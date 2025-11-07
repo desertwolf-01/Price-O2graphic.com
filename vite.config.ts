@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
@@ -12,4 +12,4 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false, // Disable for smaller build size
   },
-});
+}) satisfies UserConfig;
