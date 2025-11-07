@@ -1,3 +1,19 @@
+// في البداية
+const CLIENT_SERVICE_IDS = (URL_PARAMS.get('services') || '').split(',').filter(Boolean);
+const ALL_SERVICES_KEYWORD = 'all';
+
+// في useMemo serviceCategories
+const serviceCategories = useMemo(() => {
+  const allCategories = getServiceCategories(language);
+  if (isClientMode && CLIENT_SERVICE_IDS.length > 0) {
+    if (CLIENT_SERVICE_IDS.includes(ALL_SERVICES_KEYWORD)) {
+      // إذا كان 'all' في القائمة، أظهر كل الخدمات
+      return allCategories;
+    }
+    // ... الكود الأصلي ...
+  }
+  // ... الكود الأصلي ...
+}, [language, isClientMode]);
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import * as emailjs from '@emailjs/browser';
 import Header from './components/Header';
