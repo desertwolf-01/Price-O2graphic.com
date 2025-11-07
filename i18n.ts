@@ -5,19 +5,19 @@ export const translations = {
         appTitle: 'O2Graphic | عرض أسعار',
         // Client Info
         clientInfoTitle: 'بيانات العميل',
-        clientNameLabel: 'اسم العميل',
+        clientNameLabel: 'الاسم',
         clientPhoneLabel: 'رقم الهاتف',
-        clientEmailLabel: 'البريد الإلكتروني',
+        clientEmailLabel: 'البريد الإلكتر الإلكتروني',
         proposalDateLabel: 'تاريخ العرض',
         clientNamePlaceholder: 'اسم العميل',
         clientPhonePlaceholder: '05xxxxxxxx',
         clientEmailPlaceholder: 'email@example.com',
         emailError: 'صيغة البريد الإلكتروني غير صحيحة.',
+        proposalTitle: 'عرض أسعار خدمات التصميم الجرافيكي',
         proposalTo: (clientName: string) => `عرض سعر مقدم إلى: ${clientName || '...'}`,
 
         // Static Sections
-        proposalTitle: 'عرض أسعار خدمات التصميم الجرافيكي',
-        proposalDescription: 'نقدم حلولاً إبداعية ومبتكرة في عالم التصميم لتعزيز علامتك التجارية. تصفح خدماتنا واختر ما يناسب احتياجاتك للحصول على عرض سعر فوري.',
+        proposalDescription: 'تُحوّل أفكارك إلى واقع مرئي. لأكثر من 15 عامًا، نُعيد تعريف الجمال في التصميم؛ لن نقدم لك مجرد صورة، بل تجربة تُبقي علامتك في ذهن عملائك. نعمل مع علامات تجارية من مختلف الصناعات، من الشركات الناشئة إلى المؤسسات الراسخة، لنصنع لك تصميمات لا تُرى فقط، بل تُشعر، وتُحفّز، وتُحوّل. من لوجوهات تُعبّر عن هويتك، إلى حملات وسائل التواصل التي تُحرك الجمهور، وصولًا إلى الرسوم المتحركة والتصميم ثلاثي الأبعاد التي تُدهش، نحن نبني هوية مرئية لا تُنسى. اختر خدمتك، وسنرسل لك عرض سعر مخصص دون تعقيد، ودون تأخير. فقط اختر. سنُكمل الباقي.',
         
         // Pricing Section
         selectServicesTitle: 'اختر الخدمات',
@@ -31,24 +31,23 @@ export const translations = {
 
         // Total Bar
         totalPrice: 'المجموع الإجمالي',
-        downloadPdf: 'تحميل العرض كملف PDF',
         sendEmail: 'إرسال عبر البريد',
+        sendProposal: 'إرسال استفسار',
         sendAsText: 'ارسل',
-        preparing: 'جاري التحضير...',
         sending: 'جاري الإرسال...',
 
         // Discounts
-        discount10: 'خصم 10% لاختيار 4 باقات',
-        discount20: 'خصم 20% لاختيار 8 باقات',
-        discount30: 'خصم 30% لاختيار 10 باقات',
+        totalDiscountApplied: (percentage: number) => `🎉 لقد حصلت على خصم إجمالي بنسبة ${percentage}%!`,
 
         // Alerts & Messages
         fillInfoAlert: 'يرجى تعبئة جميع بيانات العميل (الاسم، الهاتف، والبريد الإلكتروني) بشكل صحيح أولاً.',
+        fillInfoAlertClient: 'يرجى تعبئة اسمك ورقم هاتفك وبريدك الإلكتروني بشكل صحيح للمتابعة.',
         successTitle: 'اكتمل الإجراء!',
-        successMessagePdf: 'تم تحميل ملف PDF بنجاح!',
         successMessageEmail: 'تم فتح برنامج البريد. يرجى مراجعة المحتوى ثم الإرسال.',
-        pdfErrorTitle: 'حدث خطأ',
-        pdfErrorMessage: 'فشل إنشاء ملف PDF. يرجى المحاولة مرة أخرى.',
+        successMessageClient: 'شكراً لك! تم إرسال اختيارك بنجاح. سنتواصل معك قريباً.',
+        emailSendError: 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.',
+        emailSendErrorConfig: 'يبدو أن هناك مشكلة في الإعدادات. يرجى التواصل مع الدعم الفني.',
+        emailSendErrorNetwork: 'تعذر إرسال العرض. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
         close: 'إغلاق',
 
         // Email content
@@ -87,19 +86,19 @@ export const translations = {
         appTitle: 'O2Graphic | Price Quote',
         // Client Info
         clientInfoTitle: 'Client Information',
-        clientNameLabel: 'Client Name',
+        clientNameLabel: 'Name',
         clientPhoneLabel: 'Phone Number',
         clientEmailLabel: 'Email',
         proposalDateLabel: 'Proposal Date',
-        clientNamePlaceholder: 'Client Name',
+        clientNamePlaceholder: 'Your Name',
         clientPhonePlaceholder: '05xxxxxxxx',
-        clientEmailPlaceholder: 'email@example.com',
+        clientEmailPlaceholder: 'your.email@example.com',
         emailError: 'Invalid email format.',
+        proposalTitle: 'Graphic Design Services Price Quote',
         proposalTo: (clientName: string) => `Quote presented to: ${clientName || '...'}`,
 
         // Static Sections
-        proposalTitle: 'Graphic Design Services Price Quote',
-        proposalDescription: 'We offer creative and innovative solutions in the world of design to enhance your brand. Browse our services and choose what suits your needs to get an instant price quote.',
+        proposalDescription: "We turn your ideas into visual reality. For over 15 years, we have redefined beauty in design. We offer more than just an image; we provide an experience that keeps your brand top-of-mind with your customers. We work with brands across various industries, from startups to established corporations, to create designs that are not just seen, but felt, motivating, and transformative. From logos that express your identity to social media campaigns that engage your audience, and even stunning animation and 3D design—we build an unforgettable visual identity. Select your service, and we'll send you a customized quote without complexity or delay. Just choose. We'll handle the rest.",
 
         // Pricing Section
         selectServicesTitle: 'Select Services',
@@ -113,24 +112,23 @@ export const translations = {
 
         // Total Bar
         totalPrice: 'Total Price',
-        downloadPdf: 'Download Quote as PDF',
         sendEmail: 'Send via Email',
+        sendProposal: 'Send Inquiry',
         sendAsText: 'Send',
-        preparing: 'Preparing...',
         sending: 'Sending...',
 
         // Discounts
-        discount10: '10% discount for selecting 4 or more packages',
-        discount20: '20% discount for selecting 8 or more packages',
-        discount30: '30% discount for selecting 10 or more packages',
+        totalDiscountApplied: (percentage: number) => `🎉 You've received a total discount of ${percentage}%!`,
 
         // Alerts & Messages
         fillInfoAlert: 'Please fill in all client information (Name, Phone, and Email) correctly first.',
+        fillInfoAlertClient: 'Please fill in your name, phone number, and email correctly to proceed.',
         successTitle: 'Action Completed!',
-        successMessagePdf: 'PDF downloaded successfully!',
         successMessageEmail: 'Email client opened. Please review the content and send.',
-        pdfErrorTitle: 'An Error Occurred',
-        pdfErrorMessage: 'Failed to generate PDF. Please try again.',
+        successMessageClient: 'Thank you! Your selection has been sent successfully. We will contact you shortly.',
+        emailSendError: 'An error occurred while sending. Please try again.',
+        emailSendErrorConfig: 'There seems to be a configuration issue. Please contact support.',
+        emailSendErrorNetwork: 'Could not send the proposal. Please check your internet connection and try again.',
         close: 'Close',
 
         // Email content
@@ -150,19 +148,19 @@ export const translations = {
         term1Title: 'Offer Validity',
         term1Desc: 'This offer is valid for 15 days from the date of issue.',
         term2Title: 'Payment Terms',
-        term2Desc: '50% of the project value is due as an advance payment before work begins, and 50% upon final project delivery.',
-        term3Title: 'Project Duration',
-        term3Desc: 'The final project timeline will be determined after agreement on all project details and depends on the scope of the required services.',
+        term2Desc: 'A 50% down payment of the project value is required before commencement, and the remaining 50% is due upon final delivery.',
+        term3Title: 'Project Timeline',
+        term3Desc: 'The final project timeline will be determined after all project details are agreed upon and depends on the scope of the required services.',
         term4Title: 'Client Content',
-        term4Desc: 'The client is responsible for providing all necessary materials (text, images, logos) on time to avoid delays.',
-        term5Title: 'Revisions and Edits',
-        term5Desc: 'The offer includes a specific number of revisions for each service (to be agreed upon). Any additional edits may be subject to extra charges.',
+        term4Desc: 'The client is responsible for providing all necessary materials (text, images, logos) on schedule to ensure timely delivery.',
+        term5Title: 'Revisions and Amendments',
+        term5Desc: 'The proposal includes a specified number of revisions per service (to be agreed upon). Any additional amendments may be subject to extra charges.',
         term6Title: 'Intellectual Property',
         term6Desc: 'Upon full payment, ownership of the final designs is transferred to the client. O2Graphic reserves the right to display the work in its portfolio.',
-        
+
         // ARIA labels
         decreaseQuantity: 'Decrease quantity',
         increaseQuantity: 'Increase quantity',
         currentQuantity: 'Current quantity',
-    }
+    },
 };

@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import * as emailjs from '@emailjs/browser';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import StaticSection from './components/StaticSection';
@@ -8,116 +9,143 @@ import TermsAndConditions from './components/TermsAndConditions';
 import { getServiceCategories } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
-import { logoBase64 } from './assets/logo';
-import html2pdf from 'html2pdf.js';
+import { EMAILJS_CONFIG } from './config';
+import PrintHeader from './components/PrintHeader';
+import AnimatedSection from './components/AnimatedSection';
 
-const getInitialTheme = (): 'light' | 'dark' => {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    const storedTheme = window.localStorage.getItem('theme');
-    if (storedTheme === 'dark') {
-      return 'dark';
+const URL_PARAMS = new URLSearchParams(window.location.search);
+const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
+const CLIENT_SERVICE_IDS = (URL_PARAMS.get('services') || '').split(',').filter(Boolean);
+
+function getInitialLanguage() {
+    const savedLang = localStorage.getItem('language');
+    if (savedLang === 'en' || savedLang === 'ar') {
+        return savedLang;
     }
-    if (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
+    return 'ar';
+}
+
+function getInitialClientInfo() {
+    if (IS_CLIENT_MODE) {
+        return {
+            name: URL_PARAMS.get('name') || '',
+            phone: URL_PARAMS.get('phone') || '',
+            email: URL_PARAMS.get('email') || '',
+        };
     }
-  }
-  return 'light';
-};
+    return { name: '', phone: '', email: '' };
+}
+
 
 function App() {
-  const [language, setLanguage] = useState<'ar' | 'en'>('ar');
-  const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme);
-  const [clientInfo, setClientInfo] = useState({ name: 'Energy Outdoor Advertising', phone: '05342006606', email: 'stylesowss@gmail.com' });
+  const [language, setLanguage] = useState<'ar' | 'en'>(getInitialLanguage());
+  const [isClientMode] = useState(IS_CLIENT_MODE);
+  const [clientInfo, setClientInfo] = useState(getInitialClientInfo);
   const [emailError, setEmailError] = useState('');
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [formError, setFormError] = useState('');
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
+    if (IS_CLIENT_MODE) {
+      return CLIENT_SERVICE_IDS;
+    }
+    return [];
+  });
   const [quantities, setQuantities] = useState<{ [id: string]: number }>({});
-  const [isActionInProgress, setIsActionInProgress] = useState(false);
-  const [isPrinting, setIsPrinting] = useState(false);
+  const [actionType, setActionType] = useState<string | null>(null);
   const [proposalDate] = useState(new Date());
 
   const t = useMemo(() => translations[language], [language]);
-  const serviceCategories = useMemo(() => getServiceCategories(language), [language]);
+  const serviceCategories = useMemo(() => {
+    const allCategories = getServiceCategories(language);
+    if (isClientMode && CLIENT_SERVICE_IDS.length > 0) {
+      const clientCategories = allCategories
+        .map(category => ({
+          ...category,
+          options: category.options.filter(option => CLIENT_SERVICE_IDS.includes(option.id)),
+        }))
+        .filter(category => category.options.length > 0);
+      return clientCategories;
+    }
+    return allCategories;
+  }, [language, isClientMode]);
 
-  // Language and theme side effects
+  // Language side effect
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.classList.remove('lang-en', 'lang-ar');
     document.documentElement.classList.add(`lang-${language}`);
   }, [language]);
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
+  
+  const toggleLanguage = () => {
+    const newLang = language === 'ar' ? 'en' : 'ar';
+    setLanguage(newLang);
+    localStorage.setItem('language', newLang);
+  };
+  
+  const validateEmail = (email: string) => {
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError(t.emailError);
     } else {
-      root.classList.remove('dark');
+      setEmailError('');
     }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleLanguage = () => setLanguage(prev => prev === 'ar' ? 'en' : 'ar');
-  const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
 
   const handleClientInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setClientInfo(prev => ({ ...prev, [name]: value }));
+    if (formError) setFormError('');
     if (name === 'email') {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (value && !emailRegex.test(value)) {
-        setEmailError(t.emailError);
-      } else {
-        setEmailError('');
-      }
+      validateEmail(value);
     }
   };
 
-  const handleQuantityChange = useCallback((id: string, quantity: number) => {
-    if (quantity >= 1) {
-      setQuantities(prev => ({ ...prev, [id]: quantity }));
-    }
-  }, []);
+  const handleServiceToggle = (optionId: string, category: ServiceCategory) => {
+    setSelectedIds(prevIds => {
+      let newIds = [...prevIds];
+      const isSelected = newIds.includes(optionId);
 
-  const handleServiceToggle = useCallback((optionId: string, categoryId: string) => {
-    const category = serviceCategories.find(c => c.id === categoryId);
-    if (!category) return;
-
-    let newSelectedIds = [...selectedIds];
-
-    if (category.isPhased) {
-      const optionIndex = category.options.findIndex(o => o.id === optionId);
-      const isSelected = selectedIds.includes(optionId);
-      
-      if (isSelected) {
-        // Deselect this and all subsequent options in the category
-        const idsToDeselect = category.options.slice(optionIndex).map(o => o.id);
-        newSelectedIds = newSelectedIds.filter(id => !idsToDeselect.includes(id));
-      } else {
-        // Select this and all preceding options in the category
-        const idsToSelect = category.options.slice(0, optionIndex + 1).map(o => o.id);
-        idsToSelect.forEach(id => {
-          if (!newSelectedIds.includes(id)) {
-            newSelectedIds.push(id);
-          }
+      if (category.isRadio) {
+        // Deselect all options in this category first
+        category.options.forEach(opt => {
+          const index = newIds.indexOf(opt.id);
+          if (index > -1) newIds.splice(index, 1);
         });
-      }
-    } else if (category.isRadio) {
-      // Deselect all other options in this category
-      const categoryOptionIds = category.options.map(o => o.id);
-      newSelectedIds = newSelectedIds.filter(id => !categoryOptionIds.includes(id));
-      // Select the toggled one
-      newSelectedIds.push(optionId);
-    } else {
-      // Standard checkbox behavior
-      if (newSelectedIds.includes(optionId)) {
-        newSelectedIds = newSelectedIds.filter(id => id !== optionId);
+        // Then select the new one if it wasn't selected
+        if (!isSelected) {
+          newIds.push(optionId);
+        }
+      } else if (category.isPhased) {
+        const selectedOptionIndex = category.options.findIndex(o => o.id === optionId);
+        
+        // First, clear all selections in this category
+        category.options.forEach(opt => {
+          const index = newIds.indexOf(opt.id);
+          if (index > -1) newIds.splice(index, 1);
+        });
+        
+        // If it was not currently selected, select it and all previous phases.
+        // If it was selected, it is now deselected (cleared above).
+        if (!isSelected) {
+          for (let i = 0; i <= selectedOptionIndex; i++) {
+            newIds.push(category.options[i].id);
+          }
+        }
       } else {
-        newSelectedIds.push(optionId);
+        if (isSelected) {
+          newIds = newIds.filter(id => id !== optionId);
+        } else {
+          newIds.push(optionId);
+        }
       }
-    }
+      return newIds;
+    });
+  };
 
-    setSelectedIds(newSelectedIds);
-  }, [selectedIds, serviceCategories]);
+  const handleQuantityChange = (optionId: string, newQuantity: number) => {
+    if (newQuantity >= 1) {
+      setQuantities(prev => ({ ...prev, [optionId]: newQuantity }));
+    }
+  };
 
   const selectedOptions = useMemo(() => {
     const allOptions = serviceCategories.flatMap(c => c.options);
@@ -126,72 +154,63 @@ function App() {
 
   const subTotalPrice = useMemo(() => {
     return selectedOptions.reduce((total, option) => {
-      const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
+      const quantity = !isClientMode && option.hasQuantity ? (quantities[option.id] || 1) : 1;
       return total + (option.price * quantity);
     }, 0);
-  }, [selectedOptions, quantities]);
+  }, [selectedOptions, quantities, isClientMode]);
 
   const discountPercentage = useMemo(() => {
+    if (isClientMode) return 0; // No discounts in client mode
+    
+    // Tiered discount based on number of items
+    let basePercentage = 0;
     const count = selectedIds.length;
-    if (count >= 10) return 30;
-    if (count >= 8) return 20;
-    if (count >= 4) return 10;
-    return 0;
-  }, [selectedIds.length]);
+    if (count >= 10) {
+      basePercentage = 30;
+    } else if (count >= 8) {
+      basePercentage = 20;
+    } else if (count >= 4) {
+      basePercentage = 10;
+    }
+
+    // Additional discount for high total price
+    let bonusPercentage = 0;
+    if (subTotalPrice > 5000) {
+      bonusPercentage = 5;
+    }
+
+    return basePercentage + bonusPercentage;
+  }, [selectedIds.length, isClientMode, subTotalPrice]);
+
 
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
   const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discount]);
   
-  const validateClientInfo = () => {
+  const validateAdminInfo = useCallback(() => {
     const { name, phone, email } = clientInfo;
     const isEmailValid = email && !emailError;
     if (!name || !phone || !isEmailValid) {
-      alert(t.fillInfoAlert);
+      setFormError(t.fillInfoAlert);
       return false;
     }
+    setFormError('');
     return true;
-  };
-  
-  const handleDownloadPdf = async () => {
-    if (!validateClientInfo() || isActionInProgress) return;
-    setIsActionInProgress(true);
-    setIsPrinting(true);
-    
-    setTimeout(() => {
-      try {
-        const printableElement = document.getElementById('printable-content');
-        if (!printableElement) {
-            throw new Error('Printable content not found');
-        }
-        
-        html2pdf().from(printableElement).set({
-            margin: 0,
-            filename: 'O2Graphic-Proposal.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).save().then(() => {
-            alert(t.successMessagePdf);
-        }).catch((err: any) => {
-            console.error('Failed to generate PDF:', err);
-            alert(t.pdfErrorMessage);
-        }).finally(() => {
-            setIsPrinting(false);
-            setIsActionInProgress(false);
-        });
+  }, [clientInfo, emailError, t.fillInfoAlert]);
 
-      } catch (error) {
-        console.error('Failed to generate PDF:', error);
-        alert(t.pdfErrorMessage);
-        setIsPrinting(false);
-        setIsActionInProgress(false);
+  const validateClientInfo = useCallback(() => {
+      const { name, phone, email } = clientInfo;
+      const isEmailValid = email && !emailError;
+      if (!name || !phone || !isEmailValid) {
+        setFormError(t.fillInfoAlertClient);
+        return false;
       }
-    }, 500);
-  };
+      setFormError('');
+      return true;
+  }, [clientInfo, emailError, t.fillInfoAlertClient]);
   
   const handleSendEmail = () => {
-    if (!validateClientInfo() || isActionInProgress) return;
-    setIsActionInProgress(true);
+    if (!validateAdminInfo() || actionType) return;
+    setActionType('email');
 
     const servicesText = selectedOptions.map(option => 
         `- ${option.name}: $${(option.price * (option.hasQuantity ? quantities[option.id] || 1 : 1)).toLocaleString()}`
@@ -231,147 +250,102 @@ ${t.emailTeam}
     `;
 
     const subject = encodeURIComponent(t.emailSubject(clientInfo.name || t.newClient));
-    const mailtoLink = `mailto:info@o2graphic.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+    const mailtoLink = `mailto:${clientInfo.email}?subject=${subject}&body=${encodeURIComponent(body)}`;
 
     window.location.href = mailtoLink;
     
     setTimeout(() => {
-      setIsActionInProgress(false);
+      setActionType(null);
       alert(t.successMessageEmail);
     }, 500);
   };
-  
-  if (isPrinting) {
-      const selectedByCategory: { [key: string]: { category: ServiceCategory, options: ServiceOption[] } } = {};
-      selectedOptions.forEach(option => {
-          const category = serviceCategories.find(c => c.options.some(o => o.id === option.id));
-          if (category) {
-              if (!selectedByCategory[category.id]) {
-                  selectedByCategory[category.id] = { category, options: [] };
-              }
-              selectedByCategory[category.id].options.push(option);
-          }
+
+  const handleClientSubmission = () => {
+    if (!validateClientInfo() || actionType) return;
+
+    if (EMAILJS_CONFIG.SERVICE_ID === 'YOUR_SERVICE_ID' || EMAILJS_CONFIG.TEMPLATE_ID === 'YOUR_TEMPLATE_ID' || EMAILJS_CONFIG.PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+        console.error("EmailJS credentials are not set! Please update them in config.ts.");
+        alert(t.emailSendErrorConfig);
+        return;
+    }
+
+    setActionType('email');
+
+    const servicesText = selectedOptions.map(option => 
+        `- ${option.name}: $${option.price.toLocaleString()}`
+    ).join('\n');
+
+    const summaryText = `
+Subtotal: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+    `;
+
+    const templateParams = {
+        client_name: clientInfo.name,
+        client_email: clientInfo.email,
+        client_phone: clientInfo.phone,
+        selected_services: servicesText,
+        price_summary: summaryText,
+        final_total: `$${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+    };
+
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, EMAILJS_CONFIG.PUBLIC_KEY)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert(t.successMessageClient);
+        setActionType(null);
+      }, (err) => {
+        console.error('FAILED... EmailJS Error:', err);
+        let userMessage = t.emailSendError;
+        // EmailJS returns an object with status and text on failure
+        if (err && typeof err.status === 'number') {
+            if (err.status === 400) {
+                // Bad Request - often a config issue like a malformed template param or wrong IDs
+                userMessage = t.emailSendErrorConfig;
+            } else if (err.status === 0) {
+                // This can indicate a network error (CORS, offline, etc.)
+                userMessage = t.emailSendErrorNetwork;
+            }
+        }
+        alert(userMessage);
+        setActionType(null);
       });
-      const orderedSelectedCategories = serviceCategories
-        .filter(c => selectedByCategory[c.id])
-        .map(c => selectedByCategory[c.id]);
-      
-      let serviceCounter = 0;
-
-      return (
-          <div id="printable-content" className={`font-sans bg-white text-[#0f2e4d] ${language === 'ar' ? 'lang-ar' : 'lang-en'}`}
-               style={{ width: '210mm', minHeight: '297mm', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}
-          >
-              <div className="flex-grow px-[12mm] pt-[10mm] pb-[5mm] flex flex-col">
-                <header>
-                    <div className={`${language === 'ar' ? 'text-left' : 'text-right'}`}>
-                        <img src={logoBase64} alt="O2Graphic Logo" className="h-12 inline-block" />
-                    </div>
-                    <hr className="mt-4 border-t border-gray-400"/>
-                </header>
-
-                <StaticSection 
-                    t={t}
-                    language={language}
-                    clientInfo={clientInfo}
-                    handleClientInfoChange={handleClientInfoChange}
-                    emailError={emailError}
-                    isPrinting={isPrinting}
-                    proposalDate={proposalDate}
-                />
-
-                <main className='mt-6 flex-grow'>
-                    {orderedSelectedCategories.map(({ category, options }) => (
-                        <div key={category.id} className="mb-5 break-inside-avoid">
-                            <h3 className={`text-sm font-bold bg-gray-100 p-2 text-center rounded-sm`}>
-                                {category.name}
-                            </h3>
-                            <div className="mt-2 space-y-2">
-                                {options.map(option => {
-                                    serviceCounter++;
-                                    const quantity = option.hasQuantity ? quantities[option.id] || 1 : 1;
-                                    const totalOptionPrice = option.price * quantity;
-                                    const pageCountText = option.hasQuantity && quantity > 1 ? ` (${t.pagesLabel.replace(':', '')} ${quantity})` : '';
-                                    return (
-                                        <div key={option.id} className={`flex justify-between items-start py-1 border-b border-gray-200 text-xs ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
-                                            <p className={`flex-grow ${language === 'ar' ? 'text-right' : 'text-left'}`}>
-                                                <span className="font-bold">{serviceCounter}. </span>
-                                                {option.name}
-                                                {pageCountText && <span className="text-gray-500">{pageCountText}</span>}
-                                            </p>
-                                            <p className={`flex-shrink-0 font-medium ${language === 'ar' ? 'text-left' : 'text-right'}`}>
-                                                ${totalOptionPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                            </p>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    ))}
-                </main>
-
-                <div className="flex-grow" />
-
-                <div className={`mt-auto pt-4 border-t border-gray-400 flex gap-6 ${language === 'ar' ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}>
-                    <div className="w-7/12">
-                         <div className="space-y-2 text-xs text-[#0f2e4d]">
-                            <div className={`flex justify-between ${language === 'ar' ? 'flex-row-reverse' : ''}`}><span className="text-gray-600">{t.subtotal}</span><strong>${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></div>
-                            {discount > 0 && <div className={`flex justify-between text-green-600 ${language === 'ar' ? 'flex-row-reverse' : ''}`}><span>{t.discountLabel(discountPercentage)}</span><strong>${discount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></div>}
-                            <hr className="my-1 border-gray-400" />
-                            <div className={`flex justify-between text-xl font-bold pt-1 ${language === 'ar' ? 'flex-row-reverse' : ''}`}><span>{t.finalTotal}</span><span>${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
-                        </div>
-                    </div>
-                    <div className="w-5/12">
-                       <TermsAndConditions t={t} language={language} />
-                    </div>
-                </div>
-              </div>
-
-              <footer className="bg-[#0f2e4d] text-white mt-auto">
-                <div className="px-[12mm] py-3 text-xs flex justify-between items-center">
-                    <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-                        <p>www.o2graphic.com</p>
-                        <p>info@o2graphic.com</p>
-                    </div>
-                    <div className={`flex items-center gap-2 ${language === 'ar' ? 'text-left' : 'text-right'}`}>
-                         <img src={logoBase64} alt="O2Graphic Logo" className="h-8" />
-                         <span className="font-bold">Breathe Design</span>
-                    </div>
-                </div>
-              </footer>
-          </div>
-      );
-  }
-
+  };
 
   return (
-    <div className="bg-gray-50 dark:bg-slate-900 min-h-screen">
+    <div className="bg-transparent min-h-screen">
       <Header 
-        theme={theme}
-        toggleTheme={toggleTheme}
         language={language}
         toggleLanguage={toggleLanguage}
       />
-      <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-8">
-        <StaticSection 
-          t={t}
-          language={language}
-          clientInfo={clientInfo}
-          handleClientInfoChange={handleClientInfoChange}
-          emailError={emailError}
-          isPrinting={isPrinting}
-          proposalDate={proposalDate}
-        />
-        <PricingSection
-          categories={serviceCategories}
-          selectedIds={selectedIds}
-          onServiceToggle={handleServiceToggle}
-          quantities={quantities}
-          onQuantityChange={handleQuantityChange}
-          language={language}
-          t={t}
-        />
-        <TermsAndConditions t={t} language={language} />
+      <PrintHeader />
+      <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-8 print:p-0 print:mx-0 print:max-w-full">
+        <AnimatedSection>
+            <StaticSection 
+              t={t}
+              language={language}
+              clientInfo={clientInfo}
+              onClientInfoChange={handleClientInfoChange}
+              emailError={emailError}
+              proposalDate={proposalDate}
+              isClientMode={isClientMode}
+            />
+        </AnimatedSection>
+        <AnimatedSection>
+            <PricingSection
+              categories={serviceCategories}
+              selectedIds={selectedIds}
+              onServiceToggle={handleServiceToggle}
+              quantities={quantities}
+              onQuantityChange={handleQuantityChange}
+              language={language}
+              t={t}
+              isClientMode={isClientMode}
+            />
+        </AnimatedSection>
+        <AnimatedSection>
+            <TermsAndConditions t={t} language={language} />
+        </AnimatedSection>
       </main>
       <Footer />
       <TotalBar
@@ -379,10 +353,12 @@ ${t.emailTeam}
         finalTotalPrice={finalTotalPrice}
         discount={discount}
         discountPercentage={discountPercentage}
-        onSendEmail={handleSendEmail}
+        onSendEmail={isClientMode ? handleClientSubmission : handleSendEmail}
         language={language}
         t={t}
-        isActionInProgress={isActionInProgress}
+        actionType={actionType}
+        formError={formError}
+        isClientMode={isClientMode}
       />
     </div>
   );
