@@ -1,5 +1,7 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import * as emailjs from '@emailjs/browser';
+// In App.tsx and any other .tsx/.js file using these:
+import React, { useState, useMemo, useEffect, useCallback } from 'react'; // OK
+import * as emailjs from '@emailjs/browser'; // OK (after npm install)
+// ... other imports
 import Header from './components/Header';
 import Footer from './components/Footer';
 import StaticSection from './components/StaticSection';
