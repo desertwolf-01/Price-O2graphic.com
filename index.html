@@ -1,60 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="ar" dir="rtl">
+  <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>O2Graphic | Price Quote</title>
-    <script type="importmap">
-    {
-      "imports": {
-        "react/": "https://aistudiocdn.com/react@^19.2.0/",
-        "react": "https://aistudiocdn.com/react@^19.2.0",
-        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-        "@emailjs/browser": "https://aistudiocdn.com/@emailjs/browser@^4.4.1"
-      }
-    }
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>O2Graphic Dynamic Proposal</title>
+    <!-- Optional: If Tailwind styles are ONLY in components, you might not need this CDN in the final build,
+         as Vite will bundle Tailwind via your main CSS file if configured. -->
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
       body {
-        font-family: 'Tajawal', sans-serif;
-        background: linear-gradient(to bottom, #EAF3F9, #FFFFFF);
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        background-color: #f8fafc;
       }
-      
-      @media print {
-        body {
-          background: #FFFFFF;
+      .dark body {
+        background-color: #111827; /* gray-900 */
+      }
+      html.lang-ar, .lang-ar {
+        font-family: 'Cairo', sans-serif;
+      }
+      html.lang-en, .lang-en {
+        font-family: 'Inter', sans-serif;
+      }
+      input, button, textarea, select {
+        font-family: inherit;
+      }
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translate3d(0, -20%, 0);
         }
-        .print\:p-0 { padding: 0 !important; }
-        .print\:mx-0 { margin-left: 0 !important; margin-right: 0 !important; }
-        .print\:max-w-full { max-width: 100% !important; }
-        .print\:hidden { display: none !important; }
-        .print\:block { display: block !important; }
-        .print\:shadow-none { box-shadow: none !important; }
-        .print\:border-0 { border-width: 0 !important; }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
       }
-
-      .fade-in-section {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        will-change: opacity, transform;
-      }
-      
-      .fade-in-section.is-visible {
-        opacity: 1;
-        transform: translateY(0);
+      .animate-fade-in-down {
+        animation: fadeInDown 0.5s ease-out forwards;
       }
     </style>
-<link rel="stylesheet" href="/index.css">
+  <!-- <script type="importmap">
+{
+  "imports": {
+    "react/": "  https://aistudiocdn.com/react@  ^19.2.0/",
+    "react": "https://aistudiocdn.com/react@  ^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@  ^19.2.0/",
+    "html2pdf.js": "https://aistudiocdn.com/html2pdf.js@  ^0.12.1",
+    "html2canvas": "https://aistudiocdn.com/html2canvas@  ^1.4.1",
+    "jspdf": "https://aistudiocdn.com/jspdf@  ^3.0.3"
+  }
+}
+</script> -->
+<script>
+    // Prevent FOUC for dark mode and language
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+
+    let lang = localStorage.getItem('language') || 'ar';
+    if (lang === 'fr') {
+        lang = 'ar';
+        localStorage.setItem('language', 'ar');
+    }
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.classList.add(`lang-${lang}`);
+
+</script>
 </head>
-<body>
+  <body>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-</body>
+    <!-- Vite will handle the script inclusion after building -->
+    <!-- <script type="module" src="/index.tsx"></script> -->
+  </body>
 </html>
