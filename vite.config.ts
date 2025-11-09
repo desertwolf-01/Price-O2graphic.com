@@ -18,6 +18,8 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
-      }
+      },
+      // Add this line for GitHub Pages deployment
+      base: '/Price-O2graphic.com/',
     };
 });
