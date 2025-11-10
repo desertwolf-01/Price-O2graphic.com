@@ -1,6 +1,6 @@
 // email.ts
 
-import emailjs from '@emailjs/browser'; // تأكد أنك قمت بتثبيته: npm install @emailjs/browser
+import emailjs from '@emailjs/browser';
 
 interface ProposalDetails {
     clientName: string;
@@ -9,16 +9,13 @@ interface ProposalDetails {
     totalPrice: number;
 }
 
-const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: ProposalDetails) => {
-  // ... تعريف المتغيرات ...
-  // التحقق من المفاتيح
-  if (serviceID === 'YOUR_SERVICE_ID' || ...) {
-    console.error('EmailJS credentials are not set! Please update them in email.ts.');
-    alert('An error occurred, please try again.'); // <-- هذه الرسالة يجب أن تظهر
-    return; // <-- يجب أن يتوقف هنا
-  }
-  // ... استدعاء emailjs.send ...
-};
+const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: ProposalDetails): Promise<boolean> => {
+  const templateParamsToClient = {
+    to_name: clientName,
+    to_email: clientEmail, // Sent to client
+    selected_plans: selectedPlans.join(", "),
+    total_price: totalPrice,
+  };
 
   const templateParamsToMe = {
     to_name: "O2Graphic Team", // Or your name
@@ -41,12 +38,11 @@ const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: Pr
       templateIDForMe === 'template_...' || // <-- تحقق من القيم الافتراضية
       publicKey === 'public_...') { // <-- تحقق من القيم الافتراضية
     console.error('EmailJS credentials are not set! Please update them in email.ts.');
-    alert('An error occurred, please try again.');
-    return;
+    return Promise.reject(new Error('Credentials not set.'));
   }
 
   // Send both emails simultaneously
-  Promise.all([
+  return Promise.all([
     // Send to client
     emailjs.send(serviceID, templateIDForClient, templateParamsToClient, publicKey),
     // Send to yourself
@@ -54,11 +50,11 @@ const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: Pr
   ])
   .then(() => {
     console.log('SUCCESS! Both emails sent.');
-    alert('Proposal sent successfully to your email!');
+    return true; // <-- نجاح
   })
   .catch((error) => {
     console.error('FAILED...', error);
-    alert('An error occurred, please try again.');
+    throw error; // <-- فشل
   });
 };
 
