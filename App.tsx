@@ -147,6 +147,12 @@ function App() {
     }
   };
 
+  const handleClearSelection = () => {
+    if (isClientMode) return;
+    setSelectedIds([]);
+    setQuantities({});
+  };
+
   const selectedOptions = useMemo(() => {
     const allOptions = serviceCategories.flatMap(c => c.options);
     return allOptions.filter(o => selectedIds.includes(o.id));
@@ -354,6 +360,7 @@ Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigit
         discount={discount}
         discountPercentage={discountPercentage}
         onSendEmail={isClientMode ? handleClientSubmission : handleSendEmail}
+        onClearSelection={handleClearSelection}
         language={language}
         t={t}
         actionType={actionType}

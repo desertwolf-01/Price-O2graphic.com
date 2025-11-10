@@ -7,6 +7,7 @@ interface TotalBarProps {
   discount: number;
   discountPercentage: number;
   onSendEmail: () => void;
+  onClearSelection: () => void;
   language: 'ar' | 'en';
   t: Translation;
   actionType: string | null;
@@ -20,6 +21,7 @@ const TotalBar: React.FC<TotalBarProps> = ({
   discount,
   discountPercentage,
   onSendEmail,
+  onClearSelection,
   language,
   t,
   actionType,
@@ -70,10 +72,18 @@ const TotalBar: React.FC<TotalBarProps> = ({
                 <button
                   onClick={onSendEmail}
                   disabled={isSending}
-                  className="w-full sm:w-auto flex-1 justify-center flex items-center gap-2 px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300"
+                  className="w-full sm:w-auto justify-center flex items-center gap-2 px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300"
                 >
                   {isSending ? t.sending : (isClientMode ? t.sendProposal : t.sendEmail)}
                 </button>
+                {!isClientMode && (
+                  <button
+                    onClick={onClearSelection}
+                    className="w-full sm:w-auto justify-center flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-slate-700 bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                  >
+                    {t.clearSelection}
+                  </button>
+                )}
             </div>
           )}
         </div>

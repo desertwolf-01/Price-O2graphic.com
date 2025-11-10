@@ -46,6 +46,7 @@ export const translations = {
         sendAsText: 'ارسل',
         sending: 'جاري الإرسال...',
         print: 'طباعة',
+        clearSelection: 'مسح الاختيار',
 
         // Discounts
         totalDiscountApplied: (percentage: number) => `🎉 لقد حصلت على خصم إجمالي بنسبة ${percentage}%!`,
@@ -138,6 +139,7 @@ export const translations = {
         sendAsText: 'Send',
         sending: 'Sending...',
         print: 'Print',
+        clearSelection: 'Clear Selection',
 
         // Discounts
         totalDiscountApplied: (percentage: number) => `🎉 You've received a total discount of ${percentage}%!`,
