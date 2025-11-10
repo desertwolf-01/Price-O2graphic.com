@@ -76,8 +76,6 @@ const en: Translation = {
       <li><strong>Social Media Campaign Management and Design:</strong> We produce engaging content that moves your audience and builds sustainable loyalty.</li>
       <li><strong>Animation and 3D Content Production:</strong> We give your ideas a new dimension with innovative, breathtaking designs that express your uniqueness.</li>
     </ul>
-    <p class="mt-4 font-bold text-lg">Select Your Service, and We Guarantee the Results.</p>
-    <p class="mt-2">Your simple step begins an exceptional creative journey. Choose the service you need below, and we will prepare a detailed and customized price quote for your project within 24 hours, without complications and with unparalleled precision.</p>
     <p class="mt-2 font-semibold">You choose, and let us do the rest.</p>
   `,
   clientInfoTitle: 'Client Information',
@@ -144,8 +142,6 @@ const ar: Translation = {
       <li><strong>إدارة وتصميم حملات وسائل التواصل الاجتماعي:</strong> نخلق محتوى جذاباً يحرك جمهورك ويبني ولاءً مستداماً.</li>
       <li><strong>إنتاج رسوم متحركة ومحتوى ثلاثي الأبعاد:</strong> نمنح أفكارك بُعداً جديداً بتصاميم مبتكرة تخطف الأنفاس وتُعبر عن تميزك.</li>
     </ul>
-    <p class="mt-4 font-bold text-lg">اختر خدمتك، ونحن نضمن لك النتائج.</p>
-    <p class="mt-2">خطوتك البسيطة تبدأ رحلة إبداعية استثنائية. اختر الخدمة التي تحتاجها أدناه، وسنقوم بإعداد عرض سعر مفصل ومخصص لمشروعك خلال 24 ساعة، دون تعقيدات وبدقة لا تُضاهى.</p>
     <p class="mt-2 font-semibold">اختر، ودعنا نكمل الباقي.</p>
   `,
   clientInfoTitle: 'بيانات العميل',
