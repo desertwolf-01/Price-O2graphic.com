@@ -31,6 +31,7 @@ interface SendProposalEmailsParams {
   isClientSubmission: boolean;
   t: Translation;
   selectedIds: string[];
+  proposalDate: Date;
 }
 
 /**
@@ -47,13 +48,20 @@ export const sendProposalEmails = async ({
   finalTotalPrice,
   isClientSubmission,
   t,
-  selectedIds
+  selectedIds,
+  proposalDate
 }: SendProposalEmailsParams) => {
 
   const { SERVICE_ID, TEMPLATE_ID_ADMIN, TEMPLATE_ID_CLIENT, PUBLIC_KEY } = EMAILJS_CONFIG;
   
   const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   
+  const formattedDate = proposalDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+  });
+
   const adminMessageHtml = `
     <h3>New Proposal Submission (${isClientSubmission ? 'from Client Inquiry' : 'from Admin Preview'})</h3>
     <hr>
@@ -61,6 +69,7 @@ export const sendProposalEmails = async ({
     <p><strong>Name:</strong> ${clientInfo.name}</p>
     <p><strong>Phone:</strong> ${clientInfo.countryCode}${clientInfo.phone}</p>
     <p><strong>Email:</strong> ${clientInfo.email}</p>
+    <p><strong>Proposal Date:</strong> ${formattedDate}</p>
     <hr>
     <h4>Selected Services</h4>
     <ul>

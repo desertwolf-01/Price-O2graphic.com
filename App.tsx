@@ -225,7 +225,12 @@ function App() {
     setFormError('');
     if (!validateAdminInfo()) return;
 
-    // 1. Format the message
+    const formattedDate = proposalDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+
     const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     const fullPhoneNumber = `${clientInfo.countryCode}${clientInfo.phone}`;
 
@@ -243,6 +248,7 @@ function App() {
 ${t.clientNameLabel}: ${clientInfo.name}
 ${t.clientPhoneLabel}: ${fullPhoneNumber}
 ${t.clientEmailLabel}: ${clientInfo.email}
+${t.proposalDateLabel}: ${formattedDate}
 
 *${t.selectedServicesTitle}:*
 ${servicesText}
@@ -255,7 +261,6 @@ ${language === 'en' ? t.discountLabel(discountPercentage) : `خصم (${discountP
 ${t.proposalTo(clientInfo.name)}
     `.trim().replace(/^\s+/gm, "");
 
-    // 2. Construct WhatsApp URL and open it
     const whatsappNumber = '+905342006606';
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
@@ -285,7 +290,8 @@ ${t.proposalTo(clientInfo.name)}
       finalTotalPrice,
       isClientSubmission: true,
       t,
-      selectedIds
+      selectedIds,
+      proposalDate
     })
       .then((response) => {
         console.log('SUCCESS! Both emails sent on client submission.', response);

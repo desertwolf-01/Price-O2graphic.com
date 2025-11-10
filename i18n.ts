@@ -65,7 +65,7 @@ export interface Translation {
 }
 
 const en: Translation = {
-  proposalTitle: 'Price Proposal',
+  proposalTitle: 'Graphic Design Services Price Quote',
   proposalDescription: `
     <p class="font-bold text-lg">From an Idea to an Exceptional Design: We Craft a Visual Identity That Creates a Lasting Impression</p>
     <p class="mt-2">For over 15 years, we have been transforming visions and ideas into tangible visual realities, raising the standards of aesthetics and craftsmanship in every project. We don't just deliver "images"; we create integrated visual experiences that forever establish your brand's identity in the minds of your customers.</p>
