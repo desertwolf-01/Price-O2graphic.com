@@ -6,8 +6,8 @@
 // 4. Find your Public Key in the "Account" -> "API KEYS" tab.
 
 export const EMAILJS_CONFIG = {
-  SERVICE_ID: 'service_...', // <-- Replace with your real Service ID
+  SERVICE_ID: 'service_oa6dp1v', // <-- Replace with your real Service ID
   TEMPLATE_ID_ADMIN: 'template_...', // <-- Replace with your Template ID for emails sent to you
   TEMPLATE_ID_CLIENT: 'template_...', // <-- Replace with your Template ID for emails sent to the client
-  PUBLIC_KEY: 'Tk1ZBkSxikzXkczA4',
+  PUBLIC_KEY: 'euA_gPNF71hZu-USr',
 };
