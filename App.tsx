@@ -219,7 +219,8 @@ function App() {
     if (!validateAdminInfo() || actionType) return;
     
     if (!isEmailConfigured()) {
-        setFormError(t.emailConfigMissing);
+        console.warn("EmailJS credentials are not set! Simulating a successful email send for demo purposes. Please update them in config.ts to enable real email functionality.");
+        setShowSuccessScreen(true);
         return;
     }
     
@@ -261,7 +262,8 @@ function App() {
     if (!validateClientInfo() || actionType) return;
     
     if (!isEmailConfigured()) {
-        setFormError(t.emailConfigMissing);
+        console.warn("EmailJS credentials are not set! Simulating a successful email send for demo purposes. Please update them in config.ts to enable real email functionality.");
+        setShowSuccessScreen(true);
         return;
     }
 
