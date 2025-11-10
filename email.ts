@@ -17,10 +17,10 @@ interface EmailParams {
 }
 
 export const isEmailConfigured = () => {
-    const { SERVICE_ID, TEMPLATE_ID_ADMIN, TEMPLATE_ID_CLIENT, PUBLIC_KEY } = EMAILJS_CONFIG;
+    const { SERVICE_ID, TEMPLATE_ID_ADMIN, PUBLIC_KEY } = EMAILJS_CONFIG;
+    // The client template ID is optional.
     return SERVICE_ID && !SERVICE_ID.includes('...') &&
            TEMPLATE_ID_ADMIN && !TEMPLATE_ID_ADMIN.includes('...') &&
-           TEMPLATE_ID_CLIENT && !TEMPLATE_ID_CLIENT.includes('...') &&
            PUBLIC_KEY && !PUBLIC_KEY.includes('...');
 };
 
@@ -75,8 +75,18 @@ ${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionD
 
     const { SERVICE_ID, TEMPLATE_ID_ADMIN, TEMPLATE_ID_CLIENT, PUBLIC_KEY } = EMAILJS_CONFIG;
     
+    const emailPromises: Promise<emailjs.EmailJSResponseStatus>[] = [];
+    
+    // Always send the admin email
     const sendAdminEmail = emailjs.send(SERVICE_ID, TEMPLATE_ID_ADMIN, templateParamsAdmin, { publicKey: PUBLIC_KEY });
-    const sendClientEmail = emailjs.send(SERVICE_ID, TEMPLATE_ID_CLIENT, templateParamsClient, { publicKey: PUBLIC_KEY });
+    emailPromises.push(sendAdminEmail);
 
-    return Promise.all([sendAdminEmail, sendClientEmail]);
+    // Only send the client email if the template is configured
+    const isClientTemplateConfigured = TEMPLATE_ID_CLIENT && !TEMPLATE_ID_CLIENT.includes('...');
+    if (isClientTemplateConfigured) {
+        const sendClientEmail = emailjs.send(SERVICE_ID, TEMPLATE_ID_CLIENT, templateParamsClient, { publicKey: PUBLIC_KEY });
+        emailPromises.push(sendClientEmail);
+    }
+
+    return Promise.all(emailPromises);
 };
