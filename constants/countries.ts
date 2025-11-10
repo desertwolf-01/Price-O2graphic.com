@@ -160,6 +160,7 @@ export const countries: Country[] = [
 	{ name: 'Nigeria', dial_code: '+234', code: 'NG' },
 	{ name: 'Niue', dial_code: '+683', code: 'NU' },
 	{ name: 'Norfolk Island', dial_code: '+672', code: 'NF' },
+	// Fix: Changed name:- to name:
 	{ name: 'Northern Mariana Islands', dial_code: '+1670', code: 'MP' },
 	{ name: 'Norway', dial_code: '+47', code: 'NO' },
 	{ name: 'Oman', dial_code: '+968', code: 'OM' },

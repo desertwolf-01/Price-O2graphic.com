@@ -38,26 +38,6 @@
         .print\:shadow-none { box-shadow: none !important; }
         .print\:border-0 { border-width: 0 !important; }
       }
-
-      .fade-in-section {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        will-change: opacity, transform;
-      }
-      
-      .fade-in-section.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      @keyframes enter {
-        0% { opacity: 0; transform: scale(0.95); }
-        100% { opacity: 1; transform: scale(1); }
-      }
-      .animate-enter {
-          animation: enter 0.3s ease-out forwards;
-      }
     </style>
 </head>
 <body>

@@ -21,7 +21,7 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ t, onClose, isClientMode 
         role="dialog"
         aria-modal="true"
     >
-        <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 max-w-lg w-full text-center transform transition-all animate-enter">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 max-w-lg w-full text-center transform transition-all">
             <SuccessIcon />
             <h2 id="success-title" className="text-2xl md:text-3xl font-bold text-slate-800 mt-4">
                 {t.successMessageTitle}

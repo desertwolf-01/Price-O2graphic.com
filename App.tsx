@@ -9,7 +9,6 @@ import { getServiceCategories } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
 import PrintHeader from './components/PrintHeader';
-import AnimatedSection from './components/AnimatedSection';
 import SuccessScreen from './components/SuccessScreen';
 import { isEmailConfigured, sendProposalEmails } from './email';
 
@@ -319,32 +318,26 @@ ${t.proposalTo(clientInfo.name)}
       />
       <PrintHeader />
       <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-8 print:p-0 print:mx-0 print:max-w-full">
-        <AnimatedSection>
-            <StaticSection 
-              t={t}
-              language={language}
-              clientInfo={clientInfo}
-              onClientInfoChange={handleClientInfoChange}
-              emailError={emailError}
-              proposalDate={proposalDate}
-              isClientMode={isClientMode}
-            />
-        </AnimatedSection>
-        <AnimatedSection>
-            <PricingSection
-              categories={serviceCategories}
-              selectedIds={selectedIds}
-              onServiceToggle={handleServiceToggle}
-              quantities={quantities}
-              onQuantityChange={handleQuantityChange}
-              language={language}
-              t={t}
-              isClientMode={isClientMode}
-            />
-        </AnimatedSection>
-        <AnimatedSection>
-            <TermsAndConditions t={t} language={language} />
-        </AnimatedSection>
+        <StaticSection 
+          t={t}
+          language={language}
+          clientInfo={clientInfo}
+          onClientInfoChange={handleClientInfoChange}
+          emailError={emailError}
+          proposalDate={proposalDate}
+          isClientMode={isClientMode}
+        />
+        <PricingSection
+          categories={serviceCategories}
+          selectedIds={selectedIds}
+          onServiceToggle={handleServiceToggle}
+          quantities={quantities}
+          onQuantityChange={handleQuantityChange}
+          language={language}
+          t={t}
+          isClientMode={isClientMode}
+        />
+        <TermsAndConditions t={t} language={language} />
       </main>
       <Footer />
       <TotalBar
