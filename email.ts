@@ -1,4 +1,7 @@
+// email.ts
+
 import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from './config'; // Adjust the path if config.ts is in a different folder
 
 interface ProposalDetails {
     clientName: string;
@@ -7,7 +10,7 @@ interface ProposalDetails {
     totalPrice: number;
 }
 
-const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: ProposalDetails) => {
+const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: ProposalDetails): Promise<boolean> => {
   const templateParamsToClient = {
     to_name: clientName,
     to_email: clientEmail, // Sent to client
@@ -24,36 +27,39 @@ const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: Pr
     total_price: totalPrice,
   };
 
-  // Your EmailJS credentials
-  const serviceID = 'YOUR_SERVICE_ID';
-  const templateIDForClient = 'YOUR_CLIENT_TEMPLATE_ID'; // Template for client
-  const templateIDForMe = 'YOUR_INTERNAL_TEMPLATE_ID';   // Template for you
-  const publicKey = 'YOUR_PUBLIC_KEY';
+  // Use the imported configuration
+  const { SERVICE_ID, TEMPLATE_ID: templateIDForMe, PUBLIC_KEY } = EMAILJS_CONFIG;
 
-  // Check credentials
-  if (serviceID === 'YOUR_SERVICE_ID' || 
-      templateIDForClient === 'YOUR_CLIENT_TEMPLATE_ID' || 
-      templateIDForMe === 'YOUR_INTERNAL_TEMPLATE_ID' || 
-      publicKey === 'YOUR_PUBLIC_KEY') {
-    console.error('EmailJS credentials are not set! Please update them in email.ts.');
-    alert('An error occurred, please try again.');
-    return;
+  // Check credentials (assuming you have a separate template ID for the client if needed)
+  // For now, using the main TEMPLATE_ID for the internal notification.
+  // You might want to add a CLIENT_TEMPLATE_ID to your config if you send to the client too.
+  const templateIDForClient = 'template_...'; // Add this to your config.ts if sending to client
+
+  if (SERVICE_ID === 'service_...' || // <-- Check for placeholder values
+      templateIDForMe === 'template_...' || // <-- Check for placeholder values
+      PUBLIC_KEY === 'euA_gPNF71hZu-USr') { // <-- Check for placeholder value
+    console.error('EmailJS credentials are not set in config.ts! Please update them.');
+    return Promise.reject(new Error('Credentials not set.'));
   }
 
-  // Send both emails simultaneously
-  Promise.all([
-    // Send to client
-    emailjs.send(serviceID, templateIDForClient, templateParamsToClient, publicKey),
+  // Example: If you also send to the client, use their template ID here
+  // const clientTemplateId = EMAILJS_CONFIG.CLIENT_TEMPLATE_ID || templateIDForMe;
+
+  // Send both emails simultaneously (or just one to yourself)
+  return Promise.all([
+    // Example for sending to client (uncomment and configure if needed)
+    // emailjs.send(SERVICE_ID, clientTemplateId, templateParamsToClient, PUBLIC_KEY),
+
     // Send to yourself
-    emailjs.send(serviceID, templateIDForMe, templateParamsToMe, publicKey)
+    emailjs.send(SERVICE_ID, templateIDForMe, templateParamsToMe, PUBLIC_KEY)
   ])
   .then(() => {
-    console.log('SUCCESS! Both emails sent.');
-    alert('Proposal sent successfully to your email!');
+    console.log('SUCCESS! Email sent to O2Graphic.');
+    return true; // <-- Success
   })
   .catch((error) => {
-    console.error('FAILED...', error);
-    alert('An error occurred, please try again.');
+    console.error('FAILED...', error); // <-- This message will appear now
+    throw error; // <-- Failure
   });
 };
 
