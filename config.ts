@@ -7,7 +7,7 @@
 
 export const EMAILJS_CONFIG = {
   SERVICE_ID: 'service_oa6dp1v', // <-- This is your Service ID from EmailJS
-  TEMPLATE_ID_ADMIN: 'template_o2graphic_admin', // <-- MANDATORY: Replace with your Template ID for emails sent to you (info@o2graphic.com)
-  TEMPLATE_ID_CLIENT: 'template_ie01ksd', // <-- OPTIONAL: Replace with your Template ID for confirmation emails sent to the client
+  TEMPLATE_ID_ADMIN: 'template_ie01ksd', // <-- MANDATORY: The template for emails sent to you (info@o2graphic.com)
+  TEMPLATE_ID_CLIENT: 'template_...', // <-- OPTIONAL: Create a separate template for client confirmation emails and add its ID here.
   PUBLIC_KEY: 'Tk1ZBkSxikzXkczA4', // <-- This is your Public Key from EmailJS
 };
