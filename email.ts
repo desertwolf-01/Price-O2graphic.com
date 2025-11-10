@@ -10,12 +10,15 @@ interface ProposalDetails {
 }
 
 const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: ProposalDetails) => {
-  const templateParamsToClient = {
-    to_name: clientName,
-    to_email: clientEmail, // Sent to client
-    selected_plans: selectedPlans.join(", "),
-    total_price: totalPrice,
-  };
+  // ... تعريف المتغيرات ...
+  // التحقق من المفاتيح
+  if (serviceID === 'YOUR_SERVICE_ID' || ...) {
+    console.error('EmailJS credentials are not set! Please update them in email.ts.');
+    alert('An error occurred, please try again.'); // <-- هذه الرسالة يجب أن تظهر
+    return; // <-- يجب أن يتوقف هنا
+  }
+  // ... استدعاء emailjs.send ...
+};
 
   const templateParamsToMe = {
     to_name: "O2Graphic Team", // Or your name
