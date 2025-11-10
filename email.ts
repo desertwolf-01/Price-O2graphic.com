@@ -1,4 +1,6 @@
-import emailjs from '@emailjs/browser';
+// email.ts
+
+import emailjs from '@emailjs/browser'; // تأكد أنك قمت بتثبيته: npm install @emailjs/browser
 
 interface ProposalDetails {
     clientName: string;
@@ -24,17 +26,17 @@ const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: Pr
     total_price: totalPrice,
   };
 
-  // Your EmailJS credentials
-  const serviceID = 'YOUR_SERVICE_ID';
-  const templateIDForClient = 'YOUR_CLIENT_TEMPLATE_ID'; // Template for client
-  const templateIDForMe = 'YOUR_INTERNAL_TEMPLATE_ID';   // Template for you
-  const publicKey = 'YOUR_PUBLIC_KEY';
+  // Your EmailJS credentials (Update these with your actual values)
+  const serviceID = 'service_...'; // <-- ضع Service ID هنا
+  const templateIDForClient = 'template_...'; // <-- ضع Template ID لبريد العميل هنا
+  const templateIDForMe = 'template_...';    // <-- ضع Template ID لك هنا
+  const publicKey = 'public_...'; // <-- ضع Public Key هنا
 
   // Check credentials
-  if (serviceID === 'YOUR_SERVICE_ID' || 
-      templateIDForClient === 'YOUR_CLIENT_TEMPLATE_ID' || 
-      templateIDForMe === 'YOUR_INTERNAL_TEMPLATE_ID' || 
-      publicKey === 'YOUR_PUBLIC_KEY') {
+  if (serviceID === 'service_...' || // <-- تحقق من القيم الافتراضية
+      templateIDForClient === 'template_...' || // <-- تحقق من القيم الافتراضية
+      templateIDForMe === 'template_...' || // <-- تحقق من القيم الافتراضية
+      publicKey === 'public_...') { // <-- تحقق من القيم الافتراضية
     console.error('EmailJS credentials are not set! Please update them in email.ts.');
     alert('An error occurred, please try again.');
     return;
