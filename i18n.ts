@@ -1,208 +1,203 @@
-export type Translation = typeof translations.ar;
+export interface Translation {
+  // App.tsx & StaticSection.tsx
+  proposalTitle: string;
+  proposalDescription: string;
+  clientInfoTitle: string;
+  proposalDateLabel: string;
+  clientNameLabel: string;
+  clientNamePlaceholder: string;
+  clientPhoneLabel: string;
+  clientPhonePlaceholder: string;
+  clientEmailLabel: string;
+  clientEmailPlaceholder: string;
+  emailError: string;
+  fillInfoAlert: string;
+  fillInfoAlertClient: string;
 
-export const translations = {
-    ar: {
-        appTitle: 'O2Graphic | عرض أسعار',
-        // Client Info
-        clientInfoTitle: 'بيانات العميل',
-        clientNameLabel: 'الاسم',
-        clientPhoneLabel: 'رقم الهاتف',
-        clientEmailLabel: 'البريد الإلكتروني',
-        proposalDateLabel: 'تاريخ العرض',
-        clientNamePlaceholder: 'اسم العميل',
-        clientPhonePlaceholder: '05xxxxxxxx',
-        clientEmailPlaceholder: 'email@example.com',
-        emailError: 'صيغة البريد الإلكتروني غير صحيحة.',
-        proposalTitle: 'عرض أسعار خدمات التصميم الجرافيكي',
-        proposalTo: (clientName: string) => `عرض سعر مقدم إلى: ${clientName || '...'}`,
+  // PricingSection.tsx
+  selectServicesTitle: string;
+  selectServicesDescription: string;
 
-        // Static Sections
-        proposalDescription: `
-            <p class="mb-4">لأكثر من 15 عامًا، نحوّل أفكارك إلى واقع مرئي ونُعيد تعريف الجمال في التصميم. نحن لا نقدم لك مجرد صورة، بل تجربة تُبقي علامتك في ذهن عملائك.</p>
-            <p class="mb-4">نعمل مع علامات تجارية من مختلف الصناعات، من الشركات الناشئة إلى المؤسسات الراسخة، لنصنع لك تصميمات لا تُرى فقط، بل تُشعر، وتُحفّز، وتُحوّل.</p>
-            <p class="mb-4 font-semibold text-slate-700">نحن نبني هوية مرئية لا تُنسى من خلال:</p>
-            <ul class="list-disc list-inside text-right inline-block mb-4 space-y-1">
-                <li>لوجوهات تُعبّر عن هويتك</li>
-                <li>حملات وسائل تواصل تُحرك الجمهور</li>
-                <li>رسوم متحركة وتصميم ثلاثي الأبعاد يُدهش</li>
-            </ul>
-            <p class="font-medium">اختر خدمتك، وسنرسل لك عرض سعر مخصص دون تعقيد أو تأخير. فقط اختر، وسنُكمل الباقي.</p>
-        `,
-        
-        // Pricing Section
-        selectServicesTitle: 'اختر الخدمات',
-        selectedServicesTitle: 'الخدمات المختارة',
-        selectServicesDescription: 'قم بتحديد الباقات والخدمات التي تناسب احتياجاتك',
-        pagesLabel: 'عدد الصفحات:',
-        perPageSuffix: '/ للصفحة',
-        subtotal: 'المجموع الفرعي',
-        finalTotal: 'المجموع النهائي',
-        priceSummaryTitle: 'ملخص الأسعار',
+  // PricingOption.tsx
+  pagesLabel: string;
+  perPageSuffix: string;
+  decreaseQuantity: string;
+  increaseQuantity: string;
+  currentQuantity: string;
 
-        // Total Bar
-        totalPrice: 'المجموع الإجمالي',
-        sendEmail: 'إرسال عبر واتساب',
-        sendProposal: 'إرسال استفسار',
-        sendAsText: 'ارسل',
-        sending: 'جاري الإرسال...',
-        print: 'طباعة',
-        clearSelection: 'مسح الاختيار',
+  // TotalBar.tsx
+  priceSummaryTitle: string;
+  selectedServicesTitle: string;
+  subtotal: string;
+  discountLabel: (percentage: number) => string;
+  totalPrice: string;
+  totalDiscountApplied: (percentage: number) => string;
+  proposalTo: (name: string) => string;
+  sendEmail: string;
+  sendProposal: string;
+  sending: string;
+  clearSelection: string;
+  emailConfigMissing: string;
+  emailSendError: string;
+  emailSendErrorConfig: string;
+  emailSendErrorNetwork: string;
 
-        // Discounts
-        totalDiscountApplied: (percentage: number) => `🎉 لقد حصلت على خصم إجمالي بنسبة ${percentage}%!`,
+  // TermsAndConditions.tsx
+  termsTitle: string;
+  term1Title: string;
+  term1Desc: string;
+  term2Title: string;
+  term2Desc: string;
+  term3Title: string;
+  term3Desc: string;
+  term4Title: string;
+  term4Desc: string;
+  term5Title: string;
+  term5Desc: string;
+  term6Title: string;
+  term6Desc: string;
 
-        // Alerts & Messages
-        fillInfoAlert: 'يرجى تعبئة جميع بيانات العميل (الاسم، الهاتف، والبريد الإلكتروني) بشكل صحيح أولاً.',
-        fillInfoAlertClient: 'يرجى تعبئة اسمك ورقم هاتفك وبريدك الإلكتروني بشكل صحيح للمتابعة.',
-        successTitle: 'اكتمل الإجراء!',
-        successMessageTitle: 'تم الإرسال بنجاح!',
-        successMessageEmailBody: `تم إرسال عرض السعر إلى البريد الإلكتروني info@o2graphic.com بنجاح.
-سيتم مراجعة الطلب من قبل فريقنا والرد عليكم في أقرب وقت ممكن.
-نأمل أن يلبي عرضنا توقعاتكم ومتطلباتكم بشكل كامل.
-لا تتردد في التواصل معنا لأي استفسارات إضافية أو تعديلات.
-شكراً لثقتكم بنا ونتمنى لكم يوماً مميزاً.`,
-        successMessageClientBody: `شكراً لك! تم استلام طلبك بنجاح.
-سنتواصل معك قريباً لمناقشة التفاصيل.
-نتطلع للعمل معك!`,
-        backToProposal: 'العودة إلى العرض',
-        emailSendError: 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.',
-        emailConfigMissing: 'إعدادات إرسال البريد الإلكتروني غير مكتملة. يرجى تحديث بيانات الاعتماد في ملف config.ts.',
-        emailSendErrorConfig: 'يبدو أن هناك مشكلة في الإعدادات. يرجى التواصل مع الدعم الفني.',
-        emailSendErrorNetwork: 'تعذر إرسال العرض. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
-        close: 'إغلاق',
+  // SuccessScreen.tsx
+  successMessageTitle: string;
+  successMessageClientBody: string;
+  successMessageEmailBody: string;
+  backToProposal: string;
+}
 
-        // Email content
-        emailSubject: (clientName: string) => `عرض سعر من O2Graphic لـ ${clientName}`,
-        newClient: 'عميل جديد',
-        emailGreeting: (clientName: string) => `عزيزي/عزيزتي ${clientName}،`,
-        emailIntro: 'نشكرك على اهتمامك بخدماتنا. تجد أدناه عرض السعر المخصص بناءً على الخدمات التي اخترتها:',
-        emailServicesHeader: 'تفاصيل العرض',
-        emailSummaryHeader: 'ملخص الأسعار',
-        emailClientHeader: 'بيانات العميل',
-        discountLabel: (percentage: number) => `خصم (${percentage}%)`,
-        emailClosing: 'مع خالص التقدير،',
-        emailTeam: 'فريق O2Graphic',
-        
-        // Terms & Conditions
-        termsTitle: 'الشروط والاحكام',
-        term1Title: 'مدة صلاحية العرض',
-        term1Desc: 'هذا العرض صالح لمدة 15 يوماً من تاريخ إصداره.',
-        term2Title: 'شروط الدفع',
-        term2Desc: 'يتم دفع 50% من قيمة المشروع كدفعة مقدمة قبل البدء، و 50% عند التسليم النهائي للمشروع.',
-        term3Title: 'مدة تنفيذ المشروع',
-        term3Desc: 'يتم تحديد مدة التنفيذ النهائية بعد الاتفاق على جميع تفاصيل المشروع، وتعتمد على حجم الخدمات المطلوبة.',
-        term4Title: 'محتوى العميل',
-        term4Desc: 'يلتزم العميل بتوفير جميع المواد اللازمة للمشروع (نصوص، صور، شعارات) في الوقت المحدد لضمان عدم تأخير التسليم.',
-        term5Title: 'المراجعات والتعديلات',
-        term5Desc: 'يشمل العرض عددًا محددًا من المراجعات لكل خدمة (يتم الاتفاق عليها)، وأي تعديلات إضافية قد تخضع لرسوم إضافية.',
-        term6Title: 'الملكية الفكرية',
-        term6Desc: 'بعد سداد كامل المستحقات، تنتقل ملكية التصاميم النهائية للعميل، وتحتفظ O2Graphic بحق عرضها في معرض أعمالها.',
-
-        // ARIA labels
-        decreaseQuantity: 'تقليل الكمية',
-        increaseQuantity: 'زيادة الكمية',
-        currentQuantity: 'الكمية الحالية',
-    },
-    en: {
-        appTitle: 'O2Graphic | Price Quote',
-        // Client Info
-        clientInfoTitle: 'Client Information',
-        clientNameLabel: 'Name',
-        clientPhoneLabel: 'Phone Number',
-        clientEmailLabel: 'Email',
-        proposalDateLabel: 'Proposal Date',
-        clientNamePlaceholder: 'Your Name',
-        clientPhonePlaceholder: '05xxxxxxxx',
-        clientEmailPlaceholder: 'your.email@example.com',
-        emailError: 'Invalid email format.',
-        proposalTitle: 'Graphic Design Services Price Quote',
-        proposalTo: (clientName: string) => `Quote presented to: ${clientName || '...'}`,
-
-        // Static Sections
-        proposalDescription: `
-            <p class="mb-4">For over 15 years, we've turned ideas into visual reality by redefining beauty in design. We offer more than just an image; we provide an experience that keeps your brand top-of-mind.</p>
-            <p class="mb-4">We work with brands across various industries, from startups to established corporations, to create designs that are not just seen, but felt, motivating, and transformative.</p>
-            <p class="mb-4 font-semibold text-slate-700">We build unforgettable visual identities through:</p>
-            <ul class="list-disc list-inside text-left inline-block mb-4 space-y-1">
-                <li>Logos that express your identity</li>
-                <li>Social media campaigns that engage audiences</li>
-                <li>Stunning animation and 3D designs</li>
-            </ul>
-            <p class="font-medium">Select your service, and we'll send you a customized quote without complexity or delay. Just choose. We'll handle the rest.</p>
-        `,
-
-        // Pricing Section
-        selectServicesTitle: 'Select Services',
-        selectedServicesTitle: 'Selected Services',
-        selectServicesDescription: 'Select the packages and services that suit your needs',
-        pagesLabel: 'Pages:',
-        perPageSuffix: '/ page',
-        subtotal: 'Subtotal',
-        finalTotal: 'Final Total',
-        priceSummaryTitle: 'Price Summary',
-
-        // Total Bar
-        totalPrice: 'Total Price',
-        sendEmail: 'Send via WhatsApp',
-        sendProposal: 'Send Inquiry',
-        sendAsText: 'Send',
-        sending: 'Sending...',
-        print: 'Print',
-        clearSelection: 'Clear Selection',
-
-        // Discounts
-        totalDiscountApplied: (percentage: number) => `🎉 You've received a total discount of ${percentage}%!`,
-
-        // Alerts & Messages
-        fillInfoAlert: 'Please fill in all client information (Name, Phone, and Email) correctly first.',
-        fillInfoAlertClient: 'Please fill in your name, phone number, and email correctly to proceed.',
-        successTitle: 'Action Completed!',
-        successMessageTitle: 'Sent Successfully!',
-        successMessageEmailBody: `The price proposal has been successfully sent to info@o2graphic.com.
-Our team will review the request and get back to you as soon as possible.
-We hope our offer fully meets your expectations and requirements.
-Please do not hesitate to contact us for any further inquiries or modifications.
-Thank you for your trust in us, and we wish you a wonderful day.`,
-        successMessageClientBody: `Thank you! Your request has been successfully received.
-We will contact you shortly to discuss the details.
-We look forward to working with you!`,
-        backToProposal: 'Back to Proposal',
-        emailSendError: 'An error occurred while sending. Please try again.',
-        emailConfigMissing: 'Email sending is not configured. Please update your credentials in the config.ts file.',
-        emailSendErrorConfig: 'There seems to be a configuration issue. Please contact support.',
-        emailSendErrorNetwork: 'Could not send the proposal. Please check your internet connection and try again.',
-        close: 'Close',
-
-        // Email content
-        emailSubject: (clientName: string) => `Price Proposal from O2Graphic for ${clientName}`,
-        newClient: 'a new client',
-        emailGreeting: (clientName: string) => `Dear ${clientName},`,
-        emailIntro: 'Thank you for your interest in our services. Please find your customized price proposal below:',
-        emailServicesHeader: 'PROPOSAL DETAILS',
-        emailSummaryHeader: 'PRICE SUMMARY',
-        emailClientHeader: 'CLIENT INFORMATION',
-        discountLabel: (percentage: number) => `Discount (${percentage}%)`,
-        emailClosing: 'Sincerely,',
-        emailTeam: 'The O2Graphic Team',
-
-        // Terms & Conditions
-        termsTitle: 'Terms and Conditions',
-        term1Title: 'Offer Validity',
-        term1Desc: 'This offer is valid for 15 days from the date of issue.',
-        term2Title: 'Payment Terms',
-        term2Desc: 'A 50% down payment of the project value is required before commencement, and the remaining 50% is due upon final delivery.',
-        term3Title: 'Project Timeline',
-        term3Desc: 'The final project timeline will be determined after all project details are agreed upon and depends on the scope of the required services.',
-        term4Title: 'Client Content',
-        term4Desc: 'The client is responsible for providing all necessary materials (text, images, logos) on schedule to ensure timely delivery.',
-        term5Title: 'Revisions and Amendments',
-        term5Desc: 'The proposal includes a specified number of revisions per service (to be agreed upon). Any additional amendments may be subject to extra charges.',
-        term6Title: 'Intellectual Property',
-        term6Desc: 'Upon full payment, ownership of the final designs is transferred to the client. O2Graphic reserves the right to display the work in its portfolio.',
-
-        // ARIA labels
-        decreaseQuantity: 'Decrease quantity',
-        increaseQuantity: 'Increase quantity',
-        currentQuantity: 'Current quantity',
-    },
+const en: Translation = {
+  proposalTitle: 'Price Proposal',
+  proposalDescription: `
+    <p class="font-bold text-lg">From an Idea to an Exceptional Design: We Craft a Visual Identity That Creates a Lasting Impression</p>
+    <p class="mt-2">For over 15 years, we have been transforming visions and ideas into tangible visual realities, raising the standards of aesthetics and craftsmanship in every project. We don't just deliver "images"; we create integrated visual experiences that forever establish your brand's identity in the minds of your customers.</p>
+    <p class="mt-2">We are proud of our partnerships with a diverse range of brands, from ambitious startups to established institutions, with one goal: to create designs that are not just seen, but inspire emotion, unleash creativity, and achieve the desired transformation.</p>
+    <h3 class="font-bold text-md mt-4">Our Comprehensive Services to Build Your Visual World:</h3>
+    <ul class="list-disc list-inside mt-2 space-y-1">
+      <li><strong>Integrated Visual Identity Design:</strong> We create a logo that encapsulates your story and becomes the unforgettable face of your brand.</li>
+      <li><strong>Social Media Campaign Management and Design:</strong> We produce engaging content that moves your audience and builds sustainable loyalty.</li>
+      <li><strong>Animation and 3D Content Production:</strong> We give your ideas a new dimension with innovative, breathtaking designs that express your uniqueness.</li>
+    </ul>
+    <p class="mt-4 font-bold text-lg">Select Your Service, and We Guarantee the Results.</p>
+    <p class="mt-2">Your simple step begins an exceptional creative journey. Choose the service you need below, and we will prepare a detailed and customized price quote for your project within 24 hours, without complications and with unparalleled precision.</p>
+    <p class="mt-2 font-semibold">You choose, and let us do the rest.</p>
+  `,
+  clientInfoTitle: 'Client Information',
+  proposalDateLabel: 'Proposal Date',
+  clientNameLabel: 'Client Name',
+  clientNamePlaceholder: 'e.g., John Doe',
+  clientPhoneLabel: 'Phone Number',
+  clientPhonePlaceholder: '555 123 4567',
+  clientEmailLabel: 'Email Address',
+  clientEmailPlaceholder: 'e.g., email@example.com',
+  emailError: 'Please enter a valid email address.',
+  fillInfoAlert: 'Please fill in all client information (Name, Phone, Email) before proceeding.',
+  fillInfoAlertClient: 'Please fill in your name, phone, and email to submit your inquiry.',
+  selectServicesTitle: 'Select Services',
+  selectServicesDescription: 'Choose from the services below to build your custom package. For services with quantities, the price is per page.',
+  pagesLabel: 'Pages:',
+  perPageSuffix: 'per page',
+  decreaseQuantity: 'Decrease quantity',
+  increaseQuantity: 'Increase quantity',
+  currentQuantity: 'Current quantity',
+  priceSummaryTitle: 'Price Summary',
+  selectedServicesTitle: 'Selected Services',
+  subtotal: 'Subtotal',
+  discountLabel: (percentage) => `Discount (${percentage}%)`,
+  totalPrice: 'Total Price',
+  totalDiscountApplied: (percentage) => `${percentage}% discount applied!`,
+  proposalTo: (name) => `A proposal prepared for ${name}.`,
+  sendEmail: 'Send via WhatsApp',
+  sendProposal: 'Submit Inquiry',
+  sending: 'Sending...',
+  clearSelection: 'Clear Selection',
+  emailConfigMissing: 'The email system is not configured. Please contact support.',
+  emailSendError: 'There was an error sending the email. Please try again later or contact support.',
+  emailSendErrorConfig: 'There seems to be an issue with our email configuration. Please contact support.',
+  emailSendErrorNetwork: 'A network error occurred. Please check your connection and try again.',
+  termsTitle: 'Terms & Conditions',
+  term1Title: 'Payment Terms',
+  term1Desc: 'A 50% deposit is required to start the project, with the remaining balance due upon completion.',
+  term2Title: 'Revisions',
+  term2Desc: 'Each service includes up to two rounds of revisions. Additional revisions will be billed at an hourly rate.',
+  term3Title: 'Timeline',
+  term3Desc: 'Project timelines are estimates and may vary based on feedback and revision cycles.',
+  term4Title: 'Cancellation',
+  term4Desc: 'Projects cancelled after commencement will be billed for the work completed to date.',
+  term5Title: 'Ownership',
+  term5Desc: 'Upon final payment, the client will own the rights to the final designs.',
+  term6Title: 'Confidentiality',
+  term6Desc: 'We will treat all project-related information as confidential.',
+  successMessageTitle: 'Inquiry Sent!',
+  successMessageClientBody: 'Thank you for your interest!\nWe have received your service inquiry and will contact you shortly to discuss the details.',
+  successMessageEmailBody: 'The proposal has been sent successfully.',
+  backToProposal: 'Back to Proposal',
 };
+
+const ar: Translation = {
+  proposalTitle: 'عرض أسعار خدمات التصميم الجرافيكي',
+  proposalDescription: `
+    <p class="font-bold text-lg">من فكرة إلى تصميم استثنائي: نصنع هويتك البصرية التي تخلق انطباعاً يدوم</p>
+    <p class="mt-2">لأكثر من 15 عاماً، ونحن نعمل على تحويل الرؤى والأفكار إلى واقع بصري ملموس، حيث نرفع معايير الجمالية والإتقان في كل مشروع. نحن لا نقدم مجرد "صور"، بل نبتكر تجارب بصرية متكاملة تثبت هوية علامتك التجارية في أذهان عملائك إلى الأبد.</p>
+    <p class="mt-2">نفتخر بشراكاتنا مع علامات تجارية متنوعة، بدءاً من الشركات الناشئة الطموحة ووصولاً إلى المؤسسات الراسخة، بهدف واحد: صناعة تصميمات لا تُشاهد فقط، بل تُلهِم المشاعر، تُطلق العنان للإبداع، وتُحقق التحول المنشود.</p>
+    <h3 class="font-bold text-md mt-4">خدماتنا الشاملة لبناء عالمك البصري:</h3>
+    <ul class="list-disc list-inside mt-2 space-y-1">
+      <li><strong>تصميم الهوية البصرية المتكاملة:</strong> نصنع لك شعاراً يختزل قصتك ويكون وجه علامتك التجارية الذي لا يُنسى.</li>
+      <li><strong>إدارة وتصميم حملات وسائل التواصل الاجتماعي:</strong> نخلق محتوى جذاباً يحرك جمهورك ويبني ولاءً مستداماً.</li>
+      <li><strong>إنتاج رسوم متحركة ومحتوى ثلاثي الأبعاد:</strong> نمنح أفكارك بُعداً جديداً بتصاميم مبتكرة تخطف الأنفاس وتُعبر عن تميزك.</li>
+    </ul>
+    <p class="mt-4 font-bold text-lg">اختر خدمتك، ونحن نضمن لك النتائج.</p>
+    <p class="mt-2">خطوتك البسيطة تبدأ رحلة إبداعية استثنائية. اختر الخدمة التي تحتاجها أدناه، وسنقوم بإعداد عرض سعر مفصل ومخصص لمشروعك خلال 24 ساعة، دون تعقيدات وبدقة لا تُضاهى.</p>
+    <p class="mt-2 font-semibold">اختر، ودعنا نكمل الباقي.</p>
+  `,
+  clientInfoTitle: 'بيانات العميل',
+  proposalDateLabel: 'تاريخ العرض',
+  clientNameLabel: 'اسم العميل',
+  clientNamePlaceholder: 'مثال: جون دو',
+  clientPhoneLabel: 'رقم الهاتف',
+  clientPhonePlaceholder: '555 123 4567',
+  clientEmailLabel: 'البريد الإلكتروني',
+  clientEmailPlaceholder: 'مثال: email@example.com',
+  emailError: 'الرجاء إدخال عنوان بريد إلكتروني صالح.',
+  fillInfoAlert: 'يرجى ملء جميع بيانات العميل (الاسم، الهاتف، البريد الإلكتروني) قبل المتابعة.',
+  fillInfoAlertClient: 'يرجى ملء اسمك وهاتفك وبريدك الإلكتروني لإرسال استفسارك.',
+  selectServicesTitle: 'اختر الخدمات',
+  selectServicesDescription: 'اختر من الخدمات أدناه لبناء باقتك المخصصة. بالنسبة للخدمات ذات الكميات، السعر للصفحة الواحدة.',
+  pagesLabel: 'الصفحات:',
+  perPageSuffix: 'لكل صفحة',
+  decreaseQuantity: 'تقليل الكمية',
+  increaseQuantity: 'زيادة الكمية',
+  currentQuantity: 'الكمية الحالية',
+  priceSummaryTitle: 'ملخص السعر',
+  selectedServicesTitle: 'الخدمات المختارة',
+  subtotal: 'المجموع الفرعي',
+  discountLabel: (percentage) => `خصم (${percentage}%)`,
+  totalPrice: 'السعر الإجمالي',
+  totalDiscountApplied: (percentage) => `تم تطبيق خصم ${percentage}%!`,
+  proposalTo: (name) => `عرض سعر مُعد لـ ${name}.`,
+  sendEmail: 'إرسال عبر واتساب',
+  sendProposal: 'إرسال الاستفسار',
+  sending: 'جارٍ الإرسال...',
+  clearSelection: 'مسح الاختيارات',
+  emailConfigMissing: 'نظام البريد الإلكتروني غير مهيأ. يرجى الاتصال بالدعم.',
+  emailSendError: 'حدث خطأ أثناء إرسال البريد الإلكتروني. يرجى المحاولة مرة أخرى لاحقًا أو الاتصال بالدعم.',
+  emailSendErrorConfig: 'يبدو أن هناك مشكلة في إعدادات البريد الإلكتروني لدينا. يرجى الاتصال بالدعم.',
+  emailSendErrorNetwork: 'حدث خطأ في الشبكة. يرجى التحقق من اتصالك والمحاولة مرة أخرى.',
+  termsTitle: 'الشروط والأحكام',
+  term1Title: 'شروط الدفع',
+  term1Desc: 'مطلوب دفعة مقدمة 50% لبدء المشروع، ويُستحق الرصيد المتبقي عند الانتهاء.',
+  term2Title: 'التعديلات',
+  term2Desc: 'تشمل كل خدمة ما يصل إلى جولتين من التعديلات. سيتم محاسبة التعديلات الإضافية بالساعة.',
+  term3Title: 'الجدول الزمني',
+  term3Desc: 'الجداول الزمنية للمشاريع هي تقديرات وقد تختلف بناءً على الملاحظات ودورات التعديل.',
+  term4Title: 'الإلغاء',
+  term4Desc: 'المشاريع التي يتم إلغاؤها بعد البدء سيتم محاسبتها على العمل المنجز حتى تاريخه.',
+  term5Title: 'الملكية',
+  term5Desc: 'عند الدفع النهائي، سيمتلك العميل حقوق التصاميم النهائية.',
+  term6Title: 'السرية',
+  term6Desc: 'سنتعامل مع جميع المعلومات المتعلقة بالمشروع على أنها سرية.',
+  successMessageTitle: 'تم إرسال الاستفسار!',
+  successMessageClientBody: 'شكراً لاهتمامك!\nلقد استلمنا استفسارك وسنتصل بك قريباً لمناقشة التفاصيل.',
+  successMessageEmailBody: 'تم إرسال عرض السعر بنجاة.',
+  backToProposal: 'العودة إلى العرض',
+};
+
+export const translations = { en, ar };

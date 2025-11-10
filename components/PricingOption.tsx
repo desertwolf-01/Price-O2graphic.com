@@ -1,6 +1,7 @@
 import React from 'react';
 import type { ServiceOption } from '../types';
-import type { Translation } from '../i1n';
+// Fixed typo in import path from '../i1n' to '../i18n'
+import type { Translation } from '../i18n';
 
 interface PricingOptionProps {
   option: ServiceOption;
