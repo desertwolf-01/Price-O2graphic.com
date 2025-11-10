@@ -1,11 +1,12 @@
 import React from 'react';
 import { Translation } from '../i18n';
+import { countries } from '../constants/countries';
 
 interface StaticSectionProps {
   t: Translation;
   language: 'ar' | 'en';
-  clientInfo: { name: string, phone: string, email: string };
-  onClientInfoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  clientInfo: { name: string, phone: string, email: string, countryCode: string };
+  onClientInfoChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   emailError: string;
   proposalDate: Date;
   isClientMode: boolean;
@@ -56,15 +57,31 @@ const StaticSection: React.FC<StaticSectionProps> = ({
             </div>
             <div>
                 <label htmlFor="clientPhone" className="block text-sm font-medium text-slate-700">{t.clientPhoneLabel}</label>
-                <input
-                    type="tel"
-                    name="phone"
-                    id="clientPhone"
-                    value={clientInfo.phone}
-                    onChange={onClientInfoChange}
-                    placeholder={t.clientPhonePlaceholder}
-                    className="mt-1 block w-full px-3 py-2 bg-slate-100 border border-transparent rounded-lg placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm transition-all duration-200"
-                />
+                <div className={`mt-1 flex`}>
+                    <select
+                        name="countryCode"
+                        id="countryCode"
+                        value={clientInfo.countryCode}
+                        onChange={onClientInfoChange}
+                        className={`block w-24 appearance-none px-3 py-2 bg-slate-100 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm transition-all duration-200 ${language === 'ar' ? 'rounded-r-lg rounded-l-none border-l-0' : 'rounded-l-lg rounded-r-none border-r-0'}`}
+                        aria-label="Country Code"
+                    >
+                        {countries.map(country => (
+                            <option key={country.code} value={country.dial_code}>
+                                {country.code} ({country.dial_code})
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                        type="tel"
+                        name="phone"
+                        id="clientPhone"
+                        value={clientInfo.phone}
+                        onChange={onClientInfoChange}
+                        placeholder={t.clientPhonePlaceholder}
+                        className={`block w-full px-3 py-2 bg-slate-100 border border-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm transition-all duration-200 ${language === 'ar' ? 'rounded-l-lg rounded-r-none' : 'rounded-r-lg rounded-l-none'}`}
+                    />
+                </div>
             </div>
             <div>
                 <label htmlFor="clientEmail" className="block text-sm font-medium text-slate-700">{t.clientEmailLabel}</label>

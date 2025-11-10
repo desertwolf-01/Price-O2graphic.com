@@ -21,7 +21,7 @@ export const isEmailConfigured = () => {
 };
 
 interface SendProposalEmailsParams {
-  clientInfo: { name: string; phone: string; email: string };
+  clientInfo: { name: string; phone: string; email: string; countryCode: string; };
   selectedOptions: ServiceOption[];
   quantities: { [id: string]: number };
   subTotalPrice: number;
@@ -52,15 +52,6 @@ export const sendProposalEmails = async ({
 
   const { SERVICE_ID, TEMPLATE_ID_ADMIN, TEMPLATE_ID_CLIENT, PUBLIC_KEY } = EMAILJS_CONFIG;
   
-  const clientViewParams = new URLSearchParams({
-    mode: 'client',
-    services: selectedIds.join(','),
-    name: clientInfo.name,
-    phone: clientInfo.phone,
-    email: clientInfo.email,
-  });
-  const clientViewLink = `${window.location.origin}${window.location.pathname}?${clientViewParams.toString()}`;
-
   const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   
   const adminMessageHtml = `
@@ -68,9 +59,8 @@ export const sendProposalEmails = async ({
     <hr>
     <h4>Client Information</h4>
     <p><strong>Name:</strong> ${clientInfo.name}</p>
-    <p><strong>Phone:</strong> ${clientInfo.phone}</p>
+    <p><strong>Phone:</strong> ${clientInfo.countryCode}${clientInfo.phone}</p>
     <p><strong>Email:</strong> ${clientInfo.email}</p>
-    <p><strong>Shareable Link:</strong> <a href="${clientViewLink}">View Proposal</a></p>
     <hr>
     <h4>Selected Services</h4>
     <ul>

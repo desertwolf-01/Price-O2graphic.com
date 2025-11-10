@@ -17,6 +17,13 @@ const URL_PARAMS = new URLSearchParams(window.location.search);
 const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
 const CLIENT_SERVICE_IDS = (URL_PARAMS.get('services') || '').split(',').filter(Boolean);
 
+interface ClientInfo {
+  name: string;
+  phone: string;
+  email: string;
+  countryCode: string;
+}
+
 function getInitialLanguage() {
     const savedLang = localStorage.getItem('language');
     if (savedLang === 'en' || savedLang === 'ar') {
@@ -25,21 +32,22 @@ function getInitialLanguage() {
     return 'ar';
 }
 
-function getInitialClientInfo() {
+function getInitialClientInfo(): ClientInfo {
     if (IS_CLIENT_MODE) {
         return {
             name: URL_PARAMS.get('name') || '',
             phone: URL_PARAMS.get('phone') || '',
             email: URL_PARAMS.get('email') || '',
+            countryCode: URL_PARAMS.get('countryCode') || '+90',
         };
     }
-    return { name: '', phone: '', email: '' };
+    return { name: '', phone: '', email: '', countryCode: '+90' };
 }
 
 function App() {
   const [language, setLanguage] = useState<'ar' | 'en'>(getInitialLanguage());
   const [isClientMode] = useState(IS_CLIENT_MODE);
-  const [clientInfo, setClientInfo] = useState(getInitialClientInfo);
+  const [clientInfo, setClientInfo] = useState<ClientInfo>(getInitialClientInfo);
   const [emailError, setEmailError] = useState('');
   const [formError, setFormError] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
@@ -90,7 +98,7 @@ function App() {
     }
   };
 
-  const handleClientInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleClientInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setClientInfo(prev => ({ ...prev, [name]: value }));
     if (formError) setFormError('');
@@ -190,7 +198,7 @@ function App() {
 
 
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
-  const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discount]);
+  const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);
   
   const validateAdminInfo = useCallback(() => {
     const { name, phone, email } = clientInfo;
@@ -218,18 +226,9 @@ function App() {
     setFormError('');
     if (!validateAdminInfo()) return;
 
-    // 1. Generate Client Link
-    const clientViewParams = new URLSearchParams({
-        mode: 'client',
-        services: selectedIds.join(','),
-        name: clientInfo.name,
-        phone: clientInfo.phone,
-        email: clientInfo.email,
-    });
-    const clientViewLink = `${window.location.origin}${window.location.pathname}?${clientViewParams.toString()}`;
-
-    // 2. Format the message
+    // 1. Format the message
     const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    const fullPhoneNumber = `${clientInfo.countryCode}${clientInfo.phone}`;
 
     const servicesText = selectedOptions.map(option => {
         const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
@@ -243,7 +242,7 @@ function App() {
 
 *${t.clientInfoTitle}:*
 ${t.clientNameLabel}: ${clientInfo.name}
-${t.clientPhoneLabel}: ${clientInfo.phone}
+${t.clientPhoneLabel}: ${fullPhoneNumber}
 ${t.clientEmailLabel}: ${clientInfo.email}
 
 *${t.selectedServicesTitle}:*
@@ -255,10 +254,9 @@ ${language === 'en' ? t.discountLabel(discountPercentage) : `خصم (${discountP
 *${t.totalPrice}: ${formatPrice(finalTotalPrice)}*
 
 ${t.proposalTo(clientInfo.name)}
-${clientViewLink}
     `.trim().replace(/^\s+/gm, "");
 
-    // 3. Construct WhatsApp URL and open it
+    // 2. Construct WhatsApp URL and open it
     const whatsappNumber = '+905342006606';
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
