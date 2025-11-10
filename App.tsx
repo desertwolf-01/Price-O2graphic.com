@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import * as emailjs from '@emailjs/browser';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import StaticSection from './components/StaticSection';
@@ -9,10 +8,10 @@ import TermsAndConditions from './components/TermsAndConditions';
 import { getServiceCategories } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
-import { EMAILJS_CONFIG } from './config';
 import PrintHeader from './components/PrintHeader';
 import AnimatedSection from './components/AnimatedSection';
 import SuccessScreen from './components/SuccessScreen';
+import { isEmailConfigured, sendProposalEmails } from './email';
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
 const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
@@ -36,14 +35,6 @@ function getInitialClientInfo() {
     }
     return { name: '', phone: '', email: '' };
 }
-
-const isEmailConfigured = () => {
-    const { SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY } = EMAILJS_CONFIG;
-    return SERVICE_ID && !SERVICE_ID.includes('...') &&
-           TEMPLATE_ID && !TEMPLATE_ID.includes('...') &&
-           PUBLIC_KEY && !PUBLIC_KEY.includes('...');
-};
-
 
 function App() {
   const [language, setLanguage] = useState<'ar' | 'en'>(getInitialLanguage());
@@ -234,35 +225,24 @@ function App() {
     
     setActionType('email');
     
-    const servicesText = selectedOptions.map(option => 
-        `- ${option.name}: $${(option.price * (option.hasQuantity ? quantities[option.id] || 1 : 1)).toLocaleString()}`
-    ).join('\n');
-
-    const summaryText = `
-${t.subtotal}: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-${discount > 0 ? `${t.discountLabel(discountPercentage)}: -$${discount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : ''}
-${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-    `;
-
-    const clientLink = `${window.location.origin}${window.location.pathname}?mode=client&services=${selectedIds.join(',')}&name=${encodeURIComponent(clientInfo.name)}&phone=${encodeURIComponent(clientInfo.phone)}&email=${encodeURIComponent(clientInfo.email)}`;
-
-    const templateParams = {
-        client_name: clientInfo.name,
-        client_email: clientInfo.email,
-        client_phone: clientInfo.phone,
-        selected_services: servicesText,
-        price_summary: summaryText,
-        final_total: `$${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-        proposal_link: clientLink
-    };
-
-    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, { publicKey: EMAILJS_CONFIG.PUBLIC_KEY })
+    sendProposalEmails({
+      clientInfo,
+      selectedOptions,
+      quantities,
+      subTotalPrice,
+      discount,
+      discountPercentage,
+      finalTotalPrice,
+      isClientSubmission: false,
+      t,
+      selectedIds
+    })
       .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
+        console.log('SUCCESS! Both emails sent.', response);
         setShowSuccessScreen(true);
         setActionType(null);
       }, (err) => {
-        console.error('FAILED... EmailJS Error:', { status: err.status, text: err.text });
+        console.error('FAILED... EmailJS Error:', err);
         let userMessage = t.emailSendError;
         if (err && typeof err.status === 'number') {
             if (err.status === 400) {
@@ -287,31 +267,24 @@ ${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionD
 
     setActionType('email');
 
-    const servicesText = selectedOptions.map(option => 
-        `- ${option.name}: $${option.price.toLocaleString()}`
-    ).join('\n');
-
-    const summaryText = `
-Subtotal: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-    `;
-
-    const templateParams = {
-        client_name: clientInfo.name,
-        client_email: clientInfo.email,
-        client_phone: clientInfo.phone,
-        selected_services: servicesText,
-        price_summary: summaryText,
-        final_total: `$${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-    };
-
-    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, { publicKey: EMAILJS_CONFIG.PUBLIC_KEY })
+    sendProposalEmails({
+      clientInfo,
+      selectedOptions,
+      quantities,
+      subTotalPrice,
+      discount,
+      discountPercentage,
+      finalTotalPrice,
+      isClientSubmission: true,
+      t,
+      selectedIds
+    })
       .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
+        console.log('SUCCESS! Both emails sent on client submission.', response);
         setShowSuccessScreen(true);
         setActionType(null);
       }, (err) => {
-        console.error('FAILED... EmailJS Error:', { status: err.status, text: err.text });
+        console.error('FAILED... EmailJS Error on client submission:', err);
         let userMessage = t.emailSendError;
         if (err && typeof err.status === 'number') {
             if (err.status === 400) {
