@@ -26,17 +26,17 @@ const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: Pr
     total_price: totalPrice,
   };
 
-  // Your EmailJS credentials (Update these with your actual values)
+  // Your EmailJS credentials (Updated with your new Public Key)
   const serviceID = 'service_...'; // <-- ضع Service ID هنا
   const templateIDForClient = 'template_...'; // <-- ضع Template ID لبريد العميل هنا
   const templateIDForMe = 'template_...';    // <-- ضع Template ID لك هنا
-  const publicKey = 'public_...'; // <-- ضع Public Key هنا
+  const publicKey = 'euA_gPNF71hZu-USr'; // <-- تم تحديثه بنجاح
 
   // Check credentials
   if (serviceID === 'service_...' || // <-- تحقق من القيم الافتراضية
       templateIDForClient === 'template_...' || // <-- تحقق من القيم الافتراضية
       templateIDForMe === 'template_...' || // <-- تحقق من القيم الافتراضية
-      publicKey === 'public_...') { // <-- تحقق من القيم الافتراضية
+      publicKey === 'euA_gPNF71hZu-USr') { // <-- تم التحقق من القيمة الجديدة
     console.error('EmailJS credentials are not set! Please update them in email.ts.');
     return Promise.reject(new Error('Credentials not set.'));
   }
@@ -53,7 +53,7 @@ const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: Pr
     return true; // <-- نجاح
   })
   .catch((error) => {
-    console.error('FAILED...', error);
+    console.error('FAILED...', error); // <-- هذه الرسالة ستظهر الآن
     throw error; // <-- فشل
   });
 };
