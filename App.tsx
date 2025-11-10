@@ -214,47 +214,58 @@ function App() {
       return true;
   }, [clientInfo, emailError, t.fillInfoAlertClient]);
   
-  const handleSendEmail = () => {
+  const handleSendViaWhatsApp = () => {
     setFormError('');
-    if (!validateAdminInfo() || actionType) return;
-    
-    if (!isEmailConfigured()) {
-        setFormError(t.emailConfigMissing);
-        return;
-    }
-    
-    setActionType('email');
-    
-    sendProposalEmails({
-      clientInfo,
-      selectedOptions,
-      quantities,
-      subTotalPrice,
-      discount,
-      discountPercentage,
-      finalTotalPrice,
-      isClientSubmission: false,
-      t,
-      selectedIds
-    })
-      .then((response) => {
-        console.log('SUCCESS! Both emails sent.', response);
-        setShowSuccessScreen(true);
-        setActionType(null);
-      }, (err) => {
-        console.error('FAILED... EmailJS Error:', err);
-        let userMessage = t.emailSendError;
-        if (err && typeof err.status === 'number') {
-            if (err.status === 400) {
-                userMessage = t.emailSendErrorConfig;
-            } else if (err.status === 0) {
-                userMessage = t.emailSendErrorNetwork;
-            }
-        }
-        setFormError(userMessage);
-        setActionType(null);
-      });
-  };
+    if (!validateAdminInfo()) return;
+
+    // 1. Generate Client Link
+    const clientViewParams = new URLSearchParams({
+        mode: 'client',
+        services: selectedIds.join(','),
+        name: clientInfo.name,
+        phone: clientInfo.phone,
+        email: clientInfo.email,
+    });
+    const clientViewLink = `${window.location.origin}${window.location.pathname}?${clientViewParams.toString()}`;
+
+    // 2. Format the message
+    const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+    const servicesText = selectedOptions.map(option => {
+        const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
+        const price = option.price * quantity;
+        const quantityText = option.hasQuantity ? ` (${quantity} × ${formatPrice(option.price).replace('$', '')})` : '';
+        return `- ${option.name}${quantityText}: *${formatPrice(price)}*`;
+    }).join('\n');
+
+    const message = `
+*${t.proposalTitle}*
+
+*${t.clientInfoTitle}:*
+${t.clientNameLabel}: ${clientInfo.name}
+${t.clientPhoneLabel}: ${clientInfo.phone}
+${t.clientEmailLabel}: ${clientInfo.email}
+
+*${t.selectedServicesTitle}:*
+${servicesText}
+
+*${t.priceSummaryTitle}:*
+${t.subtotal}: ${formatPrice(subTotalPrice)}
+${language === 'en' ? t.discountLabel(discountPercentage) : `خصم (${discountPercentage}%)`}: -${formatPrice(discount)}
+*${t.totalPrice}: ${formatPrice(finalTotalPrice)}*
+
+${t.proposalTo(clientInfo.name)}
+${clientViewLink}
+    `.trim().replace(/^\s+/gm, "");
+
+    // 3. Construct WhatsApp URL and open it
+    const whatsappNumber = '+905342006606';
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+};
+
 
   const handleClientSubmission = () => {
     setFormError('');
@@ -343,7 +354,7 @@ function App() {
         finalTotalPrice={finalTotalPrice}
         discount={discount}
         discountPercentage={discountPercentage}
-        onSendEmail={isClientMode ? handleClientSubmission : handleSendEmail}
+        onSendEmail={isClientMode ? handleClientSubmission : handleSendViaWhatsApp}
         onClearSelection={handleClearSelection}
         language={language}
         t={t}

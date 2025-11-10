@@ -1,3 +1,4 @@
+
 import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from './config';
 import type { ServiceOption } from './types';
@@ -62,8 +63,6 @@ export const sendProposalEmails = async ({
 
   const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   
-  // Consolidate all proposal details into a single HTML message body.
-  // This is more robust than relying on many individual template variables.
   const adminMessageHtml = `
     <h3>New Proposal Submission (${isClientSubmission ? 'from Client Inquiry' : 'from Admin Preview'})</h3>
     <hr>
@@ -89,10 +88,11 @@ export const sendProposalEmails = async ({
     <p><strong>Total Price:</strong> <strong>${formatPrice(finalTotalPrice)}</strong></p>
   `;
 
-  // Prepare simplified parameters for the admin-facing email.
-  // The template should expect a 'message' variable.
+  // Simplified parameters for the admin-facing email.
+  // This is more robust and less prone to template mismatches.
+  // The EmailJS template should be configured to send 'To: info@o2graphic.com'
+  // and use {{from_name}}, {{reply_to}}, and {{{message}}} variables.
   const adminParams = {
-    to_email: 'info@o2graphic.com',
     from_name: clientInfo.name,
     reply_to: clientInfo.email,
     message: adminMessageHtml,

@@ -41,7 +41,7 @@ export const translations = {
 
         // Total Bar
         totalPrice: 'المجموع الإجمالي',
-        sendEmail: 'ارسال العرض',
+        sendEmail: 'إرسال عبر واتساب',
         sendProposal: 'إرسال استفسار',
         sendAsText: 'ارسل',
         sending: 'جاري الإرسال...',
@@ -143,7 +143,7 @@ export const translations = {
 
         // Total Bar
         totalPrice: 'Total Price',
-        sendEmail: 'Send Proposal',
+        sendEmail: 'Send via WhatsApp',
         sendProposal: 'Send Inquiry',
         sendAsText: 'Send',
         sending: 'Sending...',
