@@ -1,4 +1,3 @@
-
 export type Translation = typeof translations.ar;
 
 export const translations = {
@@ -56,9 +55,18 @@ export const translations = {
         fillInfoAlert: 'يرجى تعبئة جميع بيانات العميل (الاسم، الهاتف، والبريد الإلكتروني) بشكل صحيح أولاً.',
         fillInfoAlertClient: 'يرجى تعبئة اسمك ورقم هاتفك وبريدك الإلكتروني بشكل صحيح للمتابعة.',
         successTitle: 'اكتمل الإجراء!',
-        successMessageEmail: 'تم إرسال عرض السعر إلى info@o2graphic.com بنجاح.',
-        successMessageClient: 'شكراً لك! تم إرسال اختيارك بنجاح. سنتواصل معك قريباً.',
+        successMessageTitle: 'تم الإرسال بنجاح!',
+        successMessageEmailBody: `تم إرسال عرض السعر إلى البريد الإلكتروني info@o2graphic.com بنجاح.
+سيتم مراجعة الطلب من قبل فريقنا والرد عليكم في أقرب وقت ممكن.
+نأمل أن يلبي عرضنا توقعاتكم ومتطلباتكم بشكل كامل.
+لا تتردد في التواصل معنا لأي استفسارات إضافية أو تعديلات.
+شكراً لثقتكم بنا ونتمنى لكم يوماً مميزاً.`,
+        successMessageClientBody: `شكراً لك! تم استلام طلبك بنجاح.
+سنتواصل معك قريباً لمناقشة التفاصيل.
+نتطلع للعمل معك!`,
+        backToProposal: 'العودة إلى العرض',
         emailSendError: 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.',
+        emailConfigMissing: 'إعدادات إرسال البريد الإلكتروني غير مكتملة. يرجى تحديث بيانات الاعتماد في ملف config.ts.',
         emailSendErrorConfig: 'يبدو أن هناك مشكلة في الإعدادات. يرجى التواصل مع الدعم الفني.',
         emailSendErrorNetwork: 'تعذر إرسال العرض. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
         close: 'إغلاق',
@@ -149,9 +157,18 @@ export const translations = {
         fillInfoAlert: 'Please fill in all client information (Name, Phone, and Email) correctly first.',
         fillInfoAlertClient: 'Please fill in your name, phone number, and email correctly to proceed.',
         successTitle: 'Action Completed!',
-        successMessageEmail: 'The proposal has been successfully sent to info@o2graphic.com.',
-        successMessageClient: 'Thank you! Your selection has been sent successfully. We will contact you shortly.',
+        successMessageTitle: 'Sent Successfully!',
+        successMessageEmailBody: `The price proposal has been successfully sent to info@o2graphic.com.
+Our team will review the request and get back to you as soon as possible.
+We hope our offer fully meets your expectations and requirements.
+Please do not hesitate to contact us for any further inquiries or modifications.
+Thank you for your trust in us, and we wish you a wonderful day.`,
+        successMessageClientBody: `Thank you! Your request has been successfully received.
+We will contact you shortly to discuss the details.
+We look forward to working with you!`,
+        backToProposal: 'Back to Proposal',
         emailSendError: 'An error occurred while sending. Please try again.',
+        emailConfigMissing: 'Email sending is not configured. Please update your credentials in the config.ts file.',
         emailSendErrorConfig: 'There seems to be a configuration issue. Please contact support.',
         emailSendErrorNetwork: 'Could not send the proposal. Please check your internet connection and try again.',
         close: 'Close',

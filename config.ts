@@ -6,7 +6,7 @@
 // 4. Find your Public Key in the "Account" -> "API KEYS" tab.
 
 export const EMAILJS_CONFIG = {
-  SERVICE_ID: 'YOUR_SERVICE_ID',
-  TEMPLATE_ID: 'YOUR_TEMPLATE_ID',
-  PUBLIC_KEY: 'YOUR_PUBLIC_KEY',
+  SERVICE_ID: 'service_...',
+  TEMPLATE_ID: 'template_...',
+  PUBLIC_KEY: 'euA_gPNF71hZu-USr',
 };

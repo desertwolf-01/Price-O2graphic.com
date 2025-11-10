@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import * as emailjs from '@emailjs/browser';
 import Header from './components/Header';
@@ -13,6 +12,7 @@ import type { ServiceOption, ServiceCategory } from './types';
 import { EMAILJS_CONFIG } from './config';
 import PrintHeader from './components/PrintHeader';
 import AnimatedSection from './components/AnimatedSection';
+import SuccessScreen from './components/SuccessScreen';
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
 const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
@@ -37,6 +37,13 @@ function getInitialClientInfo() {
     return { name: '', phone: '', email: '' };
 }
 
+const isEmailConfigured = () => {
+    const { SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY } = EMAILJS_CONFIG;
+    return SERVICE_ID && !SERVICE_ID.includes('...') &&
+           TEMPLATE_ID && !TEMPLATE_ID.includes('...') &&
+           PUBLIC_KEY && !PUBLIC_KEY.includes('...');
+};
+
 
 function App() {
   const [language, setLanguage] = useState<'ar' | 'en'>(getInitialLanguage());
@@ -53,6 +60,7 @@ function App() {
   const [quantities, setQuantities] = useState<{ [id: string]: number }>({});
   const [actionType, setActionType] = useState<string | null>(null);
   const [proposalDate] = useState(new Date());
+  const [showSuccessScreen, setShowSuccessScreen] = useState(false);
 
   const t = useMemo(() => translations[language], [language]);
   const serviceCategories = useMemo(() => {
@@ -216,23 +224,15 @@ function App() {
   }, [clientInfo, emailError, t.fillInfoAlertClient]);
   
   const handleSendEmail = () => {
+    setFormError('');
     if (!validateAdminInfo() || actionType) return;
-    setActionType('email');
-
-    const areCredentialsSet =
-      EMAILJS_CONFIG.SERVICE_ID !== 'YOUR_SERVICE_ID' &&
-      EMAILJS_CONFIG.TEMPLATE_ID !== 'YOUR_TEMPLATE_ID' &&
-      EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
-
-    if (!areCredentialsSet) {
-      console.warn("EmailJS credentials are not set! Simulating a successful email send for demo purposes. Please update them in config.ts to enable real email functionality.");
-      // Simulate a successful send for the user in a dev environment
-      setTimeout(() => {
-        alert(t.successMessageEmail);
-        setActionType(null);
-      }, 1200);
-      return;
+    
+    if (!isEmailConfigured()) {
+        setFormError(t.emailConfigMissing);
+        return;
     }
+    
+    setActionType('email');
     
     const servicesText = selectedOptions.map(option => 
         `- ${option.name}: $${(option.price * (option.hasQuantity ? quantities[option.id] || 1 : 1)).toLocaleString()}`
@@ -259,7 +259,7 @@ ${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionD
     emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, { publicKey: EMAILJS_CONFIG.PUBLIC_KEY })
       .then((response) => {
         console.log('SUCCESS!', response.status, response.text);
-        alert(t.successMessageEmail);
+        setShowSuccessScreen(true);
         setActionType(null);
       }, (err) => {
         console.error('FAILED... EmailJS Error:', { status: err.status, text: err.text });
@@ -271,29 +271,21 @@ ${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionD
                 userMessage = t.emailSendErrorNetwork;
             }
         }
-        alert(userMessage);
+        setFormError(userMessage);
         setActionType(null);
       });
   };
 
   const handleClientSubmission = () => {
+    setFormError('');
     if (!validateClientInfo() || actionType) return;
-    setActionType('email');
-
-    const areCredentialsSet =
-      EMAILJS_CONFIG.SERVICE_ID !== 'YOUR_SERVICE_ID' &&
-      EMAILJS_CONFIG.TEMPLATE_ID !== 'YOUR_TEMPLATE_ID' &&
-      EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
-
-    if (!areCredentialsSet) {
-      console.warn("EmailJS credentials are not set! Simulating a successful client submission for demo purposes. Please update them in config.ts to enable real email functionality.");
-      // Simulate a successful send for the user in a dev environment
-      setTimeout(() => {
-        alert(t.successMessageClient);
-        setActionType(null);
-      }, 1200);
-      return;
+    
+    if (!isEmailConfigured()) {
+        setFormError(t.emailConfigMissing);
+        return;
     }
+
+    setActionType('email');
 
     const servicesText = selectedOptions.map(option => 
         `- ${option.name}: $${option.price.toLocaleString()}`
@@ -316,7 +308,7 @@ Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigit
     emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, { publicKey: EMAILJS_CONFIG.PUBLIC_KEY })
       .then((response) => {
         console.log('SUCCESS!', response.status, response.text);
-        alert(t.successMessageClient);
+        setShowSuccessScreen(true);
         setActionType(null);
       }, (err) => {
         console.error('FAILED... EmailJS Error:', { status: err.status, text: err.text });
@@ -328,9 +320,13 @@ Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigit
                 userMessage = t.emailSendErrorNetwork;
             }
         }
-        alert(userMessage);
+        setFormError(userMessage);
         setActionType(null);
       });
+  };
+
+  const handleCloseSuccessScreen = () => {
+    setShowSuccessScreen(false);
   };
 
   return (
@@ -382,6 +378,13 @@ Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigit
         formError={formError}
         isClientMode={isClientMode}
       />
+      {showSuccessScreen && (
+        <SuccessScreen 
+            t={t}
+            isClientMode={isClientMode}
+            onClose={handleCloseSuccessScreen}
+        />
+      )}
     </div>
   );
 }

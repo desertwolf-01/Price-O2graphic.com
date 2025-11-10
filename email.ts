@@ -1,5 +1,3 @@
-// email.ts
-
 import emailjs from '@emailjs/browser';
 
 interface ProposalDetails {
@@ -9,7 +7,7 @@ interface ProposalDetails {
     totalPrice: number;
 }
 
-const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: ProposalDetails): Promise<boolean> => {
+const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: ProposalDetails) => {
   const templateParamsToClient = {
     to_name: clientName,
     to_email: clientEmail, // Sent to client
@@ -26,23 +24,24 @@ const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: Pr
     total_price: totalPrice,
   };
 
-  // Your EmailJS credentials (Updated with your new Public Key)
-  const serviceID = 'service_...'; // <-- ضع Service ID هنا
-  const templateIDForClient = 'template_...'; // <-- ضع Template ID لبريد العميل هنا
-  const templateIDForMe = 'template_...';    // <-- ضع Template ID لك هنا
-  const publicKey = 'euA_gPNF71hZu-USr'; // <-- تم تحديثه بنجاح
+  // Your EmailJS credentials
+  const serviceID = 'YOUR_SERVICE_ID';
+  const templateIDForClient = 'YOUR_CLIENT_TEMPLATE_ID'; // Template for client
+  const templateIDForMe = 'YOUR_INTERNAL_TEMPLATE_ID';   // Template for you
+  const publicKey = 'YOUR_PUBLIC_KEY';
 
   // Check credentials
-  if (serviceID === 'service_...' || // <-- تحقق من القيم الافتراضية
-      templateIDForClient === 'template_...' || // <-- تحقق من القيم الافتراضية
-      templateIDForMe === 'template_...' || // <-- تحقق من القيم الافتراضية
-      publicKey === 'euA_gPNF71hZu-USr') { // <-- تم التحقق من القيمة الجديدة
+  if (serviceID === 'YOUR_SERVICE_ID' || 
+      templateIDForClient === 'YOUR_CLIENT_TEMPLATE_ID' || 
+      templateIDForMe === 'YOUR_INTERNAL_TEMPLATE_ID' || 
+      publicKey === 'YOUR_PUBLIC_KEY') {
     console.error('EmailJS credentials are not set! Please update them in email.ts.');
-    return Promise.reject(new Error('Credentials not set.'));
+    alert('An error occurred, please try again.');
+    return;
   }
 
   // Send both emails simultaneously
-  return Promise.all([
+  Promise.all([
     // Send to client
     emailjs.send(serviceID, templateIDForClient, templateParamsToClient, publicKey),
     // Send to yourself
@@ -50,11 +49,11 @@ const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: Pr
   ])
   .then(() => {
     console.log('SUCCESS! Both emails sent.');
-    return true; // <-- نجاح
+    alert('Proposal sent successfully to your email!');
   })
   .catch((error) => {
-    console.error('FAILED...', error); // <-- هذه الرسالة ستظهر الآن
-    throw error; // <-- فشل
+    console.error('FAILED...', error);
+    alert('An error occurred, please try again.');
   });
 };
 
