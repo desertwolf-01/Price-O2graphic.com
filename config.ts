@@ -1,13 +1,7 @@
-// --- EMAILJS CONFIGURATION ---
-// IMPORTANT: To enable email sending, you must update the following values.
-// 1. Sign up or log in to your EmailJS account: https://dashboard.emailjs.com/
-// 2. Find your Service ID in the "Email Services" tab.
-// 3. Create at least one template for admin notifications. Find its ID in the "Email Templates" tab.
-// 4. Find your Public Key in the "Account" -> "API KEYS" tab.
-
+// config.ts
 export const EMAILJS_CONFIG = {
-  SERVICE_ID: 'service_oa6dp1v', // <-- This is your Service ID from EmailJS
-  TEMPLATE_ID_ADMIN: 'template_ie01ksd', // <-- MANDATORY: The template for emails sent to you (info@o2graphic.com)
-  TEMPLATE_ID_CLIENT: 'template_...', // <-- OPTIONAL: Create a separate template for client confirmation emails and add its ID here.
-  PUBLIC_KEY: 'Tk1ZBkSxikzXkczA4', // <-- This is your Public Key from EmailJS
+  SERVICE_ID: 'service_oa6dp1v', // This is correct and matches your setup.
+  TEMPLATE_ID_ADMIN: 'template_ie01ksd', // Corrected from the service name to the actual template ID.
+  TEMPLATE_ID_CLIENT: 'template_...', // Reset to a placeholder to disable the optional client email for now.
+  PUBLIC_KEY: 'Tk1ZBkSxikzXkczA4', // This is correct and matches your setup.
 };

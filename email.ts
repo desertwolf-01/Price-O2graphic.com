@@ -1,92 +1,124 @@
-import * as emailjs from '@emailjs/browser';
+import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from './config';
-import { Translation } from './i18n';
 import type { ServiceOption } from './types';
+import type { Translation } from './i18n';
 
-interface EmailParams {
-    clientInfo: { name: string; email: string; phone: string; };
-    selectedOptions: ServiceOption[];
-    quantities: { [id: string]: number };
-    subTotalPrice: number;
-    discount: number;
-    discountPercentage: number;
-    finalTotalPrice: number;
-    isClientSubmission: boolean;
-    t: Translation;
-    selectedIds: string[];
-}
-
+/**
+ * Checks if the essential EmailJS credentials are set in config.ts and are not placeholders.
+ * @returns {boolean} True if configured, false otherwise.
+ */
 export const isEmailConfigured = () => {
-    const { SERVICE_ID, TEMPLATE_ID_ADMIN, PUBLIC_KEY } = EMAILJS_CONFIG;
-    // The client template ID is optional.
-    return SERVICE_ID && !SERVICE_ID.includes('...') &&
-           TEMPLATE_ID_ADMIN && !TEMPLATE_ID_ADMIN.includes('...') &&
-           PUBLIC_KEY && !PUBLIC_KEY.includes('...');
+  const { SERVICE_ID, TEMPLATE_ID_ADMIN, PUBLIC_KEY } = EMAILJS_CONFIG;
+  
+  const isPlaceholder = (value: string) => !value || value.includes('...') || value.includes('YOUR_');
+  
+  if (isPlaceholder(SERVICE_ID) || isPlaceholder(TEMPLATE_ID_ADMIN) || isPlaceholder(PUBLIC_KEY)) {
+    console.warn('EmailJS credentials appear to be placeholders. Please update config.ts');
+    return false;
+  }
+  return true;
 };
 
-export const sendProposalEmails = (params: EmailParams) => {
-    const { 
-        clientInfo, selectedOptions, quantities, subTotalPrice, discount,
-        discountPercentage, finalTotalPrice, isClientSubmission, t, selectedIds 
-    } = params;
+interface SendProposalEmailsParams {
+  clientInfo: { name: string; phone: string; email: string };
+  selectedOptions: ServiceOption[];
+  quantities: { [id: string]: number };
+  subTotalPrice: number;
+  discount: number;
+  discountPercentage: number;
+  finalTotalPrice: number;
+  isClientSubmission: boolean;
+  t: Translation;
+  selectedIds: string[];
+}
 
-    const servicesText = selectedOptions.map(option => {
-        if (isClientSubmission) {
-            return `- ${option.name}: $${option.price.toLocaleString()}`;
-        }
+/**
+ * Sends proposal emails to both the admin and (optionally) the client.
+ * @param {SendProposalEmailsParams} params - The proposal details.
+ */
+export const sendProposalEmails = async ({
+  clientInfo,
+  selectedOptions,
+  quantities,
+  subTotalPrice,
+  discount,
+  discountPercentage,
+  finalTotalPrice,
+  isClientSubmission,
+  t,
+  selectedIds
+}: SendProposalEmailsParams) => {
+
+  const { SERVICE_ID, TEMPLATE_ID_ADMIN, TEMPLATE_ID_CLIENT, PUBLIC_KEY } = EMAILJS_CONFIG;
+  
+  const clientViewParams = new URLSearchParams({
+    mode: 'client',
+    services: selectedIds.join(','),
+    name: clientInfo.name,
+    phone: clientInfo.phone,
+    email: clientInfo.email,
+  });
+  const clientViewLink = `${window.location.origin}${window.location.pathname}?${clientViewParams.toString()}`;
+
+  const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  
+  // Consolidate all proposal details into a single HTML message body.
+  // This is more robust than relying on many individual template variables.
+  const adminMessageHtml = `
+    <h3>New Proposal Submission (${isClientSubmission ? 'from Client Inquiry' : 'from Admin Preview'})</h3>
+    <hr>
+    <h4>Client Information</h4>
+    <p><strong>Name:</strong> ${clientInfo.name}</p>
+    <p><strong>Phone:</strong> ${clientInfo.phone}</p>
+    <p><strong>Email:</strong> ${clientInfo.email}</p>
+    <p><strong>Shareable Link:</strong> <a href="${clientViewLink}">View Proposal</a></p>
+    <hr>
+    <h4>Selected Services</h4>
+    <ul>
+      ${selectedOptions.map(option => {
         const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
-        const price = (option.price * quantity).toLocaleString();
-        return `- ${option.name}: $${price}`;
-    }).join('\n');
-    
-    let summaryText = '';
-    if (isClientSubmission) {
-        summaryText = `
-${t.subtotal}: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        `;
-    } else {
-         summaryText = `
-${t.subtotal}: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-${discount > 0 ? `${t.discountLabel(discountPercentage)}: -$${discount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : ''}
-${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        `;
-    }
+        const price = option.price * quantity;
+        const quantityText = option.hasQuantity ? ` (${quantity} &times; $${option.price.toLocaleString()})` : '';
+        return `<li><b>${option.name}</b>${quantityText}: ${formatPrice(price)}</li>`;
+      }).join('')}
+    </ul>
+    <hr>
+    <h4>Price Summary</h4>
+    <p><strong>Subtotal:</strong> ${formatPrice(subTotalPrice)}</p>
+    <p><strong>Discount (${discountPercentage}%):</strong> -${formatPrice(discount)}</p>
+    <p><strong>Total Price:</strong> <strong>${formatPrice(finalTotalPrice)}</strong></p>
+  `;
 
-    const clientLink = `${window.location.origin}${window.location.pathname}?mode=client&services=${selectedIds.join(',')}&name=${encodeURIComponent(clientInfo.name)}&phone=${encodeURIComponent(clientInfo.phone)}&email=${encodeURIComponent(clientInfo.email)}`;
+  // Prepare simplified parameters for the admin-facing email.
+  // The template should expect a 'message' variable.
+  const adminParams = {
+    to_email: 'info@o2graphic.com',
+    from_name: clientInfo.name,
+    reply_to: clientInfo.email,
+    message: adminMessageHtml,
+  };
 
-    const templateParamsAdmin = {
-        client_name: clientInfo.name,
-        client_email: clientInfo.email,
-        client_phone: clientInfo.phone,
-        selected_services: servicesText,
-        price_summary: summaryText,
-        final_total: `$${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-        proposal_link: isClientSubmission ? 'N/A - Client Approved' : clientLink
-    };
-    
-    const templateParamsClient = {
-        to_name: clientInfo.name,
-        to_email: clientInfo.email,
-        selected_services: servicesText,
-        price_summary: summaryText,
-        final_total: `$${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-    };
+  // Prepare parameters for the client-facing email.
+  const clientParams = {
+    to_name: clientInfo.name,
+    to_email: clientInfo.email,
+    services_list: `<ul>${selectedOptions.map(o => `<li><b>${o.name}</b></li>`).join('')}</ul>`,
+    total_price: formatPrice(finalTotalPrice),
+  };
+  
+  const emailPromises = [];
 
-    const { SERVICE_ID, TEMPLATE_ID_ADMIN, TEMPLATE_ID_CLIENT, PUBLIC_KEY } = EMAILJS_CONFIG;
-    
-    const emailPromises: Promise<emailjs.EmailJSResponseStatus>[] = [];
-    
-    // Always send the admin email
-    const sendAdminEmail = emailjs.send(SERVICE_ID, TEMPLATE_ID_ADMIN, templateParamsAdmin, { publicKey: PUBLIC_KEY });
-    emailPromises.push(sendAdminEmail);
+  emailPromises.push(
+    emailjs.send(SERVICE_ID, TEMPLATE_ID_ADMIN, adminParams, PUBLIC_KEY)
+  );
 
-    // Only send the client email if the template is configured
-    const isClientTemplateConfigured = TEMPLATE_ID_CLIENT && !TEMPLATE_ID_CLIENT.includes('...');
-    if (isClientTemplateConfigured) {
-        const sendClientEmail = emailjs.send(SERVICE_ID, TEMPLATE_ID_CLIENT, templateParamsClient, { publicKey: PUBLIC_KEY });
-        emailPromises.push(sendClientEmail);
-    }
+  const isClientTemplateConfigured = TEMPLATE_ID_CLIENT && !TEMPLATE_ID_CLIENT.includes('...') && !TEMPLATE_ID_CLIENT.includes('YOUR_');
+  
+  if (isClientTemplateConfigured) {
+      emailPromises.push(
+          emailjs.send(SERVICE_ID, TEMPLATE_ID_CLIENT, clientParams, PUBLIC_KEY)
+      );
+  }
 
-    return Promise.all(emailPromises);
+  return Promise.all(emailPromises);
 };
