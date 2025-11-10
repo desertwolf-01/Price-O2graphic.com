@@ -1,5 +1,20 @@
 // email.ts
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from './config'; // أو المسار الصحيح لـ config.ts
 
+// --- تعريف isEmailConfigured ---
+const isEmailConfigured = 
+  EMAILJS_CONFIG.PUBLIC_KEY && 
+  EMAILJS_CONFIG.PUBLIC_KEY !== 'euA_gPNF71hZu-USr' && // <-- تحقق من أن القيمة ليست الافتراضية
+  EMAILJS_CONFIG.SERVICE_ID && 
+  EMAILJS_CONFIG.SERVICE_ID !== 'service_...' && // <-- تحقق من أن القيمة ليست الافتراضية
+  EMAILJS_CONFIG.TEMPLATE_ID && 
+  EMAILJS_CONFIG.TEMPLATE_ID !== 'template_...'; // <-- تحقق من أن القيمة ليست الافتراضية
+
+// --- تصدير isEmailConfigured ---
+export { isEmailConfigured }; // <-- هذا الجزء مطلوب
+
+// ... باقي الكود ...
 import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from './config'; // Adjust the path if config.ts is in a different folder
 
