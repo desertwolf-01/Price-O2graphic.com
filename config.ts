@@ -1,6 +1,5 @@
 // --- EMAILJS CONFIGURATION ---
-// IMPORTANT: To enable email sending, you must replace these placeholder values
-// with your actual EmailJS credentials.
+// IMPORTANT: To enable email sending, you must update the following values.
 // 1. Sign up or log in to your EmailJS account: https://dashboard.emailjs.com/
 // 2. Find your Service ID in the "Email Services" tab.
 // 3. Find your Template ID in the "Email Templates" tab.

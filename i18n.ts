@@ -1,3 +1,4 @@
+
 export type Translation = typeof translations.ar;
 
 export const translations = {
@@ -7,7 +8,7 @@ export const translations = {
         clientInfoTitle: 'بيانات العميل',
         clientNameLabel: 'الاسم',
         clientPhoneLabel: 'رقم الهاتف',
-        clientEmailLabel: 'البريد الإلكتر الإلكتروني',
+        clientEmailLabel: 'البريد الإلكتروني',
         proposalDateLabel: 'تاريخ العرض',
         clientNamePlaceholder: 'اسم العميل',
         clientPhonePlaceholder: '05xxxxxxxx',
@@ -55,7 +56,7 @@ export const translations = {
         fillInfoAlert: 'يرجى تعبئة جميع بيانات العميل (الاسم، الهاتف، والبريد الإلكتروني) بشكل صحيح أولاً.',
         fillInfoAlertClient: 'يرجى تعبئة اسمك ورقم هاتفك وبريدك الإلكتروني بشكل صحيح للمتابعة.',
         successTitle: 'اكتمل الإجراء!',
-        successMessageEmail: 'تم فتح برنامج البريد. يرجى مراجعة المحتوى ثم الإرسال.',
+        successMessageEmail: 'تم إرسال عرض السعر إلى info@o2graphic.com بنجاح.',
         successMessageClient: 'شكراً لك! تم إرسال اختيارك بنجاح. سنتواصل معك قريباً.',
         emailSendError: 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.',
         emailSendErrorConfig: 'يبدو أن هناك مشكلة في الإعدادات. يرجى التواصل مع الدعم الفني.',
@@ -148,7 +149,7 @@ export const translations = {
         fillInfoAlert: 'Please fill in all client information (Name, Phone, and Email) correctly first.',
         fillInfoAlertClient: 'Please fill in your name, phone number, and email correctly to proceed.',
         successTitle: 'Action Completed!',
-        successMessageEmail: 'Email client opened. Please review the content and send.',
+        successMessageEmail: 'The proposal has been successfully sent to info@o2graphic.com.',
         successMessageClient: 'Thank you! Your selection has been sent successfully. We will contact you shortly.',
         emailSendError: 'An error occurred while sending. Please try again.',
         emailSendErrorConfig: 'There seems to be a configuration issue. Please contact support.',

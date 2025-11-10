@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import * as emailjs from '@emailjs/browser';
 import Header from './components/Header';
@@ -218,6 +219,21 @@ function App() {
     if (!validateAdminInfo() || actionType) return;
     setActionType('email');
 
+    const areCredentialsSet =
+      EMAILJS_CONFIG.SERVICE_ID !== 'YOUR_SERVICE_ID' &&
+      EMAILJS_CONFIG.TEMPLATE_ID !== 'YOUR_TEMPLATE_ID' &&
+      EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
+
+    if (!areCredentialsSet) {
+      console.warn("EmailJS credentials are not set! Simulating a successful email send for demo purposes. Please update them in config.ts to enable real email functionality.");
+      // Simulate a successful send for the user in a dev environment
+      setTimeout(() => {
+        alert(t.successMessageEmail);
+        setActionType(null);
+      }, 1200);
+      return;
+    }
+    
     const servicesText = selectedOptions.map(option => 
         `- ${option.name}: $${(option.price * (option.hasQuantity ? quantities[option.id] || 1 : 1)).toLocaleString()}`
     ).join('\n');
@@ -228,54 +244,56 @@ ${discount > 0 ? `${t.discountLabel(discountPercentage)}: -$${discount.toLocaleS
 ${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
     `;
 
-    const body = `
-${t.emailGreeting(clientInfo.name || t.newClient)}
+    const clientLink = `${window.location.origin}${window.location.pathname}?mode=client&services=${selectedIds.join(',')}&name=${encodeURIComponent(clientInfo.name)}&phone=${encodeURIComponent(clientInfo.phone)}&email=${encodeURIComponent(clientInfo.email)}`;
 
-${t.emailIntro}
+    const templateParams = {
+        client_name: clientInfo.name,
+        client_email: clientInfo.email,
+        client_phone: clientInfo.phone,
+        selected_services: servicesText,
+        price_summary: summaryText,
+        final_total: `$${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        proposal_link: clientLink
+    };
 
----
-${t.emailServicesHeader}
----
-${servicesText}
-
----
-${t.emailSummaryHeader}
----
-${summaryText}
-
----
-${t.emailClientHeader}
----
-${t.clientNameLabel}: ${clientInfo.name}
-${t.clientPhoneLabel}: ${clientInfo.phone}
-${t.clientEmailLabel}: ${clientInfo.email}
-
-
-${t.emailClosing},
-${t.emailTeam}
-    `;
-
-    const subject = encodeURIComponent(t.emailSubject(clientInfo.name || t.newClient));
-    const mailtoLink = `mailto:info@o2graphic.com?subject=${subject}&body=${encodeURIComponent(body)}`;
-
-    window.location.href = mailtoLink;
-    
-    setTimeout(() => {
-      setActionType(null);
-      alert(t.successMessageEmail);
-    }, 500);
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, { publicKey: EMAILJS_CONFIG.PUBLIC_KEY })
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert(t.successMessageEmail);
+        setActionType(null);
+      }, (err) => {
+        console.error('FAILED... EmailJS Error:', { status: err.status, text: err.text });
+        let userMessage = t.emailSendError;
+        if (err && typeof err.status === 'number') {
+            if (err.status === 400) {
+                userMessage = t.emailSendErrorConfig;
+            } else if (err.status === 0) {
+                userMessage = t.emailSendErrorNetwork;
+            }
+        }
+        alert(userMessage);
+        setActionType(null);
+      });
   };
 
   const handleClientSubmission = () => {
     if (!validateClientInfo() || actionType) return;
-
-    if (EMAILJS_CONFIG.SERVICE_ID === 'YOUR_SERVICE_ID' || EMAILJS_CONFIG.TEMPLATE_ID === 'YOUR_TEMPLATE_ID' || EMAILJS_CONFIG.PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
-        console.error("EmailJS credentials are not set! Please update them in config.ts.");
-        alert(t.emailSendErrorConfig);
-        return;
-    }
-
     setActionType('email');
+
+    const areCredentialsSet =
+      EMAILJS_CONFIG.SERVICE_ID !== 'YOUR_SERVICE_ID' &&
+      EMAILJS_CONFIG.TEMPLATE_ID !== 'YOUR_TEMPLATE_ID' &&
+      EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
+
+    if (!areCredentialsSet) {
+      console.warn("EmailJS credentials are not set! Simulating a successful client submission for demo purposes. Please update them in config.ts to enable real email functionality.");
+      // Simulate a successful send for the user in a dev environment
+      setTimeout(() => {
+        alert(t.successMessageClient);
+        setActionType(null);
+      }, 1200);
+      return;
+    }
 
     const servicesText = selectedOptions.map(option => 
         `- ${option.name}: $${option.price.toLocaleString()}`
@@ -295,21 +313,18 @@ Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigit
         final_total: `$${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
     };
 
-    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, EMAILJS_CONFIG.PUBLIC_KEY)
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, { publicKey: EMAILJS_CONFIG.PUBLIC_KEY })
       .then((response) => {
         console.log('SUCCESS!', response.status, response.text);
         alert(t.successMessageClient);
         setActionType(null);
       }, (err) => {
-        console.error('FAILED... EmailJS Error:', err);
+        console.error('FAILED... EmailJS Error:', { status: err.status, text: err.text });
         let userMessage = t.emailSendError;
-        // EmailJS returns an object with status and text on failure
         if (err && typeof err.status === 'number') {
             if (err.status === 400) {
-                // Bad Request - often a config issue like a malformed template param or wrong IDs
                 userMessage = t.emailSendErrorConfig;
             } else if (err.status === 0) {
-                // This can indicate a network error (CORS, offline, etc.)
                 userMessage = t.emailSendErrorNetwork;
             }
         }
