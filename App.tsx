@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import * as emailjs from '@emailjs/browser';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import StaticSection from './components/StaticSection';
@@ -8,45 +9,38 @@ import TermsAndConditions from './components/TermsAndConditions';
 import { getServiceCategories } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
+import { EMAILJS_CONFIG } from './config';
 import PrintHeader from './components/PrintHeader';
-import SuccessScreen from './components/SuccessScreen';
-import { isEmailConfigured, sendProposalEmails } from './email';
+import AnimatedSection from './components/AnimatedSection';
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
 const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
 const CLIENT_SERVICE_IDS = (URL_PARAMS.get('services') || '').split(',').filter(Boolean);
-
-interface ClientInfo {
-  name: string;
-  phone: string;
-  email: string;
-  countryCode: string;
-}
 
 function getInitialLanguage() {
     const savedLang = localStorage.getItem('language');
     if (savedLang === 'en' || savedLang === 'ar') {
         return savedLang;
     }
-    return 'ar';
+    return 'en';
 }
 
-function getInitialClientInfo(): ClientInfo {
+function getInitialClientInfo() {
     if (IS_CLIENT_MODE) {
         return {
             name: URL_PARAMS.get('name') || '',
             phone: URL_PARAMS.get('phone') || '',
             email: URL_PARAMS.get('email') || '',
-            countryCode: URL_PARAMS.get('countryCode') || '+90',
         };
     }
-    return { name: '', phone: '', email: '', countryCode: '+90' };
+    return { name: '', phone: '', email: '' };
 }
+
 
 function App() {
   const [language, setLanguage] = useState<'ar' | 'en'>(getInitialLanguage());
   const [isClientMode] = useState(IS_CLIENT_MODE);
-  const [clientInfo, setClientInfo] = useState<ClientInfo>(getInitialClientInfo);
+  const [clientInfo, setClientInfo] = useState(getInitialClientInfo);
   const [emailError, setEmailError] = useState('');
   const [formError, setFormError] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
@@ -58,7 +52,6 @@ function App() {
   const [quantities, setQuantities] = useState<{ [id: string]: number }>({});
   const [actionType, setActionType] = useState<string | null>(null);
   const [proposalDate] = useState(new Date());
-  const [showSuccessScreen, setShowSuccessScreen] = useState(false);
 
   const t = useMemo(() => translations[language], [language]);
   const serviceCategories = useMemo(() => {
@@ -97,7 +90,7 @@ function App() {
     }
   };
 
-  const handleClientInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleClientInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setClientInfo(prev => ({ ...prev, [name]: value }));
     if (formError) setFormError('');
@@ -154,12 +147,6 @@ function App() {
     }
   };
 
-  const handleClearSelection = () => {
-    if (isClientMode) return;
-    setSelectedIds([]);
-    setQuantities({});
-  };
-
   const selectedOptions = useMemo(() => {
     const allOptions = serviceCategories.flatMap(c => c.options);
     return allOptions.filter(o => selectedIds.includes(o.id));
@@ -197,7 +184,7 @@ function App() {
 
 
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
-  const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);
+  const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discount]);
   
   const validateAdminInfo = useCallback(() => {
     const { name, phone, email } = clientInfo;
@@ -221,99 +208,108 @@ function App() {
       return true;
   }, [clientInfo, emailError, t.fillInfoAlertClient]);
   
-  const handleSendViaWhatsApp = () => {
-    setFormError('');
-    if (!validateAdminInfo()) return;
+  const handleSendEmail = () => {
+    if (!validateAdminInfo() || actionType) return;
+    setActionType('email');
 
-    const formattedDate = proposalDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    });
+    const servicesText = selectedOptions.map(option => 
+        `- ${option.name}: $${(option.price * (option.hasQuantity ? quantities[option.id] || 1 : 1)).toLocaleString()}`
+    ).join('\n');
 
-    const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    const fullPhoneNumber = `${clientInfo.countryCode}${clientInfo.phone}`;
+    const summaryText = `
+${t.subtotal}: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+${discount > 0 ? `${t.discountLabel(discountPercentage)}: -$${discount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : ''}
+${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+    `;
 
-    const servicesText = selectedOptions.map(option => {
-        const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
-        const price = option.price * quantity;
-        const quantityText = option.hasQuantity ? ` (${quantity} × ${formatPrice(option.price).replace('$', '')})` : '';
-        return `- ${option.name}${quantityText}: *${formatPrice(price)}*`;
-    }).join('\n');
+    const body = `
+${t.emailGreeting(clientInfo.name || t.newClient)}
 
-    const message = `
-*${t.proposalTitle}*
+${t.emailIntro}
 
-*${t.clientInfoTitle}:*
-${t.clientNameLabel}: ${clientInfo.name}
-${t.clientPhoneLabel}: ${fullPhoneNumber}
-${t.clientEmailLabel}: ${clientInfo.email}
-${t.proposalDateLabel}: ${formattedDate}
-
-*${t.selectedServicesTitle}:*
+---
+${t.emailServicesHeader}
+---
 ${servicesText}
 
-*${t.priceSummaryTitle}:*
-${t.subtotal}: ${formatPrice(subTotalPrice)}
-${language === 'en' ? t.discountLabel(discountPercentage) : `خصم (${discountPercentage}%)`}: -${formatPrice(discount)}
-*${t.totalPrice}: ${formatPrice(finalTotalPrice)}*
+---
+${t.emailSummaryHeader}
+---
+${summaryText}
 
-${t.proposalTo(clientInfo.name)}
-    `.trim().replace(/^\s+/gm, "");
+---
+${t.emailClientHeader}
+---
+${t.clientNameLabel}: ${clientInfo.name}
+${t.clientPhoneLabel}: ${clientInfo.phone}
+${t.clientEmailLabel}: ${clientInfo.email}
 
-    const whatsappNumber = '+905342006606';
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-};
+${t.emailClosing},
+${t.emailTeam}
+    `;
 
+    const subject = encodeURIComponent(t.emailSubject(clientInfo.name || t.newClient));
+    const mailtoLink = `mailto:info@o2graphic.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoLink;
+    
+    setTimeout(() => {
+      setActionType(null);
+      alert(t.successMessageEmail);
+    }, 500);
+  };
 
   const handleClientSubmission = () => {
-    setFormError('');
     if (!validateClientInfo() || actionType) return;
-    
-    if (!isEmailConfigured()) {
-        setFormError(t.emailConfigMissing);
+
+    if (EMAILJS_CONFIG.SERVICE_ID === 'YOUR_SERVICE_ID' || EMAILJS_CONFIG.TEMPLATE_ID === 'YOUR_TEMPLATE_ID' || EMAILJS_CONFIG.PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+        console.error("EmailJS credentials are not set! Please update them in config.ts.");
+        alert(t.emailSendErrorConfig);
         return;
     }
 
     setActionType('email');
 
-    sendProposalEmails({
-      clientInfo,
-      selectedOptions,
-      quantities,
-      subTotalPrice,
-      discount,
-      discountPercentage,
-      finalTotalPrice,
-      isClientSubmission: true,
-      t,
-      selectedIds,
-      proposalDate
-    })
+    const servicesText = selectedOptions.map(option => 
+        `- ${option.name}: $${option.price.toLocaleString()}`
+    ).join('\n');
+
+    const summaryText = `
+Subtotal: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+    `;
+
+    const templateParams = {
+        client_name: clientInfo.name,
+        client_email: clientInfo.email,
+        client_phone: clientInfo.phone,
+        selected_services: servicesText,
+        price_summary: summaryText,
+        final_total: `$${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+    };
+
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, EMAILJS_CONFIG.PUBLIC_KEY)
       .then((response) => {
-        console.log('SUCCESS! Both emails sent on client submission.', response);
-        setShowSuccessScreen(true);
+        console.log('SUCCESS!', response.status, response.text);
+        alert(t.successMessageClient);
         setActionType(null);
       }, (err) => {
-        console.error('FAILED... EmailJS Error on client submission:', err);
+        console.error('FAILED... EmailJS Error:', err);
         let userMessage = t.emailSendError;
+        // EmailJS returns an object with status and text on failure
         if (err && typeof err.status === 'number') {
             if (err.status === 400) {
+                // Bad Request - often a config issue like a malformed template param or wrong IDs
                 userMessage = t.emailSendErrorConfig;
             } else if (err.status === 0) {
+                // This can indicate a network error (CORS, offline, etc.)
                 userMessage = t.emailSendErrorNetwork;
             }
         }
-        setFormError(userMessage);
+        alert(userMessage);
         setActionType(null);
       });
-  };
-
-  const handleCloseSuccessScreen = () => {
-    setShowSuccessScreen(false);
   };
 
   return (
@@ -324,26 +320,32 @@ ${t.proposalTo(clientInfo.name)}
       />
       <PrintHeader />
       <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-8 print:p-0 print:mx-0 print:max-w-full">
-        <StaticSection 
-          t={t}
-          language={language}
-          clientInfo={clientInfo}
-          onClientInfoChange={handleClientInfoChange}
-          emailError={emailError}
-          proposalDate={proposalDate}
-          isClientMode={isClientMode}
-        />
-        <PricingSection
-          categories={serviceCategories}
-          selectedIds={selectedIds}
-          onServiceToggle={handleServiceToggle}
-          quantities={quantities}
-          onQuantityChange={handleQuantityChange}
-          language={language}
-          t={t}
-          isClientMode={isClientMode}
-        />
-        <TermsAndConditions t={t} language={language} />
+        <AnimatedSection>
+            <StaticSection 
+              t={t}
+              language={language}
+              clientInfo={clientInfo}
+              onClientInfoChange={handleClientInfoChange}
+              emailError={emailError}
+              proposalDate={proposalDate}
+              isClientMode={isClientMode}
+            />
+        </AnimatedSection>
+        <AnimatedSection>
+            <PricingSection
+              categories={serviceCategories}
+              selectedIds={selectedIds}
+              onServiceToggle={handleServiceToggle}
+              quantities={quantities}
+              onQuantityChange={handleQuantityChange}
+              language={language}
+              t={t}
+              isClientMode={isClientMode}
+            />
+        </AnimatedSection>
+        <AnimatedSection>
+            <TermsAndConditions t={t} language={language} />
+        </AnimatedSection>
       </main>
       <Footer />
       <TotalBar
@@ -351,21 +353,13 @@ ${t.proposalTo(clientInfo.name)}
         finalTotalPrice={finalTotalPrice}
         discount={discount}
         discountPercentage={discountPercentage}
-        onSendEmail={isClientMode ? handleClientSubmission : handleSendViaWhatsApp}
-        onClearSelection={handleClearSelection}
+        onSendEmail={isClientMode ? handleClientSubmission : handleSendEmail}
         language={language}
         t={t}
         actionType={actionType}
         formError={formError}
         isClientMode={isClientMode}
       />
-      {showSuccessScreen && (
-        <SuccessScreen 
-            t={t}
-            isClientMode={isClientMode}
-            onClose={handleCloseSuccessScreen}
-        />
-      )}
     </div>
   );
 }

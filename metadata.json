@@ -1,5 +1,5 @@
 {
-  "name": "Dynamic Price Proposal Generator",
+  "name": "Final",
   "description": "An interactive web application that allows users to select services from a price list, see the total cost update dynamically, and export the final selection as a PDF proposal. Based on the O2Graphic design.",
   "requestFramePermissions": []
 }

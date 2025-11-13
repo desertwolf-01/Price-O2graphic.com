@@ -1,123 +1,60 @@
-
 import emailjs from '@emailjs/browser';
-import { EMAILJS_CONFIG } from './config';
-import type { ServiceOption } from './types';
-import type { Translation } from './i18n';
 
-/**
- * Checks if the essential EmailJS credentials are set in config.ts and are not placeholders.
- * @returns {boolean} True if configured, false otherwise.
- */
-export const isEmailConfigured = () => {
-  const { SERVICE_ID, TEMPLATE_ID_ADMIN, PUBLIC_KEY } = EMAILJS_CONFIG;
-  
-  const isPlaceholder = (value: string) => !value || value.includes('...') || value.includes('YOUR_');
-  
-  if (isPlaceholder(SERVICE_ID) || isPlaceholder(TEMPLATE_ID_ADMIN) || isPlaceholder(PUBLIC_KEY)) {
-    console.warn('EmailJS credentials appear to be placeholders. Please update config.ts');
-    return false;
-  }
-  return true;
-};
-
-interface SendProposalEmailsParams {
-  clientInfo: { name: string; phone: string; email: string; countryCode: string; };
-  selectedOptions: ServiceOption[];
-  quantities: { [id: string]: number };
-  subTotalPrice: number;
-  discount: number;
-  discountPercentage: number;
-  finalTotalPrice: number;
-  isClientSubmission: boolean;
-  t: Translation;
-  selectedIds: string[];
-  proposalDate: Date;
+interface ProposalDetails {
+    clientName: string;
+    clientEmail: string; // Client's email
+    selectedPlans: string[];
+    totalPrice: number;
 }
 
-/**
- * Sends proposal emails to both the admin and (optionally) the client.
- * @param {SendProposalEmailsParams} params - The proposal details.
- */
-export const sendProposalEmails = async ({
-  clientInfo,
-  selectedOptions,
-  quantities,
-  subTotalPrice,
-  discount,
-  discountPercentage,
-  finalTotalPrice,
-  isClientSubmission,
-  t,
-  selectedIds,
-  proposalDate
-}: SendProposalEmailsParams) => {
-
-  const { SERVICE_ID, TEMPLATE_ID_ADMIN, TEMPLATE_ID_CLIENT, PUBLIC_KEY } = EMAILJS_CONFIG;
-  
-  const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-  
-  const formattedDate = proposalDate.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-  });
-
-  const adminMessageHtml = `
-    <h3>New Proposal Submission (${isClientSubmission ? 'from Client Inquiry' : 'from Admin Preview'})</h3>
-    <hr>
-    <h4>Client Information</h4>
-    <p><strong>Name:</strong> ${clientInfo.name}</p>
-    <p><strong>Phone:</strong> ${clientInfo.countryCode}${clientInfo.phone}</p>
-    <p><strong>Email:</strong> ${clientInfo.email}</p>
-    <p><strong>Proposal Date:</strong> ${formattedDate}</p>
-    <hr>
-    <h4>Selected Services</h4>
-    <ul>
-      ${selectedOptions.map(option => {
-        const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
-        const price = option.price * quantity;
-        const quantityText = option.hasQuantity ? ` (${quantity} &times; $${option.price.toLocaleString()})` : '';
-        return `<li><b>${option.name}</b>${quantityText}: ${formatPrice(price)}</li>`;
-      }).join('')}
-    </ul>
-    <hr>
-    <h4>Price Summary</h4>
-    <p><strong>Subtotal:</strong> ${formatPrice(subTotalPrice)}</p>
-    <p><strong>Discount (${discountPercentage}%):</strong> -${formatPrice(discount)}</p>
-    <p><strong>Total Price:</strong> <strong>${formatPrice(finalTotalPrice)}</strong></p>
-  `;
-
-  // Simplified parameters for the admin-facing email.
-  // This is more robust and less prone to template mismatches.
-  // The EmailJS template should be configured to send 'To: info@o2graphic.com'
-  // and use {{from_name}}, {{reply_to}}, and {{{message}}} variables.
-  const adminParams = {
-    from_name: clientInfo.name,
-    reply_to: clientInfo.email,
-    message: adminMessageHtml,
+const sendProposal = ({ clientName, clientEmail, selectedPlans, totalPrice }: ProposalDetails) => {
+  const templateParamsToClient = {
+    to_name: clientName,
+    to_email: clientEmail, // Sent to client
+    selected_plans: selectedPlans.join(", "),
+    total_price: totalPrice,
   };
 
-  // Prepare parameters for the client-facing email.
-  const clientParams = {
-    to_name: clientInfo.name,
-    to_email: clientInfo.email,
-    services_list: `<ul>${selectedOptions.map(o => `<li><b>${o.name}</b></li>`).join('')}</ul>`,
-    total_price: formatPrice(finalTotalPrice),
+  const templateParamsToMe = {
+    to_name: "O2Graphic Team", // Or your name
+    to_email: "info@o2graphic.com", // Sent to your email
+    client_name: clientName,
+    client_email: clientEmail,
+    selected_plans: selectedPlans.join(", "),
+    total_price: totalPrice,
   };
-  
-  const emailPromises = [];
 
-  emailPromises.push(
-    emailjs.send(SERVICE_ID, TEMPLATE_ID_ADMIN, adminParams, PUBLIC_KEY)
-  );
+  // Your EmailJS credentials
+  const serviceID = 'YOUR_SERVICE_ID';
+  const templateIDForClient = 'YOUR_CLIENT_TEMPLATE_ID'; // Template for client
+  const templateIDForMe = 'YOUR_INTERNAL_TEMPLATE_ID';   // Template for you
+  const publicKey = 'YOUR_PUBLIC_KEY';
 
-  const isClientTemplateConfigured = TEMPLATE_ID_CLIENT && !TEMPLATE_ID_CLIENT.includes('...') && !TEMPLATE_ID_CLIENT.includes('YOUR_');
-  
-  if (isClientTemplateConfigured) {
-      emailPromises.push(
-          emailjs.send(SERVICE_ID, TEMPLATE_ID_CLIENT, clientParams, PUBLIC_KEY)
-      );
+  // Check credentials
+  if (serviceID === 'YOUR_SERVICE_ID' || 
+      templateIDForClient === 'YOUR_CLIENT_TEMPLATE_ID' || 
+      templateIDForMe === 'YOUR_INTERNAL_TEMPLATE_ID' || 
+      publicKey === 'YOUR_PUBLIC_KEY') {
+    console.error('EmailJS credentials are not set! Please update them in email.ts.');
+    alert('An error occurred, please try again.');
+    return;
   }
 
-  return Promise.all(emailPromises);
+  // Send both emails simultaneously
+  Promise.all([
+    // Send to client
+    emailjs.send(serviceID, templateIDForClient, templateParamsToClient, publicKey),
+    // Send to yourself
+    emailjs.send(serviceID, templateIDForMe, templateParamsToMe, publicKey)
+  ])
+  .then(() => {
+    console.log('SUCCESS! Both emails sent.');
+    alert('Proposal sent successfully to your email!');
+  })
+  .catch((error) => {
+    console.error('FAILED...', error);
+    alert('An error occurred, please try again.');
+  });
 };
+
+export { sendProposal };

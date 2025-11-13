@@ -9,14 +9,12 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ language, toggleLanguage }) => {
   const logo = (
-    <a href="https://www.o2graphic.com" target="_blank" rel="noopener noreferrer" aria-label="O2Graphic Main Website">
-        <img 
-          src={fullLogoBase64}
-          alt="O2Graphic Logo" 
-          className="h-12 w-auto" 
-          style={{ maxHeight: '3rem' }}
-        />
-    </a>
+    <img 
+      src={fullLogoBase64}
+      alt="O2Graphic Logo" 
+      className="h-12 w-auto" 
+      style={{ maxHeight: '3rem' }}
+    />
   );
 
   const controls = (

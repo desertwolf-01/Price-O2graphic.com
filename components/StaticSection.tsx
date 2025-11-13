@@ -1,124 +1,84 @@
-
 import React from 'react';
 import { Translation } from '../i18n';
-import { countries } from '../constants/countries';
-
-interface ClientInfo {
-  name: string;
-  phone: string;
-  email: string;
-  countryCode: string;
-}
 
 interface StaticSectionProps {
   t: Translation;
   language: 'ar' | 'en';
-  clientInfo: ClientInfo;
-  onClientInfoChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  clientInfo: { name: string, phone: string, email: string };
+  onClientInfoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   emailError: string;
   proposalDate: Date;
   isClientMode: boolean;
 }
 
-const StaticSection: React.FC<StaticSectionProps> = ({
-  t,
-  language,
-  clientInfo,
+const StaticSection: React.FC<StaticSectionProps> = ({ 
+  t, 
+  language, 
+  clientInfo, 
   onClientInfoChange,
   emailError,
   proposalDate,
   isClientMode,
 }) => {
   const formattedDate = proposalDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
   });
 
   return (
     <section className="space-y-8">
-      {/* Introduction Section */}
-      <div className={`p-4 md:p-6 bg-white rounded-2xl shadow-lg border border-slate-200/80 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
-        <h1 className="text-3xl font-extrabold text-slate-900">{t.proposalTitle}</h1>
-        <div className="mt-4 prose prose-slate max-w-none text-slate-700" dangerouslySetInnerHTML={{ __html: t.proposalDescription }} />
+      <div className="p-4 md:p-6 text-center">
+        <h1 className="text-4xl font-bold text-slate-800 text-center">{t.proposalTitle}</h1>
+        <div 
+            className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto text-center" 
+            dangerouslySetInnerHTML={{ __html: t.proposalDescription }} 
+        />
       </div>
 
-      {/* Client Info Section */}
-      <div className="bg-white rounded-2xl shadow-lg border border-slate-200/80">
-        <div className={`p-6 border-b border-slate-200/80 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
-          <h2 className="text-2xl font-bold text-slate-800">{t.clientInfoTitle}</h2>
+      <div className="p-6 bg-white rounded-2xl shadow-lg border border-slate-200/80 print:shadow-none print:border-0">
+        <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
+            <h3 className="text-xl font-bold text-slate-900">{t.clientInfoTitle}</h3>
+            <p className="mt-1 text-sm text-slate-500">{t.proposalDateLabel}: {formattedDate}</p>
         </div>
-        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Proposal Date */}
-          <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-            <label className="block text-sm font-medium text-slate-700">{t.proposalDateLabel}</label>
-            <p className="mt-1 text-md text-slate-900 font-semibold">{formattedDate}</p>
-          </div>
-
-          {/* Spacer for alignment */}
-          <div className="hidden md:block"></div>
-
-          {/* Client Name */}
-          <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-            <label htmlFor="name" className="block text-sm font-medium text-slate-700">{t.clientNameLabel}</label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              value={clientInfo.name}
-              onChange={onClientInfoChange}
-              placeholder={t.clientNamePlaceholder}
-              disabled={isClientMode}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
-            />
-          </div>
-
-          {/* Client Phone */}
-          <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-            <label htmlFor="phone" className="block text-sm font-medium text-slate-700">{t.clientPhoneLabel}</label>
-            <div className="mt-1 flex rounded-md shadow-sm">
-                <select
-                    name="countryCode"
-                    id="countryCode"
-                    value={clientInfo.countryCode}
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <label htmlFor="clientName" className="block text-sm font-medium text-slate-700">{t.clientNameLabel}</label>
+                <input
+                    type="text"
+                    name="name"
+                    id="clientName"
+                    value={clientInfo.name}
                     onChange={onClientInfoChange}
-                    disabled={isClientMode}
-                    className={`block appearance-none border border-slate-300 py-2 bg-slate-50 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 ${language === 'ar' ? 'rounded-r-md border-l-0 pl-3 pr-8' : 'rounded-l-md border-r-0 pr-3 pl-8'}`}
-                    style={{ backgroundImage: 'none' }} // Remove default arrow
-                >
-                    {countries.map(country => (
-                        <option key={country.code} value={country.dial_code}>{`${country.code} (${country.dial_code})`}</option>
-                    ))}
-                </select>
+                    placeholder={t.clientNamePlaceholder}
+                    className="mt-1 block w-full px-3 py-2 bg-slate-100 border border-transparent rounded-lg placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm transition-all duration-200"
+                />
+            </div>
+            <div>
+                <label htmlFor="clientPhone" className="block text-sm font-medium text-slate-700">{t.clientPhoneLabel}</label>
                 <input
                     type="tel"
                     name="phone"
-                    id="phone"
+                    id="clientPhone"
                     value={clientInfo.phone}
                     onChange={onClientInfoChange}
                     placeholder={t.clientPhonePlaceholder}
-                    disabled={isClientMode}
-                    className={`block w-full flex-1 px-3 py-2 bg-white border border-slate-300 text-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none ${language === 'ar' ? 'rounded-l-md' : 'rounded-r-md'}`}
+                    className="mt-1 block w-full px-3 py-2 bg-slate-100 border border-transparent rounded-lg placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm transition-all duration-200"
                 />
             </div>
-          </div>
-          
-          {/* Client Email */}
-          <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-            <label htmlFor="email" className="block text-sm font-medium text-slate-700">{t.clientEmailLabel}</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={clientInfo.email}
-              onChange={onClientInfoChange}
-              placeholder={t.clientEmailPlaceholder}
-              disabled={isClientMode}
-              className={`mt-1 block w-full px-3 py-2 bg-white border ${emailError ? 'border-red-500' : 'border-slate-300'} rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 ${emailError ? 'focus:ring-red-500' : 'focus:ring-blue-500'} disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none`}
-            />
-            {emailError && <p className="mt-2 text-sm text-red-600">{emailError}</p>}
-          </div>
-
+            <div>
+                <label htmlFor="clientEmail" className="block text-sm font-medium text-slate-700">{t.clientEmailLabel}</label>
+                <input
+                    type="email"
+                    name="email"
+                    id="clientEmail"
+                    value={clientInfo.email}
+                    onChange={onClientInfoChange}
+                    placeholder={t.clientEmailPlaceholder}
+                    className={`mt-1 block w-full px-3 py-2 bg-slate-100 border rounded-lg placeholder-slate-400 focus:outline-none focus:ring-2 sm:text-sm transition-all duration-200 ${emailError ? 'border-red-500 focus:ring-red-500' : 'border-transparent focus:ring-blue-500'}`}
+                />
+                {emailError && <p className="mt-1 text-xs text-red-500">{emailError}</p>}
+            </div>
         </div>
       </div>
     </section>
