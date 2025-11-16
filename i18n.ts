@@ -1,3 +1,4 @@
+
 export type Translation = typeof translations.ar;
 
 export const translations = {
@@ -34,6 +35,7 @@ export const translations = {
         selectedServicesTitle: 'الخدمات المختارة',
         selectServicesDescription: 'قم بتحديد الباقات والخدمات التي تناسب احتياجاتك',
         pagesLabel: 'عدد الصفحات:',
+        pagesUnit: 'صفحات',
         perPageSuffix: '/ للصفحة',
         subtotal: 'المجموع الفرعي',
         finalTotal: 'المجموع النهائي',
@@ -126,6 +128,7 @@ export const translations = {
         selectedServicesTitle: 'Selected Services',
         selectServicesDescription: 'Select the packages and services that suit your needs',
         pagesLabel: 'Pages:',
+        pagesUnit: 'pages',
         perPageSuffix: '/ page',
         subtotal: 'Subtotal',
         finalTotal: 'Final Total',

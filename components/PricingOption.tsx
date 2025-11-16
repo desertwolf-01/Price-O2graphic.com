@@ -3,8 +3,14 @@ import React from 'react';
 import type { ServiceOption } from '../types';
 import type { Translation } from '../i18n';
 
+// The incoming option prop will be augmented with these properties in App.tsx
+type AugmentedServiceOption = ServiceOption & {
+    totalPrice?: number;
+    effectivePrice?: number;
+};
+
 interface PricingOptionProps {
-  option: ServiceOption;
+  option: AugmentedServiceOption;
   isSelected: boolean;
   onToggle: () => void;
   quantity: number;
@@ -64,7 +70,8 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   isClientMode,
 }) => {
     const selectorType = isRadio ? 'radio' : 'checkbox';
-    const totalOptionPrice = option.price * (option.hasQuantity ? quantity : 1);
+    const totalOptionPrice = option.totalPrice || option.price;
+    const effectivePricePerPage = option.effectivePrice || option.price;
 
     const handleToggle = () => {
         if (!isClientMode) {
@@ -106,12 +113,14 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                             <h4 className="font-bold text-slate-800">{option.name}</h4>
                         </div>
                         <div className={`font-semibold text-slate-900 ${language === 'ar' ? 'sm:text-left' : 'sm:text-right'}`}>
-                            {option.hasQuantity && quantity > 1 && !isClientMode ? (
+                           {option.hasQuantity && !isClientMode ? (
                                 <div>
-                                    <p className="text-lg text-slate-800">${totalOptionPrice.toLocaleString()}</p>
-                                    <p className="text-xs text-slate-500 font-normal mt-1">
-                                        ({quantity} &times; ${option.price.toLocaleString()})
-                                    </p>
+                                    <p className="text-lg text-slate-800">${totalOptionPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    {quantity > 1 && (
+                                        <p className="text-xs text-slate-500 font-normal mt-1">
+                                            (${effectivePricePerPage.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {t.perPageSuffix} avg)
+                                        </p>
+                                    )}
                                 </div>
                             ) : (
                                 <p className="text-lg">
@@ -143,17 +152,15 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                 <div className="hidden print:block pt-2">
                     <div className="flex justify-between items-baseline">
                         <div className="flex items-center gap-2">
-                           <h4 className="font-bold text-sm text-black">{option.name}</h4>
+                           <h4 className="font-bold text-sm text-black">
+                                {option.name}
+                                {option.hasQuantity && ` (${quantity} ${t.pagesUnit})`}
+                           </h4>
                         </div>
                         <p className="font-semibold text-sm text-black">
-                            {option.hasQuantity ? `${quantity} x $${option.price.toLocaleString()}` : `$${option.price.toLocaleString()}`}
+                           ${totalOptionPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </p>
                     </div>
-                    {option.hasQuantity && (
-                        <div className="flex justify-end">
-                            <p className="font-bold text-sm text-black">= ${totalOptionPrice.toLocaleString()}</p>
-                        </div>
-                    )}
                     {option.items && (
                         <ul className="mt-1 text-xs text-gray-700 space-y-0.5 list-disc list-inside">
                              {option.items.map((item, index) => (

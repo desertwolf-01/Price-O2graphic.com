@@ -18,6 +18,7 @@ const URL_PARAMS = new URLSearchParams(window.location.search);
 const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
 const CLIENT_SERVICE_IDS = (URL_PARAMS.get('services') || '').split(',').filter(Boolean);
 
+
 function getInitialLanguage() {
     const savedLang = localStorage.getItem('language');
     if (savedLang === 'en' || savedLang === 'ar') {
@@ -68,6 +69,37 @@ function App() {
     }
     return allCategories;
   }, [language, isClientMode]);
+  
+  const calculateOptionTotal = useCallback((option: ServiceOption, quantity: number): number => {
+    const tieredPricingServices = ['catalog-design', 'company-profile', 'presentation-design', 'annual-report'];
+    
+    if (option.hasQuantity && tieredPricingServices.includes(option.id)) {
+        if (quantity <= 0) return 0;
+        // 1-19 pages @ $20
+        if (quantity <= 19) return quantity * 20;
+        // 20-39 pages
+        if (quantity <= 39) return (19 * 20) + ((quantity - 19) * 15);
+        // 40+ pages
+        return (19 * 20) + (20 * 15) + ((quantity - 39) * 10);
+    }
+    
+    return option.price * (option.hasQuantity ? quantity : 1);
+  }, []);
+
+  const categoriesWithTotals = useMemo(() => {
+      return serviceCategories.map(category => ({
+          ...category,
+          options: category.options.map(option => {
+              const quantity = !isClientMode && option.hasQuantity ? (quantities[option.id] || 1) : 1;
+              const total = calculateOptionTotal(option, quantity);
+              return {
+                  ...option,
+                  totalPrice: total,
+                  effectivePrice: quantity > 0 && option.hasQuantity ? total / quantity : option.price,
+              };
+          })
+      }));
+  }, [serviceCategories, quantities, isClientMode, calculateOptionTotal]);
 
   // Language side effect
   useEffect(() => {
@@ -149,16 +181,13 @@ function App() {
   };
 
   const selectedOptions = useMemo(() => {
-    const allOptions = serviceCategories.flatMap(c => c.options);
+    const allOptions = categoriesWithTotals.flatMap(c => c.options);
     return allOptions.filter(o => selectedIds.includes(o.id));
-  }, [selectedIds, serviceCategories]);
+  }, [selectedIds, categoriesWithTotals]);
 
   const subTotalPrice = useMemo(() => {
-    return selectedOptions.reduce((total, option) => {
-      const quantity = !isClientMode && option.hasQuantity ? (quantities[option.id] || 1) : 1;
-      return total + (option.price * quantity);
-    }, 0);
-  }, [selectedOptions, quantities, isClientMode]);
+    return selectedOptions.reduce((total, option) => total + (option.totalPrice || 0), 0);
+  }, [selectedOptions]);
 
   const discountPercentage = useMemo(() => {
     if (isClientMode) return 0; // No discounts in client mode
@@ -213,9 +242,12 @@ function App() {
     if (!validateAdminInfo() || actionType) return;
     setActionType('email');
 
-    const servicesText = selectedOptions.map(option => 
-        `- ${option.name}: $${(option.price * (option.hasQuantity ? quantities[option.id] || 1 : 1)).toLocaleString()}`
-    ).join('\n');
+    const servicesText = selectedOptions.map(option => {
+        const quantity = option.hasQuantity && !isClientMode ? (quantities[option.id] || 1) : 1;
+        const total = option.totalPrice || 0;
+        const details = option.hasQuantity && !isClientMode ? ` (${quantity} ${t.pagesUnit})` : '';
+        return `- ${option.name}${details}: $${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }).join('\n');
 
     const summaryText = `
 ${t.subtotal}: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -272,7 +304,7 @@ ${t.emailTeam}
     setActionType('email');
 
     const servicesText = selectedOptions.map(option => 
-        `- ${option.name}: $${option.price.toLocaleString()}`
+        `- ${option.name}: $${(option.totalPrice || option.price).toLocaleString()}`
     ).join('\n');
 
     const summaryText = `
@@ -333,7 +365,7 @@ Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigit
         </AnimatedSection>
         <AnimatedSection>
             <PricingSection
-              categories={serviceCategories}
+              categories={categoriesWithTotals}
               selectedIds={selectedIds}
               onServiceToggle={handleServiceToggle}
               quantities={quantities}
