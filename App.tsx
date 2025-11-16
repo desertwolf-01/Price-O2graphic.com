@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import * as emailjs from '@emailjs/browser';
 import Header from './components/Header';
@@ -228,17 +229,17 @@ ${t.emailGreeting(clientInfo.name || t.newClient)}
 ${t.emailIntro}
 
 ---
-${t.emailServicesHeader}
+*${t.emailServicesHeader}*
 ---
 ${servicesText}
 
 ---
-${t.emailSummaryHeader}
+*${t.emailSummaryHeader}*
 ---
 ${summaryText}
 
 ---
-${t.emailClientHeader}
+*${t.emailClientHeader}*
 ---
 ${t.clientNameLabel}: ${clientInfo.name}
 ${t.clientPhoneLabel}: ${clientInfo.phone}
@@ -249,10 +250,9 @@ ${t.emailClosing},
 ${t.emailTeam}
     `;
 
-    const subject = encodeURIComponent(t.emailSubject(clientInfo.name || t.newClient));
-    const mailtoLink = `mailto:info@o2graphic.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+    const whatsappLink = `https://wa.me/905342006606?text=${encodeURIComponent(body)}`;
 
-    window.location.href = mailtoLink;
+    window.open(whatsappLink, '_blank');
     
     setTimeout(() => {
       setActionType(null);

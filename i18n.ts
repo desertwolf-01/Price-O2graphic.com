@@ -41,7 +41,7 @@ export const translations = {
 
         // Total Bar
         totalPrice: 'المجموع الإجمالي',
-        sendEmail: 'إرسال عبر البريد',
+        sendEmail: 'إرسال عبر واتساب',
         sendProposal: 'إرسال استفسار',
         sendAsText: 'ارسل',
         sending: 'جاري الإرسال...',
@@ -54,7 +54,7 @@ export const translations = {
         fillInfoAlert: 'يرجى تعبئة جميع بيانات العميل (الاسم، الهاتف، والبريد الإلكتروني) بشكل صحيح أولاً.',
         fillInfoAlertClient: 'يرجى تعبئة اسمك ورقم هاتفك وبريدك الإلكتروني بشكل صحيح للمتابعة.',
         successTitle: 'اكتمل الإجراء!',
-        successMessageEmail: 'تم فتح برنامج البريد. يرجى مراجعة المحتوى ثم الإرسال.',
+        successMessageEmail: 'تم فتح واتساب. يرجى مراجعة المحتوى ثم الإرسال.',
         successMessageClient: 'شكراً لك! تم إرسال اختيارك بنجاح. سنتواصل معك قريباً.',
         emailSendError: 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.',
         emailSendErrorConfig: 'يبدو أن هناك مشكلة في الإعدادات. يرجى التواصل مع الدعم الفني.',
@@ -133,7 +133,7 @@ export const translations = {
 
         // Total Bar
         totalPrice: 'Total Price',
-        sendEmail: 'Send via Email',
+        sendEmail: 'Send via WhatsApp',
         sendProposal: 'Send Inquiry',
         sendAsText: 'Send',
         sending: 'Sending...',
@@ -146,7 +146,7 @@ export const translations = {
         fillInfoAlert: 'Please fill in all client information (Name, Phone, and Email) correctly first.',
         fillInfoAlertClient: 'Please fill in your name, phone number, and email correctly to proceed.',
         successTitle: 'Action Completed!',
-        successMessageEmail: 'Email client opened. Please review the content and send.',
+        successMessageEmail: 'WhatsApp opened. Please review the content and send.',
         successMessageClient: 'Thank you! Your selection has been sent successfully. We will contact you shortly.',
         emailSendError: 'An error occurred while sending. Please try again.',
         emailSendErrorConfig: 'There seems to be a configuration issue. Please contact support.',
