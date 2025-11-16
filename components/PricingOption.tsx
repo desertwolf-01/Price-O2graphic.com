@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { ServiceOption } from '../types';
 import type { Translation } from '../i18n';
+import Tooltip from './Tooltip';
 
 // The incoming option prop will be augmented with these properties in App.tsx
 type AugmentedServiceOption = ServiceOption & {
@@ -32,27 +33,91 @@ const QuantitySelector: React.FC<{
     onQuantityChange: (newQuantity: number) => void,
     t: Translation,
 }> = ({ quantity, onQuantityChange, t }) => {
+    const [inputValue, setInputValue] = useState<string>(quantity.toString());
+
+    useEffect(() => {
+        setInputValue(quantity.toString());
+    }, [quantity]);
+
+    const handleCommit = (val: string) => {
+        let newQuantity = parseInt(val, 10);
+        if (isNaN(newQuantity) || newQuantity < 1) {
+            newQuantity = 1;
+        }
+        onQuantityChange(newQuantity);
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (/^\d*$/.test(value)) {
+            setInputValue(value);
+        }
+    };
+
+    const handleBlur = () => {
+        handleCommit(inputValue);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleCommit(inputValue);
+            e.currentTarget.blur();
+        }
+    };
+
+    const handleDecrement = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        onQuantityChange(Math.max(1, quantity - 1));
+    };
+
+    const handleIncrement = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        onQuantityChange(quantity + 1);
+    };
+
+    const isInvalid = inputValue !== '' && (parseInt(inputValue, 10) < 1 || isNaN(parseInt(inputValue, 10)));
+
     return (
-        <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-slate-700">{t.pagesLabel}</span>
-            <div className="flex items-center">
-                <button
-                    onClick={(e) => { e.stopPropagation(); onQuantityChange(quantity - 1); }}
-                    disabled={quantity <= 1}
-                    className="px-2 py-1 border border-slate-300 rounded-l-md text-slate-600 hover:bg-slate-100 disabled:opacity-50"
-                    aria-label={t.decreaseQuantity}
-                >
-                    -
-                </button>
-                <span className="px-3 py-1 border-t border-b border-slate-300 text-slate-800" aria-label={t.currentQuantity} role="status">{quantity}</span>
-                <button
-                    onClick={(e) => { e.stopPropagation(); onQuantityChange(quantity + 1); }}
-                    className="px-2 py-1 border border-slate-300 rounded-r-md text-slate-600 hover:bg-slate-100"
-                    aria-label={t.increaseQuantity}
-                >
-                    +
-                </button>
+        <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-slate-700">{t.pagesLabel}</span>
+                <div className="flex items-center relative">
+                    <button
+                        onClick={handleDecrement}
+                        disabled={quantity <= 1}
+                        className="px-2 py-1 border border-r-0 border-slate-300 rounded-l-md text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        aria-label={t.decreaseQuantity}
+                    >
+                        -
+                    </button>
+                    <input
+                        type="text"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        onKeyDown={handleKeyDown}
+                        className={`w-12 text-center px-1 py-1 border text-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:z-10 transition-colors
+                            ${isInvalid ? 'border-red-500 ring-red-500' : 'border-slate-300 focus:ring-blue-500'}`
+                        }
+                        aria-label={t.currentQuantity}
+                        aria-invalid={isInvalid}
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                    />
+                    <button
+                        onClick={handleIncrement}
+                        className="px-2 py-1 border border-l-0 border-slate-300 rounded-r-md text-slate-600 hover:bg-slate-100 transition-colors"
+                        aria-label={t.increaseQuantity}
+                    >
+                        +
+                    </button>
+                </div>
             </div>
+            {isInvalid && (
+                <p className="mt-1 text-xs text-red-600" role="alert">
+                    {t.invalidQuantityError}
+                </p>
+            )}
         </div>
     );
 };
@@ -69,6 +134,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   t,
   isClientMode,
 }) => {
+    const [isHovered, setIsHovered] = useState(false);
     const selectorType = isRadio ? 'radio' : 'checkbox';
     const totalOptionPrice = option.totalPrice || option.price;
     const effectivePricePerPage = option.effectivePrice || option.price;
@@ -78,12 +144,24 @@ const PricingOption: React.FC<PricingOptionProps> = ({
             onToggle();
         }
     };
+    
+    const handleMouseEnter = () => {
+        if (!isClientMode) {
+            setIsHovered(true);
+        }
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
 
     return (
         <div
             onClick={handleToggle}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             className={`
-                p-4 border rounded-xl transition-all duration-300 transform
+                relative p-4 border rounded-xl transition-all duration-300 transform
                 ${isSelected
                     ? 'bg-blue-50 border-blue-500 shadow-lg scale-[1.02]'
                     : `bg-slate-50 border-slate-200 ${!isClientMode ? 'hover:border-slate-300 hover:shadow-md hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500' : ''}`
@@ -170,6 +248,12 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                     )}
                 </div>
             )}
+            <Tooltip
+                option={option}
+                language={language}
+                t={t}
+                isVisible={isHovered}
+            />
         </div>
     );
 };

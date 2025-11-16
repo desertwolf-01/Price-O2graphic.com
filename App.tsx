@@ -13,11 +13,11 @@ import type { ServiceOption, ServiceCategory } from './types';
 import { EMAILJS_CONFIG } from './config';
 import PrintHeader from './components/PrintHeader';
 import AnimatedSection from './components/AnimatedSection';
+import FAQSection from './components/FAQSection';
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
 const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
 const CLIENT_SERVICE_IDS = (URL_PARAMS.get('services') || '').split(',').filter(Boolean);
-
 
 function getInitialLanguage() {
     const savedLang = localStorage.getItem('language');
@@ -179,7 +179,7 @@ function App() {
       setQuantities(prev => ({ ...prev, [optionId]: newQuantity }));
     }
   };
-
+  
   const selectedOptions = useMemo(() => {
     const allOptions = categoriesWithTotals.flatMap(c => c.options);
     return allOptions.filter(o => selectedIds.includes(o.id));
@@ -189,10 +189,9 @@ function App() {
     return selectedOptions.reduce((total, option) => total + (option.totalPrice || 0), 0);
   }, [selectedOptions]);
 
-  const discountPercentage = useMemo(() => {
-    if (isClientMode) return 0; // No discounts in client mode
+  const automaticDiscountPercentage = useMemo(() => {
+    if (isClientMode) return 0;
     
-    // Tiered discount based on number of items
     let basePercentage = 0;
     const count = selectedIds.length;
     if (count >= 10) {
@@ -211,9 +210,13 @@ function App() {
 
     return basePercentage + bonusPercentage;
   }, [selectedIds.length, isClientMode, subTotalPrice]);
+  
+  const totalDiscountPercentage = useMemo(() => {
+    return automaticDiscountPercentage;
+  }, [automaticDiscountPercentage]);
 
 
-  const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
+  const discount = useMemo(() => (subTotalPrice * totalDiscountPercentage) / 100, [subTotalPrice, totalDiscountPercentage]);
   const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discount]);
   
   const validateAdminInfo = useCallback(() => {
@@ -249,11 +252,20 @@ function App() {
         return `- ${option.name}${details}: $${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     }).join('\n');
 
-    const summaryText = `
-${t.subtotal}: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-${discount > 0 ? `${t.discountLabel(discountPercentage)}: -$${discount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : ''}
-${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-    `;
+    const discountLines: string[] = [];
+    if (automaticDiscountPercentage > 0) {
+        const automaticDiscountAmount = (subTotalPrice * automaticDiscountPercentage) / 100;
+        discountLines.push(`${t.discountLabel(automaticDiscountPercentage)}: -$${automaticDiscountAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+    }
+    
+    const discountText = discountLines.length > 0 ? discountLines.join('\n') : null;
+
+    const summaryText = [
+        `${t.subtotal}: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        discountText,
+        `${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+    ].filter(Boolean).join('\n');
+
 
     const body = `
 ${t.emailGreeting(clientInfo.name || t.newClient)}
@@ -349,6 +361,7 @@ Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigit
       <Header 
         language={language}
         toggleLanguage={toggleLanguage}
+        t={t}
       />
       <PrintHeader />
       <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-8 print:p-0 print:mx-0 print:max-w-full">
@@ -378,13 +391,16 @@ Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigit
         <AnimatedSection>
             <TermsAndConditions t={t} language={language} />
         </AnimatedSection>
+        <AnimatedSection>
+            <FAQSection t={t} />
+        </AnimatedSection>
       </main>
       <Footer />
       <TotalBar
         subTotalPrice={subTotalPrice}
         finalTotalPrice={finalTotalPrice}
         discount={discount}
-        discountPercentage={discountPercentage}
+        discountPercentage={totalDiscountPercentage}
         onSendEmail={isClientMode ? handleClientSubmission : handleSendEmail}
         language={language}
         t={t}

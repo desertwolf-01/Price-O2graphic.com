@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useMemo } from 'react';
 import { Translation } from '../i18n';
 
 interface StaticSectionProps {
@@ -20,11 +21,13 @@ const StaticSection: React.FC<StaticSectionProps> = ({
   proposalDate,
   isClientMode,
 }) => {
-  const formattedDate = proposalDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-  });
+  const formattedDate = useMemo(() => {
+    return proposalDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+  }, [proposalDate, language]);
 
   return (
     <section className="space-y-8">

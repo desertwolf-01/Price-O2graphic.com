@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Translation } from '../i18n';
 
@@ -29,12 +30,9 @@ const TotalBar: React.FC<TotalBarProps> = ({
   if (finalTotalPrice <= 0 && !formError) {
     return null;
   }
-
-  const discountText = discountPercentage > 0 && !isClientMode
-    ? t.totalDiscountApplied(discountPercentage)
-    : null;
     
   const isSending = actionType === 'email';
+  const hasAutomaticDiscount = discountPercentage > 0 && !isClientMode;
 
   return (
     <div className="sticky bottom-0 bg-white/90 backdrop-blur-md border-t border-slate-200 shadow-lg print:hidden">
@@ -53,8 +51,10 @@ const TotalBar: React.FC<TotalBarProps> = ({
                   <span className="text-base font-medium text-slate-500 line-through">${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 )}
               </div>
-              {discountText && (
-                <p className="text-sm text-blue-600 font-medium mt-1">{discountText}</p>
+              {hasAutomaticDiscount && (
+                <p className="text-sm text-blue-600 font-medium mt-1">
+                  {t.totalDiscountApplied(discountPercentage)}
+                </p>
               )}
             </>
           )}

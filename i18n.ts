@@ -4,6 +4,7 @@ export type Translation = typeof translations.ar;
 export const translations = {
     ar: {
         appTitle: 'O2Graphic | عرض أسعار',
+        bookConsultation: 'احجز استشارة',
         // Client Info
         clientInfoTitle: 'بيانات العميل',
         clientNameLabel: 'الاسم',
@@ -40,6 +41,7 @@ export const translations = {
         subtotal: 'المجموع الفرعي',
         finalTotal: 'المجموع النهائي',
         priceSummaryTitle: 'ملخص الأسعار',
+        tooltipIncludedTitle: 'ماذا يتضمن',
 
         // Total Bar
         totalPrice: 'المجموع الإجمالي',
@@ -50,7 +52,7 @@ export const translations = {
         print: 'طباعة',
 
         // Discounts
-        totalDiscountApplied: (percentage: number) => `🎉 لقد حصلت على خصم إجمالي بنسبة ${percentage}%!`,
+        totalDiscountApplied: (percentage: number) => `🎉 لقد حصلت على خصم تلقائي بنسبة ${percentage}%!`,
 
         // Alerts & Messages
         fillInfoAlert: 'يرجى تعبئة جميع بيانات العميل (الاسم، الهاتف، والبريد الإلكتروني) بشكل صحيح أولاً.',
@@ -61,6 +63,7 @@ export const translations = {
         emailSendError: 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.',
         emailSendErrorConfig: 'يبدو أن هناك مشكلة في الإعدادات. يرجى التواصل مع الدعم الفني.',
         emailSendErrorNetwork: 'تعذر إرسال العرض. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
+        invalidQuantityError: 'يجب أن يكون الرقم موجبًا.',
         close: 'إغلاق',
 
         // Email content
@@ -90,6 +93,31 @@ export const translations = {
         term6Title: 'الملكية الفكرية',
         term6Desc: 'بعد سداد كامل المستحقات، تنتقل ملكية التصاميم النهائية للعميل، وتحتفظ O2Graphic بحق عرضها في معرض أعمالها.',
 
+        // FAQ Section
+        faqTitle: 'الأسئلة الشائعة',
+        faqs: [
+            {
+                q: 'ما هي مدة صلاحية عرض السعر هذا؟',
+                a: 'هذا العرض صالح لمدة 15 يومًا من تاريخ إصداره. قد تخضع الأسعار للتغيير بعد هذه الفترة.'
+            },
+            {
+                q: 'ما هي شروط الدفع؟',
+                a: 'نطلب دفعة مقدمة بنسبة 50% قبل بدء المشروع، ويتم دفع الـ 50% المتبقية عند التسليم النهائي وموافقتك.'
+            },
+            {
+                q: 'كيف أقدم المحتوى (النصوص، الصور) لمشروعي؟',
+                a: 'ستكون مسؤولاً عن توفير جميع المواد اللازمة للمشروع، مثل النصوص والصور والشعارات، في الوقت المناسب. قد يؤثر التأخير في تقديم المحتوى على الجدول الزمني للمشروع.'
+            },
+            {
+                q: 'ماذا لو احتجت إلى تعديلات أكثر من المضمنة؟',
+                a: 'يشمل العرض عددًا محددًا من المراجعات لكل خدمة. أي تعديلات إضافية أو تغييرات كبيرة خارج النطاق المتفق عليه قد تخضع لرسوم إضافية، والتي ستتم مناقشتها والموافقة عليها مسبقًا.'
+            },
+            {
+                q: 'هل يمكنني طلب خدمة غير مدرجة هنا؟',
+                a: 'بالتأكيد! تغطي هذه القائمة خدماتنا الأكثر شيوعًا، لكننا نقدم مجموعة واسعة من حلول التصميم المخصصة. يرجى الاتصال بنا لمناقشة احتياجاتك الخاصة، ويمكننا إنشاء عرض أسعار مخصص لك.'
+            }
+        ],
+
         // ARIA labels
         decreaseQuantity: 'تقليل الكمية',
         increaseQuantity: 'زيادة الكمية',
@@ -97,6 +125,7 @@ export const translations = {
     },
     en: {
         appTitle: 'O2Graphic | Price Quote',
+        bookConsultation: 'Book a Consultation',
         // Client Info
         clientInfoTitle: 'Client Information',
         clientNameLabel: 'Name',
@@ -133,6 +162,7 @@ export const translations = {
         subtotal: 'Subtotal',
         finalTotal: 'Final Total',
         priceSummaryTitle: 'Price Summary',
+        tooltipIncludedTitle: "What's Included",
 
         // Total Bar
         totalPrice: 'Total Price',
@@ -143,7 +173,7 @@ export const translations = {
         print: 'Print',
 
         // Discounts
-        totalDiscountApplied: (percentage: number) => `🎉 You've received a total discount of ${percentage}%!`,
+        totalDiscountApplied: (percentage: number) => `🎉 You've received an automatic discount of ${percentage}%!`,
 
         // Alerts & Messages
         fillInfoAlert: 'Please fill in all client information (Name, Phone, and Email) correctly first.',
@@ -154,6 +184,7 @@ export const translations = {
         emailSendError: 'An error occurred while sending. Please try again.',
         emailSendErrorConfig: 'There seems to be a configuration issue. Please contact support.',
         emailSendErrorNetwork: 'Could not send the proposal. Please check your internet connection and try again.',
+        invalidQuantityError: 'Must be a positive number.',
         close: 'Close',
 
         // Email content
@@ -182,6 +213,31 @@ export const translations = {
         term5Desc: 'The proposal includes a specified number of revisions per service (to be agreed upon). Any additional amendments may be subject to extra charges.',
         term6Title: 'Intellectual Property',
         term6Desc: 'Upon full payment, ownership of the final designs is transferred to the client. O2Graphic reserves the right to display the work in its portfolio.',
+
+        // FAQ Section
+        faqTitle: 'Frequently Asked Questions',
+        faqs: [
+          {
+            q: 'How long is this price proposal valid?',
+            a: 'This proposal is valid for 15 days from the date of issue. Prices may be subject to change after this period.'
+          },
+          {
+            q: 'What are the payment terms?',
+            a: 'We require a 50% down payment before starting the project and the remaining 50% upon final delivery and your approval.'
+          },
+          {
+            q: 'How do I provide the content (text, images) for my project?',
+            a: 'You will be responsible for providing all necessary materials for the project, such as text, images, and logos, in a timely manner. Delays in providing content may affect the project timeline.'
+          },
+          {
+            q: 'What if I need more revisions than what is included?',
+            a: 'The proposal includes a specific number of revisions for each service. Any additional amendments or major changes beyond the agreed scope may be subject to extra charges, which will be discussed and approved by you beforehand.'
+          },
+          {
+            q: 'Can I request a service that is not listed here?',
+            a: 'Absolutely! This list covers our most common services, but we offer a wide range of custom design solutions. Please contact us to discuss your specific needs, and we can create a custom quote for you.'
+          }
+        ],
 
         // ARIA labels
         decreaseQuantity: 'Decrease quantity',
