@@ -1,3 +1,4 @@
+
 import React from 'react';
 import LanguageToggle from './LanguageToggle';
 import { fullLogoBase64 } from '../assets/logo';
@@ -18,12 +19,14 @@ const CalendarIcon = () => (
 
 const Header: React.FC<HeaderProps> = ({ language, toggleLanguage, t }) => {
   const logo = (
-    <img 
-      src={fullLogoBase64}
-      alt="O2Graphic Logo" 
-      className="h-12 w-auto" 
-      style={{ maxHeight: '3rem' }}
-    />
+    <a href="https://www.o2graphic.com" target="_blank" rel="noopener noreferrer">
+      <img 
+        src={fullLogoBase64}
+        alt="O2Graphic Logo" 
+        className="h-12 w-auto" 
+        style={{ maxHeight: '3rem' }}
+      />
+    </a>
   );
 
   const controls = (
