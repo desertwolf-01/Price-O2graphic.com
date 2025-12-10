@@ -28,7 +28,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({
 }) => {
   return (
     <section className="space-y-8">
-      <div className={`p-4 md:p-6 text-center ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+      <div className={`p-4 md:p-6 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
         <h2 className="text-3xl font-bold text-slate-800">{t.selectServicesTitle}</h2>
         <p className="mt-2 text-md text-slate-600">{t.selectServicesDescription}</p>
       </div>

@@ -1,6 +1,4 @@
-
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import * as emailjs from '@emailjs/browser';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import StaticSection from './components/StaticSection';
@@ -10,39 +8,45 @@ import TermsAndConditions from './components/TermsAndConditions';
 import { getServiceCategories } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
-import { EMAILJS_CONFIG } from './config';
 import PrintHeader from './components/PrintHeader';
-import AnimatedSection from './components/AnimatedSection';
-import FAQSection from './components/FAQSection';
+import SuccessScreen from './components/SuccessScreen';
+import { isEmailConfigured, sendProposalEmails } from './email';
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
 const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
 const CLIENT_SERVICE_IDS = (URL_PARAMS.get('services') || '').split(',').filter(Boolean);
+
+interface ClientInfo {
+  name: string;
+  phone: string;
+  email: string;
+  countryCode: string;
+}
 
 function getInitialLanguage() {
     const savedLang = localStorage.getItem('language');
     if (savedLang === 'en' || savedLang === 'ar') {
         return savedLang;
     }
-    return 'en';
+    return 'ar';
 }
 
-function getInitialClientInfo() {
+function getInitialClientInfo(): ClientInfo {
     if (IS_CLIENT_MODE) {
         return {
             name: URL_PARAMS.get('name') || '',
             phone: URL_PARAMS.get('phone') || '',
             email: URL_PARAMS.get('email') || '',
+            countryCode: URL_PARAMS.get('countryCode') || '+90',
         };
     }
-    return { name: '', phone: '', email: '' };
+    return { name: '', phone: '', email: '', countryCode: '+90' };
 }
-
 
 function App() {
   const [language, setLanguage] = useState<'ar' | 'en'>(getInitialLanguage());
   const [isClientMode] = useState(IS_CLIENT_MODE);
-  const [clientInfo, setClientInfo] = useState(getInitialClientInfo);
+  const [clientInfo, setClientInfo] = useState<ClientInfo>(getInitialClientInfo);
   const [emailError, setEmailError] = useState('');
   const [formError, setFormError] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
@@ -54,6 +58,7 @@ function App() {
   const [quantities, setQuantities] = useState<{ [id: string]: number }>({});
   const [actionType, setActionType] = useState<string | null>(null);
   const [proposalDate] = useState(new Date());
+  const [showSuccessScreen, setShowSuccessScreen] = useState(false);
 
   const t = useMemo(() => translations[language], [language]);
   const serviceCategories = useMemo(() => {
@@ -69,37 +74,6 @@ function App() {
     }
     return allCategories;
   }, [language, isClientMode]);
-  
-  const calculateOptionTotal = useCallback((option: ServiceOption, quantity: number): number => {
-    const tieredPricingServices = ['catalog-design', 'company-profile', 'presentation-design', 'annual-report'];
-    
-    if (option.hasQuantity && tieredPricingServices.includes(option.id)) {
-        if (quantity <= 0) return 0;
-        // 1-19 pages @ $20
-        if (quantity <= 19) return quantity * 20;
-        // 20-39 pages
-        if (quantity <= 39) return (19 * 20) + ((quantity - 19) * 15);
-        // 40+ pages
-        return (19 * 20) + (20 * 15) + ((quantity - 39) * 10);
-    }
-    
-    return option.price * (option.hasQuantity ? quantity : 1);
-  }, []);
-
-  const categoriesWithTotals = useMemo(() => {
-      return serviceCategories.map(category => ({
-          ...category,
-          options: category.options.map(option => {
-              const quantity = !isClientMode && option.hasQuantity ? (quantities[option.id] || 1) : 1;
-              const total = calculateOptionTotal(option, quantity);
-              return {
-                  ...option,
-                  totalPrice: total,
-                  effectivePrice: quantity > 0 && option.hasQuantity ? total / quantity : option.price,
-              };
-          })
-      }));
-  }, [serviceCategories, quantities, isClientMode, calculateOptionTotal]);
 
   // Language side effect
   useEffect(() => {
@@ -123,7 +97,7 @@ function App() {
     }
   };
 
-  const handleClientInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleClientInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setClientInfo(prev => ({ ...prev, [name]: value }));
     if (formError) setFormError('');
@@ -179,19 +153,29 @@ function App() {
       setQuantities(prev => ({ ...prev, [optionId]: newQuantity }));
     }
   };
-  
+
+  const handleClearSelection = () => {
+    if (isClientMode) return;
+    setSelectedIds([]);
+    setQuantities({});
+  };
+
   const selectedOptions = useMemo(() => {
-    const allOptions = categoriesWithTotals.flatMap(c => c.options);
+    const allOptions = serviceCategories.flatMap(c => c.options);
     return allOptions.filter(o => selectedIds.includes(o.id));
-  }, [selectedIds, categoriesWithTotals]);
+  }, [selectedIds, serviceCategories]);
 
   const subTotalPrice = useMemo(() => {
-    return selectedOptions.reduce((total, option) => total + (option.totalPrice || 0), 0);
-  }, [selectedOptions]);
+    return selectedOptions.reduce((total, option) => {
+      const quantity = !isClientMode && option.hasQuantity ? (quantities[option.id] || 1) : 1;
+      return total + (option.price * quantity);
+    }, 0);
+  }, [selectedOptions, quantities, isClientMode]);
 
-  const automaticDiscountPercentage = useMemo(() => {
-    if (isClientMode) return 0;
+  const discountPercentage = useMemo(() => {
+    if (isClientMode) return 0; // No discounts in client mode
     
+    // Tiered discount based on number of items
     let basePercentage = 0;
     const count = selectedIds.length;
     if (count >= 10) {
@@ -210,14 +194,10 @@ function App() {
 
     return basePercentage + bonusPercentage;
   }, [selectedIds.length, isClientMode, subTotalPrice]);
-  
-  const totalDiscountPercentage = useMemo(() => {
-    return automaticDiscountPercentage;
-  }, [automaticDiscountPercentage]);
 
 
-  const discount = useMemo(() => (subTotalPrice * totalDiscountPercentage) / 100, [subTotalPrice, totalDiscountPercentage]);
-  const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discount]);
+  const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
+  const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);
   
   const validateAdminInfo = useCallback(() => {
     const { name, phone, email } = clientInfo;
@@ -241,119 +221,99 @@ function App() {
       return true;
   }, [clientInfo, emailError, t.fillInfoAlertClient]);
   
-  const handleSendEmail = () => {
-    if (!validateAdminInfo() || actionType) return;
-    setActionType('email');
+  const handleSendViaWhatsApp = () => {
+    setFormError('');
+    if (!validateAdminInfo()) return;
+
+    const formattedDate = proposalDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+
+    const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    const fullPhoneNumber = `${clientInfo.countryCode}${clientInfo.phone}`;
 
     const servicesText = selectedOptions.map(option => {
-        const quantity = option.hasQuantity && !isClientMode ? (quantities[option.id] || 1) : 1;
-        const total = option.totalPrice || 0;
-        const details = option.hasQuantity && !isClientMode ? ` (${quantity} ${t.pagesUnit})` : '';
-        return `- ${option.name}${details}: $${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
+        const price = option.price * quantity;
+        const quantityText = option.hasQuantity ? ` (${quantity} × ${formatPrice(option.price).replace('$', '')})` : '';
+        return `- ${option.name}${quantityText}: *${formatPrice(price)}*`;
     }).join('\n');
 
-    const discountLines: string[] = [];
-    if (automaticDiscountPercentage > 0) {
-        const automaticDiscountAmount = (subTotalPrice * automaticDiscountPercentage) / 100;
-        discountLines.push(`${t.discountLabel(automaticDiscountPercentage)}: -$${automaticDiscountAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
-    }
-    
-    const discountText = discountLines.length > 0 ? discountLines.join('\n') : null;
+    const message = `
+*${t.proposalTitle}*
 
-    const summaryText = [
-        `${t.subtotal}: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-        discountText,
-        `${t.finalTotal}: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-    ].filter(Boolean).join('\n');
+*${t.clientInfoTitle}:*
+${t.clientNameLabel}: ${clientInfo.name}
+${t.clientPhoneLabel}: ${fullPhoneNumber}
+${t.clientEmailLabel}: ${clientInfo.email}
+${t.proposalDateLabel}: ${formattedDate}
 
-
-    const body = `
-${t.emailGreeting(clientInfo.name || t.newClient)}
-
-${t.emailIntro}
-
----
-*${t.emailServicesHeader}*
----
+*${t.selectedServicesTitle}:*
 ${servicesText}
 
----
-*${t.emailSummaryHeader}*
----
-${summaryText}
+*${t.priceSummaryTitle}:*
+${t.subtotal}: ${formatPrice(subTotalPrice)}
+${language === 'en' ? t.discountLabel(discountPercentage) : `خصم (${discountPercentage}%)`}: -${formatPrice(discount)}
+*${t.totalPrice}: ${formatPrice(finalTotalPrice)}*
 
----
-*${t.emailClientHeader}*
----
-${t.clientNameLabel}: ${clientInfo.name}
-${t.clientPhoneLabel}: ${clientInfo.phone}
-${t.clientEmailLabel}: ${clientInfo.email}
+${t.proposalTo(clientInfo.name)}
+    `.trim().replace(/^\s+/gm, "");
 
+    const whatsappNumber = '+905342006606';
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-${t.emailClosing},
-${t.emailTeam}
-    `;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+};
 
-    const whatsappLink = `https://wa.me/905342006606?text=${encodeURIComponent(body)}`;
-
-    window.open(whatsappLink, '_blank');
-    
-    setTimeout(() => {
-      setActionType(null);
-      alert(t.successMessageEmail);
-    }, 500);
-  };
 
   const handleClientSubmission = () => {
+    setFormError('');
     if (!validateClientInfo() || actionType) return;
-
-    if (EMAILJS_CONFIG.SERVICE_ID === 'YOUR_SERVICE_ID' || EMAILJS_CONFIG.TEMPLATE_ID === 'YOUR_TEMPLATE_ID' || EMAILJS_CONFIG.PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
-        console.error("EmailJS credentials are not set! Please update them in config.ts.");
-        alert(t.emailSendErrorConfig);
+    
+    if (!isEmailConfigured()) {
+        setFormError(t.emailConfigMissing);
         return;
     }
 
     setActionType('email');
 
-    const servicesText = selectedOptions.map(option => 
-        `- ${option.name}: $${(option.totalPrice || option.price).toLocaleString()}`
-    ).join('\n');
-
-    const summaryText = `
-Subtotal: $${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-    `;
-
-    const templateParams = {
-        client_name: clientInfo.name,
-        client_email: clientInfo.email,
-        client_phone: clientInfo.phone,
-        selected_services: servicesText,
-        price_summary: summaryText,
-        final_total: `$${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-    };
-
-    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, EMAILJS_CONFIG.PUBLIC_KEY)
+    sendProposalEmails({
+      clientInfo,
+      selectedOptions,
+      quantities,
+      subTotalPrice,
+      discount,
+      discountPercentage,
+      finalTotalPrice,
+      isClientSubmission: true,
+      t,
+      selectedIds,
+      proposalDate
+    })
       .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
-        alert(t.successMessageClient);
+        console.log('SUCCESS! Both emails sent on client submission.', response);
+        setShowSuccessScreen(true);
         setActionType(null);
       }, (err) => {
-        console.error('FAILED... EmailJS Error:', err);
+        console.error('FAILED... EmailJS Error on client submission:', err);
         let userMessage = t.emailSendError;
-        // EmailJS returns an object with status and text on failure
         if (err && typeof err.status === 'number') {
             if (err.status === 400) {
-                // Bad Request - often a config issue like a malformed template param or wrong IDs
                 userMessage = t.emailSendErrorConfig;
             } else if (err.status === 0) {
-                // This can indicate a network error (CORS, offline, etc.)
                 userMessage = t.emailSendErrorNetwork;
             }
         }
-        alert(userMessage);
+        setFormError(userMessage);
         setActionType(null);
       });
+  };
+
+  const handleCloseSuccessScreen = () => {
+    setShowSuccessScreen(false);
   };
 
   return (
@@ -361,53 +321,51 @@ Final Total: $${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigit
       <Header 
         language={language}
         toggleLanguage={toggleLanguage}
-        t={t}
       />
       <PrintHeader />
       <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-8 print:p-0 print:mx-0 print:max-w-full">
-        <AnimatedSection>
-            <StaticSection 
-              t={t}
-              language={language}
-              clientInfo={clientInfo}
-              onClientInfoChange={handleClientInfoChange}
-              emailError={emailError}
-              proposalDate={proposalDate}
-              isClientMode={isClientMode}
-            />
-        </AnimatedSection>
-        <AnimatedSection>
-            <PricingSection
-              categories={categoriesWithTotals}
-              selectedIds={selectedIds}
-              onServiceToggle={handleServiceToggle}
-              quantities={quantities}
-              onQuantityChange={handleQuantityChange}
-              language={language}
-              t={t}
-              isClientMode={isClientMode}
-            />
-        </AnimatedSection>
-        <AnimatedSection>
-            <TermsAndConditions t={t} language={language} />
-        </AnimatedSection>
-        <AnimatedSection>
-            <FAQSection t={t} />
-        </AnimatedSection>
+        <StaticSection 
+          t={t}
+          language={language}
+          clientInfo={clientInfo}
+          onClientInfoChange={handleClientInfoChange}
+          emailError={emailError}
+          proposalDate={proposalDate}
+          isClientMode={isClientMode}
+        />
+        <PricingSection
+          categories={serviceCategories}
+          selectedIds={selectedIds}
+          onServiceToggle={handleServiceToggle}
+          quantities={quantities}
+          onQuantityChange={handleQuantityChange}
+          language={language}
+          t={t}
+          isClientMode={isClientMode}
+        />
+        <TermsAndConditions t={t} language={language} />
       </main>
       <Footer />
       <TotalBar
         subTotalPrice={subTotalPrice}
         finalTotalPrice={finalTotalPrice}
         discount={discount}
-        discountPercentage={totalDiscountPercentage}
-        onSendEmail={isClientMode ? handleClientSubmission : handleSendEmail}
+        discountPercentage={discountPercentage}
+        onSendEmail={isClientMode ? handleClientSubmission : handleSendViaWhatsApp}
+        onClearSelection={handleClearSelection}
         language={language}
         t={t}
         actionType={actionType}
         formError={formError}
         isClientMode={isClientMode}
       />
+      {showSuccessScreen && (
+        <SuccessScreen 
+            t={t}
+            isClientMode={isClientMode}
+            onClose={handleCloseSuccessScreen}
+        />
+      )}
     </div>
   );
 }
