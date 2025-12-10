@@ -1,3 +1,9 @@
+
+export interface PriceTier {
+  minQuantity: number;
+  price: number;
+}
+
 export interface ServiceOption {
   id: string;
   name: string;
@@ -5,6 +11,9 @@ export interface ServiceOption {
   price: number;
   items?: string[];
   hasQuantity?: boolean;
+  quantityLabel?: string;
+  priceSuffix?: string;
+  priceTiers?: PriceTier[];
 }
 
 export interface ServiceCategory {

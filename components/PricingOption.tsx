@@ -1,6 +1,7 @@
+
 import React from 'react';
 import type { ServiceOption } from '../types';
-// Fixed typo in import path from '../i1n' to '../i18n'
+import { getUnitPrice } from '../constants';
 import type { Translation } from '../i18n';
 
 interface PricingOptionProps {
@@ -25,10 +26,11 @@ const QuantitySelector: React.FC<{
     quantity: number,
     onQuantityChange: (newQuantity: number) => void,
     t: Translation,
-}> = ({ quantity, onQuantityChange, t }) => {
+    label?: string,
+}> = ({ quantity, onQuantityChange, t, label }) => {
     return (
         <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-slate-700">{t.pagesLabel}</span>
+            <span className="text-sm font-medium text-slate-700">{label || t.pagesLabel}</span>
             <div className="flex items-center">
                 <button
                     onClick={(e) => { e.stopPropagation(); onQuantityChange(quantity - 1); }}
@@ -64,7 +66,8 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   isClientMode,
 }) => {
     const selectorType = isRadio ? 'radio' : 'checkbox';
-    const totalOptionPrice = option.price * (option.hasQuantity ? quantity : 1);
+    const currentUnitPrice = getUnitPrice(option, quantity);
+    const totalOptionPrice = currentUnitPrice * (option.hasQuantity ? quantity : 1);
 
     const handleToggle = () => {
         if (!isClientMode) {
@@ -110,13 +113,13 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                                 <div>
                                     <p className="text-lg text-slate-800">${totalOptionPrice.toLocaleString()}</p>
                                     <p className="text-xs text-slate-500 font-normal mt-1">
-                                        ({quantity} &times; ${option.price.toLocaleString()})
+                                        ({quantity} &times; ${currentUnitPrice.toLocaleString()})
                                     </p>
                                 </div>
                             ) : (
                                 <p className="text-lg">
-                                    ${option.price.toLocaleString()}
-                                    {option.hasQuantity && <span className="text-sm text-slate-500 font-normal"> {t.perPageSuffix}</span>}
+                                    ${currentUnitPrice.toLocaleString()}
+                                    {option.hasQuantity && <span className="text-sm text-slate-500 font-normal"> {option.priceSuffix || t.perPageSuffix}</span>}
                                 </p>
                             )}
                         </div>
@@ -132,7 +135,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
 
                     <div className="mt-4 flex flex-wrap items-center gap-4">
                         {option.hasQuantity && !isClientMode && (
-                            <QuantitySelector quantity={quantity} onQuantityChange={onQuantityChange} t={t} />
+                            <QuantitySelector quantity={quantity} onQuantityChange={onQuantityChange} t={t} label={option.quantityLabel} />
                         )}
                     </div>
                 </div>
@@ -146,7 +149,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                            <h4 className="font-bold text-sm text-black">{option.name}</h4>
                         </div>
                         <p className="font-semibold text-sm text-black">
-                            {option.hasQuantity ? `${quantity} x $${option.price.toLocaleString()}` : `$${option.price.toLocaleString()}`}
+                            {option.hasQuantity ? `${quantity} x $${currentUnitPrice.toLocaleString()}` : `$${currentUnitPrice.toLocaleString()}`}
                         </p>
                     </div>
                     {option.hasQuantity && (

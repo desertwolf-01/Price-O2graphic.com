@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -5,7 +6,7 @@ import StaticSection from './components/StaticSection';
 import PricingSection from './components/PricingSection';
 import TotalBar from './components/TotalBar';
 import TermsAndConditions from './components/TermsAndConditions';
-import { getServiceCategories } from './constants';
+import { getServiceCategories, getUnitPrice } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
 import PrintHeader from './components/PrintHeader';
@@ -168,7 +169,8 @@ function App() {
   const subTotalPrice = useMemo(() => {
     return selectedOptions.reduce((total, option) => {
       const quantity = !isClientMode && option.hasQuantity ? (quantities[option.id] || 1) : 1;
-      return total + (option.price * quantity);
+      const unitPrice = getUnitPrice(option, quantity);
+      return total + (unitPrice * quantity);
     }, 0);
   }, [selectedOptions, quantities, isClientMode]);
 
@@ -236,8 +238,9 @@ function App() {
 
     const servicesText = selectedOptions.map(option => {
         const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
-        const price = option.price * quantity;
-        const quantityText = option.hasQuantity ? ` (${quantity} × ${formatPrice(option.price).replace('$', '')})` : '';
+        const unitPrice = getUnitPrice(option, quantity);
+        const price = unitPrice * quantity;
+        const quantityText = option.hasQuantity ? ` (${quantity} × ${formatPrice(unitPrice).replace('$', '')})` : '';
         return `- ${option.name}${quantityText}: *${formatPrice(price)}*`;
     }).join('\n');
 

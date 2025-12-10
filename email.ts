@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from './config';
 import type { ServiceOption } from './types';
 import type { Translation } from './i18n';
+import { getUnitPrice } from './constants';
 
 /**
  * Checks if the essential EmailJS credentials are set in config.ts and are not placeholders.
@@ -75,8 +76,9 @@ export const sendProposalEmails = async ({
     <ul>
       ${selectedOptions.map(option => {
         const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
-        const price = option.price * quantity;
-        const quantityText = option.hasQuantity ? ` (${quantity} &times; $${option.price.toLocaleString()})` : '';
+        const unitPrice = getUnitPrice(option, quantity);
+        const price = unitPrice * quantity;
+        const quantityText = option.hasQuantity ? ` (${quantity} &times; $${unitPrice.toLocaleString()})` : '';
         return `<li><b>${option.name}</b>${quantityText}: ${formatPrice(price)}</li>`;
       }).join('')}
     </ul>

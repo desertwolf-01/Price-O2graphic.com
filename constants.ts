@@ -1,6 +1,17 @@
 
+import type { ServiceCategory, ServiceOption } from './types';
 
-import type { ServiceCategory } from './types';
+export const getUnitPrice = (option: ServiceOption, quantity: number): number => {
+    if (!option.priceTiers || option.priceTiers.length === 0) {
+        return option.price;
+    }
+    // Find the applicable tier: highest minQuantity <= quantity
+    const tier = option.priceTiers
+        .filter(t => t.minQuantity <= quantity)
+        .sort((a, b) => b.minQuantity - a.minQuantity)[0];
+        
+    return tier ? tier.price : option.price;
+}
 
 export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
   {
@@ -273,7 +284,15 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'reels-package',
         name: 'باقة تصميم ريلز',
-        price: 150,
+        price: 200,
+        hasQuantity: true,
+        quantityLabel: 'عدد الفيديوهات',
+        priceSuffix: 'لكل فيديو',
+        priceTiers: [
+          { minQuantity: 1, price: 200 },
+          { minQuantity: 10, price: 150 },
+          { minQuantity: 15, price: 75 },
+        ],
         items: [
             '__خدمة مخصصة لتصميم العناصر لمقاطع الريلز/الشورتس/تيك توك — جاهزة للمونتاج أو النشر.__',
             '__تنسيقات التسليم:__',
@@ -602,7 +621,15 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'reels-package',
         name: 'Reels Design Package',
-        price: 150,
+        price: 200,
+        hasQuantity: true,
+        quantityLabel: 'Number of Videos',
+        priceSuffix: 'per video',
+        priceTiers: [
+          { minQuantity: 1, price: 200 },
+          { minQuantity: 10, price: 150 },
+          { minQuantity: 15, price: 75 },
+        ],
         items: [
             '__Customized service for designing elements for Reels/Shorts/TikTok clips — ready for editing or publishing.__',
             '__Delivery Formats:__',
