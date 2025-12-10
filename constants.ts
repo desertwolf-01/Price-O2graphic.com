@@ -1,4 +1,5 @@
 
+
 import type { ServiceCategory, ServiceOption } from './types';
 
 export const getUnitPrice = (option: ServiceOption, quantity: number): number => {
@@ -185,7 +186,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             "اقتراح نصوص أولية + توزيع بصري لكل منشور",
             "موودبورد أو سكتشات أولية لـ 15 فكرة",
             "تجديد أنواع المنشورات (ترويج، تعليم، تفاعل، عروض...)",
-            "الالتزام الكامل بهوية العلامة (ألوان، خطوط، أنماط)",
+            "الالتزام الكامل بهوية العلامة (ألوان، خطوط، أنماط،)",
         ]
       },
       {
@@ -274,6 +275,29 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
           'أبرز الأنشطة والفعاليات',
           'يُسلم بصيغة PDF الفاعلي + طباعة',
         ]
+      },
+      {
+        id: 'infographic-static',
+        name: 'تصميم إنفوجرافيك ثابت (Static Infographic)',
+        price: 75,
+        hasQuantity: true,
+        quantityLabel: 'عدد التصاميم',
+        priceSuffix: 'للتصميم',
+        priceTiers: [
+            { minQuantity: 1, price: 75 },
+            { minQuantity: 5, price: 50 },
+        ],
+        items: [
+          '__المخرجات:__',
+          'ملف JPEG/PNG عالي الجودة (طباعة وعرض)',
+          'ملف PDF للطباعة والمشاركة',
+          'ملف PSD/AI قابل للتعديل (اختياري)',
+          '__مقاسات متعددة:__',
+          '2480x3508 بكسل (A4 عمودي)',
+          '3508x2480 بكسل (A4 أفقي)',
+          '1080x1920 بكسل (للوسائط الاجتماعية)',
+          'مقاس مخصص حسب الطلب',
+        ]
       }
     ]
   },
@@ -285,15 +309,10 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'reels-package',
         name: 'باقة تصميم ريلز',
-        price: 200,
+        price: 150,
         hasQuantity: true,
         quantityLabel: 'عدد الفيديوهات',
         priceSuffix: 'لكل فيديو',
-        priceTiers: [
-          { minQuantity: 1, price: 200 },
-          { minQuantity: 10, price: 150 },
-          { minQuantity: 15, price: 75 },
-        ],
         items: [
             '__خدمة مخصصة لتصميم العناصر لمقاطع الريلز/الشورتس/تيك توك — جاهزة للمونتاج أو النشر.__',
             '__تنسيقات التسليم:__',
@@ -305,6 +324,70 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             'دمج الشعار والرسائل الأساسية بشكل بصري متناسق',
             '__عدد المراجعات:__',
             'حتى مرتين تعديل لكل ريلز (تعديل نص، لون، ترتيب المشاهد)',
+        ]
+      },
+      {
+        id: '2d-animation-package',
+        name: 'باقة إنتاج أنيميشن 2D متكاملة (من الفكرة إلى التسليم)',
+        price: 500,
+        hasQuantity: true,
+        quantityLabel: 'عدد الدقائق',
+        priceSuffix: 'لكل دقيقة',
+        priceTiers: [
+            { minQuantity: 1, price: 500 },
+            { minQuantity: 5, price: 350 },
+        ],
+        items: [
+            '__الباقة الذهبية للأنيميشن 2D الكامل__',
+            '__📝 المرحلة 1: التطوير والإعداد__',
+            'جلسة العصف الذهبي - جلسة افتراضية/حضورية لفهم الأهداف والجمهور',
+            'صياغة الفكرة وترتيب الأفكار وهيكلة المحتوى',
+            'كتابة السيناريو - نص محترف مع توقيت دقيق للمشاهد',
+            'تطوير الشخصيات (إذا لزم) - تصميم 1-3 شخصيات رئيسية',
+            '__🎨 المرحلة 2: التصميم المرئي__',
+            'القصة المصورة (Storyboard) - لوحات مصورة مفصلة لكل مشهد',
+            'أسلوب فني موحد - تحديد نمط الرسم والألوان (Flat, Cartoon, Minimal, إلخ)',
+            'رسم المشاهد الرئيسية وتلوينها - تطبيق لوحة الألوان المعتمدة',
+            '__✨ المرحلة 3: التحريك والإنتاج__',
+            'تحريك المشاهد - إضافة الحركة والحياة للرسومات',
+            'تحريك الشخصيات (Character Rigging & Animation) - إذا وجدت شخصيات',
+            'إضافة المؤثرات البصرية والتأليف المرئي (Compositing)',
+            '__🔊 المرحلة 4: الصوتيات__',
+            'اختيار المعلق الصوتي وتسجيل التعليق في استوديو محترف',
+            'اختيار موسيقى أصلية وحصرية',
+            'إضافة المؤثرات الصوتية (SFX) ومزج صوتي احترافي',
+            '__🎬 المرحلة 5: الإخراج النهائي__',
+            'المراجعة الأولى، التعديلات (حتى 3 جولات)، والتدقيق النهائي',
+            '__📦 حزمة التسليم الكاملة:__',
+            'الفيديو الرئيسي MP4 HD (1920x1080) + نسخة للمنصات الاجتماعية',
+            'نسخة بدون موسيقى/نص للمراجعات المستقبلية',
+            'ملفات المشروع (After Effects, PSD) - (اختياري بفرق سعر)',
+            'مرفقات: القصة المصورة والسيناريو وملفات الصور الثابتة',
+        ]
+      },
+      {
+        id: 'corporate-intro-video',
+        name: 'باقة فيديو تعريف الشركة (Corporate Intro / Explainer Video)',
+        price: 600,
+        hasQuantity: true,
+        quantityLabel: 'عدد الدقائق',
+        priceSuffix: 'لكل دقيقة',
+        items: [
+            '__الهدف:__ فيديو احترافي قصير (60-90 ثانية) يشرح هوية الشركة، رسالتها، خدماتها، أو منتجها الرئيسي بشكل جذاب وسهل الفهم.',
+            '__المخرجات:__',
+            'فيديو نهائي عالي الجودة بصيغة MP4 (نسخة مربعة 1080x1080 للمنصات الاجتماعية + نسخة أفقية 1920x1080 للموقع والعروض).',
+            'نسخة بدون موسيقى (Music-Free) للاستخدام مع تعليق صوتي بلغات مختلفة.',
+            'قالب (Template) للغة الإنجليزية + لغة عربية (إذا كانت الهوية ثنائية اللغة) – قابل للتعديل على النصوص الرئيسية فقط.',
+            '__نطاق الخدمة التفصيلي:__',
+            'مرحلة الاكتشاف: جمع المعلومات (نقاط البيع الفريدة، الجمهور المستهدف، النبرة التواصلية).',
+            'السيناريو والصوت: كتابة نص (سكريبت) مؤثر وواضح، مع اقتراح تعليق صوتي محترف (يمكن تقديم خدمة التعليق كإضافة).',
+            'القصة المصورة (Storyboard): تقديم رسم تخطيطي مفصل لكل مشهد.',
+            '__التصميم والإنتاج:__',
+            'سيناريو مرئي مخصص: تصميم مشاهد فريدة تعكس ثقافة الشركة (استخدام الصور الفعلية للفريق/المكتب إن أمكن).',
+            'موشن جرافيك متقدم: رسوم متحركة معقدة (Animated Infographics) لشرح العمليات أو الإحصائيات.',
+            'تسجيل صوتي: تنسيق عملية التسجيل مع معلق صوتي محترف (ضمن الباقة أو كإضافة).',
+            'موسيقى وتؤثرات صوتية: اختيار موسيقى أصيلة تعكس شخصية العلامة التجارية.',
+            'المراجعة والتنقيح: مراجعتان رئيسيتان على الأقل (واحدة على القصة المصورة، والأخرى على النسخة الأولية من الفيديو).',
         ]
       }
     ]
@@ -612,6 +695,29 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
           'Main activities and events',
           'Delivered as an interactive PDF + print version',
         ]
+      },
+      {
+        id: 'infographic-static',
+        name: 'Static Infographic Design',
+        price: 75,
+        hasQuantity: true,
+        quantityLabel: 'Number of Designs',
+        priceSuffix: 'per design',
+        priceTiers: [
+            { minQuantity: 1, price: 75 },
+            { minQuantity: 5, price: 50 },
+        ],
+        items: [
+          '__Outputs:__',
+          'High-quality JPEG/PNG file (Print & Web)',
+          'PDF file for printing and sharing',
+          'Editable PSD/AI file (Optional)',
+          '__Multiple Sizes:__',
+          '2480x3508 pixels (A4 Vertical)',
+          '3508x2480 pixels (A4 Horizontal)',
+          '1080x1920 pixels (For Social Media)',
+          'Custom size upon request',
+        ]
       }
     ]
   },
@@ -623,15 +729,10 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'reels-package',
         name: 'Reels Design Package',
-        price: 200,
+        price: 150,
         hasQuantity: true,
         quantityLabel: 'Number of Videos',
         priceSuffix: 'per video',
-        priceTiers: [
-          { minQuantity: 1, price: 200 },
-          { minQuantity: 10, price: 150 },
-          { minQuantity: 15, price: 75 },
-        ],
         items: [
             '__Customized service for designing elements for Reels/Shorts/TikTok clips — ready for editing or publishing.__',
             '__Delivery Formats:__',
@@ -643,6 +744,70 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
             'Integration of the logo and key messages in a visually consistent manner',
             '__Number of Revisions:__',
             'Up to two revisions per reel (text, color, scene order adjustment)',
+        ]
+      },
+      {
+        id: '2d-animation-package',
+        name: 'Integrated 2D Animation Production Package (From Idea to Delivery)',
+        price: 500,
+        hasQuantity: true,
+        quantityLabel: 'Number of Minutes',
+        priceSuffix: 'per minute',
+        priceTiers: [
+            { minQuantity: 1, price: 500 },
+            { minQuantity: 5, price: 350 },
+        ],
+        items: [
+            '__Gold Package for Full 2D Animation__',
+            '__📝 Phase 1: Development & Preparation__',
+            'Brainstorming session - Virtual/in-person to understand goals and audience',
+            'Concept formulation, idea structuring, and content outline',
+            'Scriptwriting - Professional script with precise scene timing',
+            'Character Development (if needed) - Design of 1-3 main characters',
+            '__🎨 Phase 2: Visual Design__',
+            'Storyboard - Detailed illustrated boards for each scene',
+            'Unified Art Style - Defining drawing style and colors (Flat, Cartoon, Minimal, etc.)',
+            'Scene Illustration & Coloring - Applying approved color palette',
+            '__✨ Phase 3: Animation & Production__',
+            'Scene Animation - Adding motion and life to illustrations',
+            'Character Rigging & Animation - If characters are present',
+            'Visual Effects (VFX) & Compositing',
+            '__🔊 Phase 4: Audio__',
+            'Voiceover selection and recording in a professional studio',
+            'Exclusive original music selection',
+            'Sound Effects (SFX) & Professional Audio Mixing',
+            '__🎬 Phase 5: Final Output__',
+            'First draft review, up to 3 rounds of revisions, and final QC',
+            '__📦 Final Deliverables Package:__',
+            'Main Video MP4 HD (1920x1080) + Social Media Versions',
+            'Music-free/Voice-free versions for future edits',
+            'Project Files (After Effects, PSD) - (Optional extra)',
+            'Attachments: Storyboard, Script, and Still Images',
+        ]
+      },
+      {
+        id: 'corporate-intro-video',
+        name: 'Package 2: Corporate Intro / Explainer Video',
+        price: 600,
+        hasQuantity: true,
+        quantityLabel: 'Number of Minutes',
+        priceSuffix: 'per minute',
+        items: [
+            '__Goal:__ A professional short video (60-90 seconds) explaining the company identity, mission, services, or main product in an engaging and easy-to-understand way.',
+            '__Deliverables:__',
+            'High-quality final video in MP4 format (Square 1080x1080 for social platforms + Horizontal 1920x1080 for website and presentations).',
+            'Music-Free version for use with voiceovers in different languages.',
+            'Template for English + Arabic (if the identity is bilingual) – editable for main texts only.',
+            '__Detailed Scope of Service:__',
+            'Discovery Phase: Gathering information (USPs, target audience, tone of voice).',
+            'Script & Voice: Writing an impactful and clear script, with professional voiceover suggestion (voiceover service can be added).',
+            'Storyboard: Providing a detailed sketch for each scene.',
+            '__Design & Production:__',
+            'Custom Visual Scenario: Designing unique scenes reflecting company culture (using actual team/office photos if possible).',
+            'Advanced Motion Graphics: Complex animated infographics to explain processes or statistics.',
+            'Voiceover Recording: Coordinating recording with a professional voiceover artist (included or as an add-on).',
+            'Music & Sound Effects: Selecting authentic music reflecting the brand personality.',
+            'Review & Revision: At least two major reviews (one on the storyboard, and one on the initial video draft).',
         ]
       }
     ]

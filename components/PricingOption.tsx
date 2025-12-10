@@ -16,8 +16,8 @@ interface PricingOptionProps {
   isClientMode: boolean;
 }
 
-const CheckIcon = () => (
-    <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+const CheckIcon = ({ className = "h-4 w-4" }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 20 20" fill="currentColor">
         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
     </svg>
 );
@@ -29,21 +29,21 @@ const QuantitySelector: React.FC<{
     label?: string,
 }> = ({ quantity, onQuantityChange, t, label }) => {
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
             <span className="text-sm font-medium text-slate-700">{label || t.pagesLabel}</span>
             <div className="flex items-center">
                 <button
                     onClick={(e) => { e.stopPropagation(); onQuantityChange(quantity - 1); }}
                     disabled={quantity <= 1}
-                    className="px-2 py-1 border border-slate-300 rounded-l-md text-slate-600 hover:bg-slate-100 disabled:opacity-50"
+                    className="px-2 py-1 border border-slate-300 rounded-l-md text-slate-600 hover:bg-slate-100 disabled:opacity-50 transition-colors"
                     aria-label={t.decreaseQuantity}
                 >
                     -
                 </button>
-                <span className="px-3 py-1 border-t border-b border-slate-300 text-slate-800" aria-label={t.currentQuantity} role="status">{quantity}</span>
+                <span className="px-3 py-1 border-t border-b border-slate-300 text-slate-800 bg-white" aria-label={t.currentQuantity} role="status">{quantity}</span>
                 <button
                     onClick={(e) => { e.stopPropagation(); onQuantityChange(quantity + 1); }}
-                    className="px-2 py-1 border border-slate-300 rounded-r-md text-slate-600 hover:bg-slate-100"
+                    className="px-2 py-1 border border-slate-300 rounded-r-md text-slate-600 hover:bg-slate-100 transition-colors"
                     aria-label={t.increaseQuantity}
                 >
                     +
@@ -79,10 +79,10 @@ const PricingOption: React.FC<PricingOptionProps> = ({
         <div
             onClick={handleToggle}
             className={`
-                p-4 border rounded-xl transition-all duration-300 transform
+                relative p-4 border rounded-xl transition-all duration-300 ease-out transform
                 ${isSelected
-                    ? 'bg-blue-50 border-blue-500 shadow-lg scale-[1.02]'
-                    : `bg-slate-50 border-slate-200 ${!isClientMode ? 'hover:border-slate-300 hover:shadow-md hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500' : ''}`
+                    ? 'bg-blue-50 border-blue-500 shadow-md scale-[1.02] z-10'
+                    : `bg-white border-slate-200 ${!isClientMode ? 'hover:border-blue-300 hover:shadow-md hover:scale-[1.005]' : ''}`
                 }
                 ${isClientMode ? 'cursor-default' : 'cursor-pointer'}
             `}
@@ -95,23 +95,25 @@ const PricingOption: React.FC<PricingOptionProps> = ({
             <div className="flex items-start gap-4">
                 {/* Custom Checkbox/Radio */}
                 <div className={`
-                    flex-shrink-0 w-5 h-5 mt-1 border-2 flex items-center justify-center transition-colors
+                    flex-shrink-0 w-5 h-5 mt-1 border-2 flex items-center justify-center transition-all duration-300
                     ${isRadio ? 'rounded-full' : 'rounded'}
-                    ${isSelected ? 'bg-blue-600 border-blue-600 text-white' : 'bg-white border-slate-300'}
+                    ${isSelected ? 'bg-blue-600 border-blue-600 text-white scale-110' : 'bg-white border-slate-300'}
                     ${isClientMode ? 'opacity-70' : ''}
                 `}>
-                    {isSelected && (isRadio ? <div className="w-2 h-2 bg-white rounded-full"></div> : <CheckIcon />)}
+                    <div className={`transform transition-transform duration-200 ${isSelected ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}>
+                         {isRadio ? <div className="w-2 h-2 bg-white rounded-full"></div> : <CheckIcon />}
+                    </div>
                 </div>
 
                 <div className="flex-grow">
                     <div className="flex flex-col sm:flex-row justify-between sm:items-center">
                         <div className="flex items-center gap-3">
-                            <h4 className="font-bold text-slate-800">{option.name}</h4>
+                            <h4 className={`font-bold transition-colors duration-300 ${isSelected ? 'text-blue-900' : 'text-slate-800'}`}>{option.name}</h4>
                         </div>
-                        <div className={`font-semibold text-slate-900 ${language === 'ar' ? 'sm:text-left' : 'sm:text-right'}`}>
+                        <div className={`font-semibold transition-colors duration-300 ${isSelected ? 'text-blue-900' : 'text-slate-900'} ${language === 'ar' ? 'sm:text-left' : 'sm:text-right'}`}>
                             {option.hasQuantity && quantity > 1 && !isClientMode ? (
                                 <div>
-                                    <p className="text-lg text-slate-800">${totalOptionPrice.toLocaleString()}</p>
+                                    <p className="text-lg">${totalOptionPrice.toLocaleString()}</p>
                                     <p className="text-xs text-slate-500 font-normal mt-1">
                                         ({quantity} &times; ${currentUnitPrice.toLocaleString()})
                                     </p>
