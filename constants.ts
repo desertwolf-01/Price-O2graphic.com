@@ -285,7 +285,8 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         priceSuffix: 'للتصميم',
         priceTiers: [
             { minQuantity: 1, price: 75 },
-            { minQuantity: 5, price: 50 },
+            { minQuantity: 10, price: 37.5 }, // 50% discount
+            { minQuantity: 15, price: 22.5 }, // 70% discount
         ],
         items: [
           '__المخرجات:__',
@@ -313,6 +314,11 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'عدد الفيديوهات',
         priceSuffix: 'لكل فيديو',
+        priceTiers: [
+            { minQuantity: 1, price: 150 },
+            { minQuantity: 10, price: 75 }, // 50% discount
+            { minQuantity: 15, price: 45 }, // 70% discount
+        ],
         items: [
             '__خدمة مخصصة لتصميم العناصر لمقاطع الريلز/الشورتس/تيك توك — جاهزة للمونتاج أو النشر.__',
             '__تنسيقات التسليم:__',
@@ -335,7 +341,8 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         priceSuffix: 'لكل دقيقة',
         priceTiers: [
             { minQuantity: 1, price: 500 },
-            { minQuantity: 5, price: 350 },
+            { minQuantity: 10, price: 250 }, // 50% discount
+            { minQuantity: 15, price: 150 }, // 70% discount
         ],
         items: [
             '__الباقة الذهبية للأنيميشن 2D الكامل__',
@@ -372,6 +379,11 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'عدد الدقائق',
         priceSuffix: 'لكل دقيقة',
+        priceTiers: [
+            { minQuantity: 1, price: 600 },
+            { minQuantity: 10, price: 300 }, // 50% discount
+            { minQuantity: 15, price: 180 }, // 70% discount
+        ],
         items: [
             '__الهدف:__ فيديو احترافي قصير (60-90 ثانية) يشرح هوية الشركة، رسالتها، خدماتها، أو منتجها الرئيسي بشكل جذاب وسهل الفهم.',
             '__المخرجات:__',
@@ -705,7 +717,8 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         priceSuffix: 'per design',
         priceTiers: [
             { minQuantity: 1, price: 75 },
-            { minQuantity: 5, price: 50 },
+            { minQuantity: 10, price: 37.5 }, // 50% discount
+            { minQuantity: 15, price: 22.5 }, // 70% discount
         ],
         items: [
           '__Outputs:__',
@@ -733,6 +746,11 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'Number of Videos',
         priceSuffix: 'per video',
+        priceTiers: [
+            { minQuantity: 1, price: 150 },
+            { minQuantity: 10, price: 75 }, // 50% discount
+            { minQuantity: 15, price: 45 }, // 70% discount
+        ],
         items: [
             '__Customized service for designing elements for Reels/Shorts/TikTok clips — ready for editing or publishing.__',
             '__Delivery Formats:__',
@@ -755,7 +773,8 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         priceSuffix: 'per minute',
         priceTiers: [
             { minQuantity: 1, price: 500 },
-            { minQuantity: 5, price: 350 },
+            { minQuantity: 10, price: 250 }, // 50% discount
+            { minQuantity: 15, price: 150 }, // 70% discount
         ],
         items: [
             '__Gold Package for Full 2D Animation__',
@@ -792,6 +811,11 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'Number of Minutes',
         priceSuffix: 'per minute',
+        priceTiers: [
+            { minQuantity: 1, price: 600 },
+            { minQuantity: 10, price: 300 }, // 50% discount
+            { minQuantity: 15, price: 180 }, // 70% discount
+        ],
         items: [
             '__Goal:__ A professional short video (60-90 seconds) explaining the company identity, mission, services, or main product in an engaging and easy-to-understand way.',
             '__Deliverables:__',
