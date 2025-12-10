@@ -11,6 +11,7 @@ import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
 import PrintHeader from './components/PrintHeader';
 import SuccessScreen from './components/SuccessScreen';
+import DiscountCelebration from './components/DiscountCelebration';
 import { isEmailConfigured, sendProposalEmails } from './email';
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
@@ -60,6 +61,8 @@ function App() {
   const [actionType, setActionType] = useState<string | null>(null);
   const [proposalDate] = useState(new Date());
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [prevDiscountPercentage, setPrevDiscountPercentage] = useState(0);
 
   const t = useMemo(() => translations[language], [language]);
   const serviceCategories = useMemo(() => {
@@ -197,10 +200,17 @@ function App() {
     return basePercentage + bonusPercentage;
   }, [selectedIds.length, isClientMode, subTotalPrice]);
 
-
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
   const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);
   
+  // Logic to trigger celebratory animation
+  useEffect(() => {
+    if (discountPercentage > prevDiscountPercentage && !isClientMode) {
+        setShowCelebration(true);
+    }
+    setPrevDiscountPercentage(discountPercentage);
+  }, [discountPercentage, prevDiscountPercentage, isClientMode]);
+
   const validateAdminInfo = useCallback(() => {
     const { name, phone, email } = clientInfo;
     const isEmailValid = email && !emailError;
@@ -367,6 +377,14 @@ ${t.proposalTo(clientInfo.name)}
             t={t}
             isClientMode={isClientMode}
             onClose={handleCloseSuccessScreen}
+        />
+      )}
+      {showCelebration && (
+        <DiscountCelebration 
+            t={t}
+            discountPercentage={discountPercentage}
+            savedAmount={discount}
+            onClose={() => setShowCelebration(false)}
         />
       )}
     </div>

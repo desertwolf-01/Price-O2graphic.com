@@ -1,3 +1,4 @@
+
 export interface Translation {
   // App.tsx & StaticSection.tsx
   proposalTitle: string;
@@ -62,6 +63,11 @@ export interface Translation {
   successMessageClientBody: string;
   successMessageEmailBody: string;
   backToProposal: string;
+
+  // DiscountCelebration.tsx
+  discountUnlockedTitle: string;
+  discountUnlockedMessage: (percentage: number) => string;
+  youSaved: (amount: string) => string;
 }
 
 const en: Translation = {
@@ -128,6 +134,9 @@ const en: Translation = {
   successMessageClientBody: 'Thank you for your interest!\nWe have received your service inquiry and will contact you shortly to discuss the details.',
   successMessageEmailBody: 'The proposal has been sent successfully.',
   backToProposal: 'Back to Proposal',
+  discountUnlockedTitle: 'Discount Unlocked!',
+  discountUnlockedMessage: (percentage) => `You've unlocked a ${percentage}% discount!`,
+  youSaved: (amount) => `You saved ${amount}!`,
 };
 
 const ar: Translation = {
@@ -194,6 +203,9 @@ const ar: Translation = {
   successMessageClientBody: 'شكراً لاهتمامك!\nلقد استلمنا استفسارك وسنتصل بك قريباً لمناقشة التفاصيل.',
   successMessageEmailBody: 'تم إرسال عرض السعر بنجاة.',
   backToProposal: 'العودة إلى العرض',
+  discountUnlockedTitle: 'تم فتح الخصم!',
+  discountUnlockedMessage: (percentage) => `لقد حصلت على خصم ${percentage}%!`,
+  youSaved: (amount) => `وفرت ${amount}!`,
 };
 
 export const translations = { en, ar };
