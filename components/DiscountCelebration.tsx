@@ -1,4 +1,5 @@
 
+
 import React, { useEffect } from 'react';
 import { Translation } from '../i18n';
 
@@ -21,7 +22,11 @@ const DiscountCelebration: React.FC<DiscountCelebrationProps> = ({ t, discountPe
        <div className="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
 
        {/* Modal */}
-       <div className="bg-white rounded-2xl shadow-2xl p-8 transform animate-bounce-in relative z-10 pointer-events-auto text-center border-4 border-yellow-400 max-w-sm w-full mx-4">
+       <div 
+         onClick={onClose}
+         className="bg-white rounded-2xl shadow-2xl p-8 transform animate-bounce-in relative z-10 pointer-events-auto text-center border-4 border-yellow-400 max-w-sm w-full mx-4 cursor-pointer"
+         title="Click to close"
+       >
           {/* Confetti Elements (Simple CSS) */}
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
              {[...Array(20)].map((_, i) => (
