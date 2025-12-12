@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import StaticSection from './components/StaticSection';
@@ -62,7 +62,9 @@ function App() {
   const [proposalDate] = useState(new Date());
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [prevDiscountPercentage, setPrevDiscountPercentage] = useState(0);
+  
+  // Use a ref to track the previous discount percentage to avoid extra renders
+  const prevDiscountPercentageRef = useRef(0);
 
   const t = useMemo(() => translations[language], [language]);
   const serviceCategories = useMemo(() => {
@@ -180,9 +182,10 @@ function App() {
   const discountPercentage = useMemo(() => {
     if (isClientMode) return 0; // No discounts in client mode
     
-    // Tiered discount based on number of items
+    // 1. Tiered discount based on count of selected services
     let basePercentage = 0;
     const count = selectedIds.length;
+    
     if (count >= 10) {
       basePercentage = 30;
     } else if (count >= 8) {
@@ -191,7 +194,7 @@ function App() {
       basePercentage = 10;
     }
 
-    // Additional discount for high total price
+    // 2. Additional discount for high total price
     let bonusPercentage = 0;
     if (subTotalPrice > 5000) {
       bonusPercentage = 5;
@@ -203,13 +206,15 @@ function App() {
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
   const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);
   
-  // Logic to trigger celebratory animation
+  // Logic to trigger celebratory animation when discount tier increases
   useEffect(() => {
-    if (discountPercentage > prevDiscountPercentage && !isClientMode) {
+    if (isClientMode) return;
+
+    if (discountPercentage > prevDiscountPercentageRef.current) {
         setShowCelebration(true);
     }
-    setPrevDiscountPercentage(discountPercentage);
-  }, [discountPercentage, prevDiscountPercentage, isClientMode]);
+    prevDiscountPercentageRef.current = discountPercentage;
+  }, [discountPercentage, isClientMode]);
 
   const validateAdminInfo = useCallback(() => {
     const { name, phone, email } = clientInfo;

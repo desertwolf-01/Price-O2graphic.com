@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import type { ServiceOption } from '../types';
 import { getUnitPrice } from '../constants';
@@ -79,10 +80,10 @@ const PricingOption: React.FC<PricingOptionProps> = ({
         <div
             onClick={handleToggle}
             className={`
-                relative p-4 border rounded-xl transition-all duration-300 ease-out transform
+                relative p-4 border rounded-xl transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform
                 ${isSelected
-                    ? 'bg-blue-50 border-blue-500 shadow-md scale-[1.02] z-10'
-                    : `bg-white border-slate-200 ${!isClientMode ? 'hover:border-blue-300 hover:shadow-md hover:scale-[1.005]' : ''}`
+                    ? 'bg-blue-50 border-blue-500 shadow-lg scale-[1.02] ring-1 ring-blue-300 z-10'
+                    : `bg-white border-slate-200 ${!isClientMode ? 'hover:border-blue-300 hover:shadow-md hover:scale-[1.01] hover:bg-slate-50' : ''}`
                 }
                 ${isClientMode ? 'cursor-default' : 'cursor-pointer'}
             `}
@@ -95,12 +96,12 @@ const PricingOption: React.FC<PricingOptionProps> = ({
             <div className="flex items-start gap-4">
                 {/* Custom Checkbox/Radio */}
                 <div className={`
-                    flex-shrink-0 w-5 h-5 mt-1 border-2 flex items-center justify-center transition-all duration-300
+                    flex-shrink-0 w-5 h-5 mt-1 border-2 flex items-center justify-center transition-all duration-300 ease-out
                     ${isRadio ? 'rounded-full' : 'rounded'}
-                    ${isSelected ? 'bg-blue-600 border-blue-600 text-white scale-110' : 'bg-white border-slate-300'}
+                    ${isSelected ? 'bg-blue-600 border-blue-600 text-white scale-110 shadow-sm' : 'bg-white border-slate-300 group-hover:border-blue-400'}
                     ${isClientMode ? 'opacity-70' : ''}
                 `}>
-                    <div className={`transform transition-transform duration-200 ${isSelected ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}>
+                    <div className={`transform transition-all duration-200 ${isSelected ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}>
                          {isRadio ? <div className="w-2 h-2 bg-white rounded-full"></div> : <CheckIcon />}
                     </div>
                 </div>

@@ -212,10 +212,10 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         name: '2. التصميم الاحترافي (جودة عالية تُنافس كبار العلامات)',
         price: 300,
         items: [
-          "15 Professional designs (Static images or Carousels)",
-          "Delivery in ready-to-publish formats: High-quality PNG + JPG",
-          "Usage of identity elements: Logo, patterns, icons, fonts",
-          "Compatible with Facebook and Instagram (Ideal sizes)",
+          "15 تصميمًا احترافيًا (صور ثابتة أو كاروسيل)",
+          "التسليم بتنسيقات جاهزة للنشر: PNG + JPG عالية الجودة",
+          "استخدام عناصر الهوية: الشعار، الأنماط، الأيقونات، الخطوط",
+          "متوافق مع فيسبوك وإنستغرام (المقاسات المثالية)",
         ]
       },
       {
@@ -223,9 +223,9 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         name: '3. النشر والجدولة الذكية (لضمان أقصى وصول)',
         price: 75,
         items: [
-          "Scheduling posts at optimal times",
-          "Auto-publishing without client intervention",
-          "Monthly simple report for top performing posts",
+          "جدولة المنشورات في الأوقات المثالية",
+          "نشر تلقائي دون تدخل العميل",
+          "تقرير شهري مبسط لأفضل المنشورات أداءً",
         ]
       }
     ]
