@@ -18,7 +18,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
   {
     id: 'graphic-design-services',
     name: 'خدمات الهوية البصرية والتصميم الجرافيكي',
-    description: 'نقدم حلولاً إبداعية ومبتكرة في عالم التصميم لتعزيز علامتك التجارية. تصفح خدماتنا واختر ما يناسب احتياجاتك للحصول على عرض سعر فوري.',
+    description: 'نقدم حلولاً إبداعية ومبتكرة في عالم التصميم لتعزيز علامتك التجارية. تصفح خدماتنا واختر ما يناسب احتياجاتك للحصول على عرض سعر فوري.<br/><br/><strong>🔄 ملخّص سير العمل من منظور العميل:</strong><br/>1- أريد شعارًا ← أطلب "الهوية الأساسية".<br/>2- أريد حماية هويتي من الاستخدام الخاطئ ← أطلب "دليل الهوية".<br/>3- أريد تطبيقات إبداعية ← أضيف "العناصر الموسعة".<br/>4- أريد حضورًا رقميًّا ← أطلب "التواجد الرقمي".<br/>5- أريد احترافية داخلية ← أطلب "المواد المكتبية".<br/>6- أشارك في معارض أو فعاليات ← أطلب "اللافتات".<br/>7- أوزّع هدايا أو أعزز ولاء العملاء ← أطلب "الأدوات الترويجية".',
     options: [
       {
         id: 'brand-identity',
@@ -35,9 +35,23 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         ],
       },
       {
+        id: 'brand-guidelines',
+        name: '2. دليل الهوية البصرية الشامل (Brand Guidelines Manual)',
+        price: 250,
+        items: [
+          'يُبنى بعد اعتماد الهوية الأساسية، ليشرح كيف تُستخدم كل العناصر.',
+          'قواعد استخدام الشعار (الهوامش، الأحجام، الخلفيات، الممنوعات)',
+          'تفاصيل الألوان الكاملة (بما في ذلك Pantone)',
+          'قواعد الخطوط (بما في ذلك بدائل مؤقتة)',
+          'الأنماط، الأيقونات، أنماط الصور',
+          'أمثلة تطبيقية على السوشيال ميديا، الطباعة، الفواتير، إلخ.',
+          'ملف PDF احترافي',
+        ],
+      },
+      {
         id: 'visual-elements',
-        name: '2. العناصر البصرية الموسعة (لإثراء اللغة البصرية)',
-        price: 200,
+        name: '3. العناصر البصرية الموسعة (لإثراء اللغة البصرية)',
+        price: 100,
         items: [
           '__نمط مرئي متكرر (Pattern):__<br/>• تصميم فني مُنسَّق يعكس هوية العلامة، قابل للتكرار دون انقطاع.',
           '__نمط خلفيات:__<br/>• نسخة من النمط مُعدة خصيصًا للاستخدام كخلفيات في العروض التقديمية، المواقع، أو المواد الرقمية.',
@@ -46,9 +60,21 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         ],
       },
       {
-        id: 'stationery',
-        name: '3. المواد المكتبية والمراسلات (للاحترافية اليومية داخل المؤسسة)',
+        id: 'digital-presence',
+        name: '4. التواجد الرقمي والسوشيال ميديا (لبناء صورة احترافية على الإنترنت)',
         price: 500,
+        items: [
+          '__أغلفة منصات التواصل الاجتماعي:__<br/>o تصميم موحّد ومتناسق لأغلفة فيسبوك، تويتر (إكس)، وLinkedIn<br/>o متوافق مع الهوية البصرية الثنائية (عربي/إنجليزي)<br/>o مُحسّن للأحجام والنسب الخاصة بكل منصة',
+          '__قالب منشورات سوشيال ميديا قابل للتخصيص:__<br/>o تصميم مرن يدعم مختلف أنواع المحتوى<br/>o متوافق مع معايير الرؤية على الجوال والشاشة',
+          '__توقيع بريد إلكتروني موحد للموظفين:__<br/>o يشمل الشعار، الاسم، المسمى الوظيفي، رقم الهاتف، روابط التواصل، والبيانات الأساسية<br/>o متوافق مع عملاء البريد (Outlook، Gmail، إلخ)',
+          '__قالب عرض تقديمي احترافي (PowerPoint):__<br/>o تصميم مخصص يعكس الهوية البصرية الكاملة (الألوان، الخطوط، العناصر الرسومية)<br/>o قابل للتعديل بسهولة من قبل أي موظف',
+          '__شاشة توقف لأجهزة الموظفين:__<br/>o تصميم أنيق يعرض شعار الشركة ورسالة هوية موجزة<br/>o متوافق مع أحجام الشاشات الشائعة (16:9، 4:3)<br/>o يعزز الشعور بالانتماء ويوحّد المظهر البصري داخل بيئة العمل الرقمية',
+        ],
+      },
+      {
+        id: 'stationery',
+        name: '5. المواد المكتبية والمراسلات (للاحترافية اليومية داخل المؤسسة)',
+        price: 400,
         items: [
           '__بطاقات أعمال:__<br/>• 5 تصاميم مخصصة لأدوار مختلفة (مثل: المدير، فريق المبيعات، الدعم الفني، إلخ)، متوافقة مع الهوية البصرية الثنائية (عربي/إنجليزي).',
           '__ورق المراسلات:__<br/>• نسخة بحجم A5<br/>• نسخة بحجم A4<br/>• يتضمن رأس صفحة معتمد للاستخدام الرسمي.',
@@ -61,21 +87,9 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         ],
       },
       {
-        id: 'digital-presence',
-        name: '4. التواجد الرقمي والسوشيال ميديا (لبناء صورة احترافية على الإنترنت)',
-        price: 400,
-        items: [
-          '__أغلفة منصات التواصل الاجتماعي:__<br/>o تصميم موحّد ومتناسق لأغلفة فيسبوك، تويتر (إكس)، وLinkedIn<br/>o متوافق مع الهوية البصرية الثنائية (عربي/إنجليزي)<br/>o مُحسّن للأحجام والنسب الخاصة بكل منصة',
-          '__قالب منشورات سوشيال ميديا قابل للتخصيص:__<br/>o تصميم مرن يدعم مختلف أنواع المحتوى<br/>o متوافق مع معايير الرؤية على الجوال والشاشة',
-          '__توقيع بريد إلكتروني موحد للموظفين:__<br/>o يشمل الشعار، الاسم، المسمى الوظيفي، رقم الهاتف، روابط التواصل، والبيانات الأساسية<br/>o متوافق مع عملاء البريد (Outlook، Gmail، إلخ)',
-          '__قالب عرض تقديمي احترافي (PowerPoint):__<br/>o تصميم مخصص يعكس الهوية البصرية الكاملة (الألوان، الخطوط، العناصر الرسومية)<br/>o قابل للتعديل بسهولة من قبل أي موظف',
-          '__شاشة توقف لأجهزة الموظفين:__<br/>o تصميم أنيق يعرض شعار الشركة ورسالة هوية موجزة<br/>o متوافق مع أحجام الشاشات الشائعة (16:9، 4:3)<br/>o يعزز الشعور بالانتماء ويوحّد المظهر البصري داخل بيئة العمل الرقمية',
-        ],
-      },
-      {
         id: 'promotional-materials',
-        name: '5. اللافتات والعروض الترويجية (للفعاليات، المعارض، والمكتب)',
-        price: 600,
+        name: '6. اللافتات والعروض الترويجية (للفعاليات، المعارض، والمكتب)',
+        price: 500,
         items: [
           '__اللوحة الخارجية للمكتب:__<br/>o تصميم احترافي يعرض اسم الشركة، الشعار، ونشاطها الرئيسي<br/>o متوافق مع متطلبات الرؤية من مسافات بعيدة<br/>o يراعي التناسق البصري مع الهوية الثنائية',
           '__رول أب (Roll-up Banner):__<br/>o تصميم جذاب ومناسب للاستخدام في المعارض، المؤتمرات، أو عند مدخل المكتب<br/>o يحتوي على رسالة رئيسية واضحة، شعار، ومعلومات التواصل<br/>o جاهز للطباعة بأبعاد قياسية (عادةً 85×200 سم)',
@@ -86,23 +100,30 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         ],
       },
       {
-        id: 'promo-tools',
-        name: '6. الأدوات الترويجية والهدايا التفاعلية (لبناء الولاء وتعزيز الانتشار)',
-        price: 300,
+        id: 'promotional-tools-package',
+        name: '7. الأدوات الترويجية والهدايا التفاعلية (لبناء الولاء وتعزيز الانتشار)',
+        price: 550,
         items: [
-          '__أقلام مكتبية:__<br/>تصميم أنيق يحمل شعار الشركة، مناسب للتوزيع في الفعاليات أو كهدايا للعملاء.',
-          '__أكواب (سيراميك / بلاستيك):__<br/>مخصصة للاستخدام اليومي، تحمل الشعار والهوية البصرية بشكل جذاب ودائم.',
-          '__طاقية (قبعة):__<br/>تصميم عملي ومرن يعزز ظهور العلامة في المناسبات الخارجية أو كجزء من الزي الترويجي.',
-          '__فلاشة USB:__<br/>هدية ذكية تحمل شعار الشركة، مفيدة للعملاء والشركاء، مع إمكانية تخصيص العبوة.',
-          '__دبوس شعار (Pin Badge):__<br/>قطعة صغيرة لكنها فعّالة لتمثيل الهوية في الاجتماعات، المؤتمرات، أو كإكسسوار للموظفين.',
-          '__أكياس تحمل الشعار:__<br/>• أكياس ورقية (صديقة للبيئة)<br/>• أكياس بلاستيكية (متينة وقابلة لإعادة الاستخدام)<br/>• مصممة للاستخدام في التغليف أو التوزيع الترويجي',
-          '__علم الشركة:__<br/>تصميم رسمي يُستخدم في المكتب، الفعاليات، أو السيارات، يعكس الهوية الوطنية والمؤسسية.',
-          '__ميدالية شعار:__<br/>قطعة تذكارية تُستخدم في المناسبات الخاصة أو كجائزة في الفعاليات الداخلية.',
-          '__مغلف هدايا مخصص:__<br/>تصميم أنيق يُستخدم لتغليف الهدايا أو المستندات المهمة، يعزز الانطباع الراقي بالعلامة.',
-          '__أجندة مكتبية:__<br/>دليل سنوي يجمع بين الوظيفية والترويج، يحتوي على شعار الشركة وتقويم مخصص.',
-          '__مفكرة جيب:__<br/>صغيرة الحجم، سهلة الحمل، مثالية للتوزيع الجماعي مع مساحة للشعار والبيانات الأساسية.',
-          '__مظلة تحمل الشعار:__<br/>هدية عملية تُستخدم يوميًا، وتعزز رؤية العلامة في الأماكن العامة.',
-        ],
+            '__أقلام مكتبية:__<br/>تصميم أنيق يحمل شعار الشركة، مناسب للتوزيع في الفعاليات أو كهدايا للعملاء.',
+            '__أكواب (سيراميك / بلاستيك):__<br/>مخصصة للاستخدام اليومي، تحمل الشعار والهوية البصرية بشكل جذاب ودائم.',
+            '__طاقية (قبعة):__<br/>تصميم عملي ومرن يعزز ظهور العلامة في المناسبات الخارجية أو كجزء من الزي الترويجي.',
+            '__فلاشة USB:__<br/>هدية ذكية تحمل شعار الشركة، مفيدة للعملاء والشركاء، مع إمكانية تخصيص العبوة.',
+            '__دبوس شعار (Pin Badge):__<br/>قطعة صغيرة لكنها فعّالة لتمثيل الهوية في الاجتماعات، المؤتمرات، أو كإكسسوار للموظفين.',
+            '__أكياس تحمل الشعار:__<br/>أكياس ورقية (صديقة للبيئة) وأكياس بلاستيكية (متينة وقابلة لإعادة الاستخدام)، مصممة للاستخدام في التغليف أو التوزيع الترويجي.',
+            '__علم الشركة:__<br/>تصميم رسمي يُستخدم في المكتب، الفعاليات، أو السيارات، يعكس الهوية الوطنية والمؤسسية.',
+            '__ميدالية شعار:__<br/>قطعة تذكارية تُستخدم في المناسبات الخاصة أو كجائزة في الفعاليات الداخلية.',
+            '__مغلف هدايا مخصص:__<br/>تصميم أنيق يُستخدم لتغليف الهدايا أو المستندات المهمة، يعزز الانطباع الراقي بالعلامة.',
+            '__أجندة مكتبية:__<br/>دليل سنوي يجمع بين الوظيفية والترويج، يحتوي على شعار الشركة وتقويم مخصص.',
+            '__مفكرة جيب:__<br/>صغيرة الحجم، سهلة الحمل، مثالية للتوزيع الجماعي مع مساحة للشعار والبيانات الأساسية.',
+            '__مظلة تحمل الشعار:__<br/>هدية عملية تُستخدم يوميًا، وتعزز رؤية العلامة في الأماكن العامة.',
+            '__وسادة مكتب (Desk Mat / Mouse Pad):__<br/>تحمل الشعار أو نمطًا بصريًّا من الهوية، مفيدة جدًّا للموظفين والعملاء (خاصة المبدعين أو العاملين على الحاسوب)، تُستخدم يوميًّا لضمان عرض متكرر للعلامة.',
+            '__حقيبة ظهر أو حقيبة يد ترويجية (Tote Bag / Backpack):__<br/>شائعة جدًّا في الفعاليات والمعارض. حقيبة قماش قوية (Tote) تحمل رسالة مستدامة + شعار، أو حقيبة ظهر صغيرة يمكن توزيعها كهدية قيّمة للعملاء المميزين.',
+            '__شاحن لاسلكي أو باور بانك مخصص:__<br/>هدايا عملية وعصرية، خاصة في عالم رقمي. تُخصّص بطباعة الشعار أو تصميم معدني أنيق لتترك انطباعًا "ذكيًّا" عن علامتك.',
+            '__مغناطيس ثلاجة (Fridge Magnet):__<br/>صغير، رخيص الإنتاج، لكنه فعّال. يُبقي شعارك في بيوت العملاء (خاصة إذا كنت تقدم خدمات استهلاكية أو يومية).',
+            '__بطاقة خصم أو عرض حصري (Loyalty Card / VIP Pass):__<br/>مصنوعة من كرتون فاخر أو بلاستيك، تُستخدم لتشجيع التفاعل المتكرر مع العميل (QR Code أو ملموسة).',
+            '__علبة مناديل صغيرة (مع شعار):__<br/>شائعة في المطاعم، العيادات، والمعارض. عملية وشخصية تُستخدم في لحظات يومية.',
+            '__ملصقات (Stickers) عالية الجودة:__<br/>شائعة جدًّا بين الجمهور الشاب والمجتمعات الإبداعية. تُلصق على الأجهزة، الدفاتر، السيارات. تكلفة منخفضة، انتشار عالٍ.',
+        ]
       },
     ],
   },
@@ -158,11 +179,11 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
           'عرض منظم للمنتجات أو الخدمات مع: صور عالية الجودة، وصف مختصر، خيارات تصنيف أو فلاتر.',
           '__5. المعرض (Gallery)__',
           'قسم لعرض: صور من المعارض أو المشاريع السابقة، فيديوهات أو ريلز، تنسيق شبكي أو كاروسيل جذاب.',
-          '__6. اتصل بنا (Contact Us)__',
+          '__6. Contact Us__',
           'صفحة تحتوي على: نموذج تواصل مباشر، خريطة تفاعلية (Google Maps)، معلومات الاتصال (هاتف، بريد، عنوان).',
-          '__7. المتابعة والصيانة (Support & Maintenance)__',
+          '__7. Support & Maintenance__',
           'تحديثات دورية للمحتوى (حسب الاتفاق)، مراقبة أداء الموقع، دعم فني لمدة 3 أشهر بعد التسليم.',
-          '__8. تأمين الموقع & Hosting Setup (Security & Hosting)__',
+          '__8. Security & Hosting Setup__',
           'تركيب شهادة SSL لجعل الموقع آمناً (https://)، إعدادات حماية أساسية ضد الاختراق.',
         ]
       }
@@ -191,10 +212,10 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         name: '2. التصميم الاحترافي (جودة عالية تُنافس كبار العلامات)',
         price: 300,
         items: [
-          "15 تصميمًا احترافيًا (صور ثابتة أو كاروسيل)",
-          "تسليم بتنسيقات جاهزة للنشر: PNG + JPG عالية الجودة",
-          "استخدام عناصر الهوية: الشعار، الأنماط، الأيقونات، الخطوط",
-          "متوافق مع فيسبوك وإنستغرام (المقاسات المثالية)",
+          "15 Professional designs (Static images or Carousels)",
+          "Delivery in ready-to-publish formats: High-quality PNG + JPG",
+          "Usage of identity elements: Logo, patterns, icons, fonts",
+          "Compatible with Facebook and Instagram (Ideal sizes)",
         ]
       },
       {
@@ -202,9 +223,9 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         name: '3. النشر والجدولة الذكية (لضمان أقصى وصول)',
         price: 75,
         items: [
-          "جدولة المنشورات في الأوقات المثالية",
-          "نشر تلقائي دون تدخل العميل",
-          "تقرير شهري مبسط لأفضل المنشورات أداءً",
+          "Scheduling posts at optimal times",
+          "Auto-publishing without client intervention",
+          "Monthly simple report for top performing posts",
         ]
       }
     ]
@@ -431,13 +452,13 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'sticker-design-new',
         name: 'تصميم ملصق (Sticker) للعبوة لكل منتج',
         price: 150,
-        items: ['تصميم ملصق احترافي'],
+        items: ['تصميم ملصق'],
       },
       {
         id: 'sticker-design-edit',
         name: 'تعديل تصميم ملصق (Sticker) للعبوة لكل منتج',
         price: 50,
-        items: ['تعديل تصميم الملصق الحالي'],
+        items: ['تعديل تصميم الملصق'],
       },
     ]
   }
@@ -464,9 +485,24 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ],
       },
       {
+        id: 'brand-guidelines',
+        name: '2. Comprehensive Brand Guidelines Manual',
+        price: 250,
+        items: [
+          'Developed after core identity approval to explain how to use all elements.',
+          'Logo usage rules (margins, sizes, backgrounds, do\'s and don\'ts)',
+          'Full color details (including Pantone)',
+          'Typography rules (including fallback fonts)',
+          'Patterns, Icons, and Imagery styles',
+          'Application examples for social media, print, stationery, etc.',
+          'Cultural guidelines for the Saudi market',
+          'Professional interactive PDF file',
+        ],
+      },
+      {
         id: 'visual-elements',
-        name: '2. Extended Visual Elements (Enriching Visual Language)',
-        price: 200,
+        name: '3. Extended Visual Elements (Enriching Visual Language)',
+        price: 100,
         items: [
           '__Visual Pattern:__<br/>• Coordinated artistic design reflecting brand identity, repeatable without interruption.',
           '__Background Pattern:__<br/>• Version of the pattern tailored for backgrounds in presentations, websites, or digital materials.',
@@ -475,9 +511,21 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ],
       },
       {
-        id: 'stationery',
-        name: '3. Stationery & Correspondence (Daily Professionalism)',
+        id: 'digital-presence',
+        name: '4. Digital Presence & Social Media (Building Professional Online Image)',
         price: 500,
+        items: [
+          '__Social Media Covers:__<br/>o Unified and consistent design for Facebook, Twitter (X), and LinkedIn covers<br/>o Compatible with bilingual identity (Arabic/English)<br/>o Optimized for sizes and ratios of each platform',
+          '__Customizable Social Media Template:__<br/>o Flexible design supporting various content types<br/>o Compatible with visibility standards on mobile and screens',
+          '__Unified Email Signature:__<br/>o Includes Logo, Name, Job Title, Phone Number, Social Links, and basic data<br/>o Compatible with email clients (Outlook, Gmail, etc.)',
+          '__Professional Presentation Template (PowerPoint):__<br/>o Custom design reflecting full visual identity (Colors, Fonts, Graphic Elements)<br/>o Easily editable by any employee',
+          '__Screensaver:__<br/>o Elegant design displaying company logo and brief identity message<br/>o Compatible with common screen sizes (16:9, 4:3)<br/>o Enhances sense of belonging and unifies visual look in digital work environment',
+        ],
+      },
+      {
+        id: 'stationery',
+        name: '5. Stationery & Correspondence (Daily Professionalism)',
+        price: 400,
         items: [
           '__Business Cards:__<br/>• 5 custom designs for different roles (e.g., Manager, Sales Team, Tech Support, etc.), compatible with bilingual identity (Arabic/English).',
           '__Letterhead:__<br/>• A5 version<br/>• A4 version<br/>• Includes approved header for official use.',
@@ -490,21 +538,9 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ],
       },
       {
-        id: 'digital-presence',
-        name: '4. Digital Presence & Social Media (Building Professional Online Image)',
-        price: 400,
-        items: [
-          '__Social Media Covers:__<br/>o Unified and consistent design for Facebook, Twitter (X), and LinkedIn covers<br/>o Compatible with bilingual identity (Arabic/English)<br/>o Optimized for sizes and ratios of each platform',
-          '__Customizable Social Media Template:__<br/>o Flexible design supporting various content types<br/>o Compatible with visibility standards on mobile and screens',
-          '__Unified Email Signature:__<br/>o Includes Logo, Name, Job Title, Phone Number, Social Links, and basic data<br/>o Compatible with email clients (Outlook, Gmail, etc.)',
-          '__Professional Presentation Template (PowerPoint):__<br/>o Custom design reflecting full visual identity (Colors, Fonts, Graphic Elements)<br/>o Easily editable by any employee',
-          '__Screensaver:__<br/>o Elegant design displaying company logo and brief identity message<br/>o Compatible with common screen sizes (16:9, 4:3)<br/>o Enhances sense of belonging and unifies visual look in digital work environment',
-        ],
-      },
-      {
         id: 'promotional-materials',
-        name: '5. Signage & Promotional Materials (Events, Exhibitions, Office)',
-        price: 600,
+        name: '6. Signage & Promotional Materials (Events, Exhibitions, Office)',
+        price: 500,
         items: [
           '__External Office Signboard:__<br/>o Professional design displaying company name, logo, and main activity<br/>o Compatible with long-distance visibility requirements<br/>o Considers visual consistency with bilingual identity',
           '__Roll-up Banner:__<br/>o Attractive design suitable for exhibitions, conferences, or office entrance<br/>o Contains clear key message, logo, and contact info<br/>o Ready for print in standard dimensions (usually 85x200 cm)',
@@ -515,23 +551,30 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ],
       },
       {
-        id: 'promo-tools',
-        name: '6. Promotional Tools & Giveaways (Building Loyalty & Reach)',
-        price: 300,
+        id: 'promotional-tools-package',
+        name: '7. Promotional Tools & Interactive Giveaways (Building Loyalty & Reach)',
+        price: 550,
         items: [
-          '__Office Pens:__<br/>Elegant design carrying company logo, suitable for distribution at events or as client gifts.',
-          '__Mugs (Ceramic / Plastic):__<br/>Customized for daily use, carrying logo and visual identity attractively and permanently.',
-          '__Cap:__<br/>Practical and flexible design enhancing brand visibility at outdoor events or as part of promotional uniform.',
-          '__USB Drive:__<br/>Smart gift carrying company logo, useful for clients and partners, with optional packaging customization.',
-          '__Logo Pin (Badge):__<br/>Small but effective piece to represent identity in meetings, conferences, or as employee accessory.',
-          '__Branded Bags:__<br/>• Paper bags (Eco-friendly)<br/>• Plastic bags (Durable and reusable)<br/>• Designed for use in packaging or promotional distribution',
-          '__Company Flag:__<br/>Official design used in office, events, or cars, reflecting national and corporate identity.',
-          '__Logo Keychain:__<br/>Souvenir piece used for special occasions or as a prize in internal events.',
-          '__Custom Gift Box/Wrapper:__<br/>Elegant design used for wrapping gifts or important documents, enhancing the upscale impression of the brand.',
-          '__Office Agenda:__<br/>Annual guide combining functionality and promotion, containing company logo and custom calendar.',
-          '__Pocket Notebook:__<br/>Small size, easy to carry, ideal for mass distribution with space for logo and basic data.',
-          '__Umbrella with Logo:__<br/>Practical gift used daily, enhancing brand visibility in public places.',
-        ],
+            '__Office Pens:__<br/>Elegant design carrying company logo, suitable for distribution at events or as client gifts.',
+            '__Mugs (Ceramic / Plastic):__<br/>Customized for daily use, carrying logo and visual identity attractively and permanently.',
+            '__Cap:__<br/>Practical and flexible design enhancing brand visibility at outdoor events or as part of promotional uniform.',
+            '__USB Drive:__<br/>Smart gift carrying company logo, useful for clients and partners, with optional packaging customization.',
+            '__Logo Pin (Badge):__<br/>Small but effective piece to represent identity in meetings, conferences, or as employee accessory.',
+            '__Branded Bags:__<br/>Paper bags (Eco-friendly) and Plastic bags, designed for use in packaging or promotional distribution.',
+            '__Company Flag:__<br/>Official design used in office, events, or cars, reflecting national and corporate identity.',
+            '__Logo Keychain:__<br/>Souvenir piece used for special occasions or as a prize in internal events.',
+            '__Custom Gift Box/Wrapper:__<br/>Elegant design used for wrapping gifts or important documents, enhancing the upscale impression of the brand.',
+            '__Office Agenda:__<br/>Annual guide combining functionality and promotion, containing company logo and custom calendar.',
+            '__Pocket Notebook:__<br/>Small size, easy to carry, ideal for mass distribution with space for logo and basic data.',
+            '__Umbrella with Logo:__<br/>Practical gift used daily, enhancing brand visibility in public places.',
+            '__Desk Mat / Mouse Pad:__<br/>Carries logo or visual pattern, very useful for employees and clients, ensures daily brand exposure.',
+            '__Promotional Tote Bag / Backpack:__<br/>Sturdy canvas bag (Tote) or small backpack, very common in events and exhibitions.',
+            '__Wireless Charger or Custom Power Bank:__<br/>Practical and modern gifts, customized with logo print or elegant metal design.',
+            '__Fridge Magnet:__<br/>Small, low production cost, but effective. Keeps your logo in clients\' homes.',
+            '__Loyalty Card / VIP Pass:__<br/>Made of premium cardboard or plastic, used to encourage repeated interaction with the client.',
+            '__Small Tissue Box (Branded):__<br/>Common in restaurants, clinics, and exhibitions. Practical and personal.',
+            '__High Quality Stickers:__<br/>Very common among young audience and creative communities. Low cost, high reach.',
+        ]
       },
     ],
   },

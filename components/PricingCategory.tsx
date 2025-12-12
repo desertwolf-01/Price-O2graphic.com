@@ -1,3 +1,4 @@
+
 import React from 'react';
 import PricingOption from './PricingOption';
 import type { ServiceCategory } from '../types';
@@ -28,7 +29,12 @@ const PricingCategory: React.FC<PricingCategoryProps> = ({
     <div className="bg-white rounded-2xl shadow-lg border border-slate-200/80 print:shadow-none print:border-0 overflow-hidden">
       <div className={`p-6 bg-slate-50/50 border-b border-slate-200/80 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
         <h3 className="text-2xl font-bold text-slate-800">{category.name}</h3>
-        {category.description && <p className="mt-2 text-md text-slate-600">{category.description}</p>}
+        {category.description && (
+          <div 
+            className="mt-2 text-md text-slate-600 leading-relaxed" 
+            dangerouslySetInnerHTML={{ __html: category.description }} 
+          />
+        )}
       </div>
 
       <div className="p-6 space-y-4">
