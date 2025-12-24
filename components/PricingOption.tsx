@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { ServiceOption } from '../types';
 import { getUnitPrice } from '../constants';
 import type { Translation } from '../i18n';
@@ -27,6 +27,14 @@ const QuantitySelector: React.FC<{
     t: Translation,
     label?: string,
 }> = ({ quantity, onQuantityChange, t, label }) => {
+    const [isPulsing, setIsPulsing] = useState(false);
+
+    useEffect(() => {
+        setIsPulsing(true);
+        const timer = setTimeout(() => setIsPulsing(false), 300);
+        return () => clearTimeout(timer);
+    }, [quantity]);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = parseInt(e.target.value, 10);
         if (!isNaN(val)) {
@@ -43,33 +51,33 @@ const QuantitySelector: React.FC<{
     return (
         <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
             {label && <span className="text-sm font-medium text-slate-700">{label}</span>}
-            <div className="flex items-center border border-slate-200 rounded-lg shadow-sm bg-white overflow-hidden h-8" style={{ minWidth: '110px' }}>
-                {/* Plus Button (Matches image position) */}
+            <div className="flex items-center border border-slate-200 rounded-lg shadow-sm bg-white overflow-hidden h-9 transition-shadow hover:shadow-md" style={{ minWidth: '120px' }}>
+                {/* Plus Button */}
                 <button
                     onClick={(e) => { e.stopPropagation(); onQuantityChange(quantity + 1); }}
-                    className="w-8 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-blue-600 transition-colors font-bold text-lg"
+                    className="w-10 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-blue-600 active:scale-90 transition-all font-bold text-xl"
                     aria-label={t.increaseQuantity}
                 >
                     +
                 </button>
                 
-                {/* Number Input with White Background and Black Text */}
+                {/* Number Input */}
                 <div className="flex-1 bg-white h-full flex items-center justify-center border-x border-slate-100">
                     <input
                         type="number"
                         value={quantity === 0 ? '' : quantity}
                         onChange={handleInputChange}
                         onBlur={handleBlur}
-                        className="w-full bg-transparent border-none text-slate-900 font-bold text-center text-sm focus:outline-none focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none p-0"
+                        className={`w-full bg-transparent border-none text-slate-900 font-bold text-center text-base focus:outline-none focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none p-0 transition-transform ${isPulsing ? 'animate-value-pop' : ''}`}
                         aria-label={t.currentQuantity}
                     />
                 </div>
 
-                {/* Minus Button (Matches image position) */}
+                {/* Minus Button */}
                 <button
                     onClick={(e) => { e.stopPropagation(); onQuantityChange(Math.max(1, quantity - 1)); }}
                     disabled={quantity <= 1}
-                    className="w-8 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-red-500 disabled:opacity-20 transition-colors font-bold text-lg"
+                    className="w-10 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-red-500 disabled:opacity-20 active:scale-90 transition-all font-bold text-xl"
                     aria-label={t.decreaseQuantity}
                 >
                     -
@@ -91,9 +99,16 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   t,
   isClientMode,
 }) => {
+    const [pricePulse, setPricePulse] = useState(false);
     const selectorType = isRadio ? 'radio' : 'checkbox';
     const currentUnitPrice = getUnitPrice(option, quantity);
     const totalOptionPrice = currentUnitPrice * (option.hasQuantity ? quantity : 1);
+
+    useEffect(() => {
+        setPricePulse(true);
+        const timer = setTimeout(() => setPricePulse(false), 300);
+        return () => clearTimeout(timer);
+    }, [totalOptionPrice, isSelected]); // Pulsing on value change OR selection state change
 
     const handleToggle = () => {
         if (!isClientMode) {
@@ -105,12 +120,12 @@ const PricingOption: React.FC<PricingOptionProps> = ({
         <div
             onClick={handleToggle}
             className={`
-                relative p-4 border rounded-xl transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform
+                relative p-5 border rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform
                 ${isSelected
-                    ? 'bg-blue-50 border-blue-500 shadow-lg scale-[1.02] ring-1 ring-blue-300 z-10'
-                    : `bg-white border-slate-200 ${!isClientMode ? 'hover:border-blue-300 hover:shadow-md hover:scale-[1.01] hover:bg-slate-50' : ''}`
+                    ? 'bg-blue-50 border-blue-500 shadow-xl scale-[1.015] ring-2 ring-blue-500/20 z-10'
+                    : `bg-white border-slate-200 hover:border-blue-300 hover:shadow-lg hover:translate-y-[-2px] hover:bg-slate-50`
                 }
-                ${isClientMode ? 'cursor-default' : 'cursor-pointer'}
+                ${isClientMode ? 'cursor-default pointer-events-none opacity-90' : 'cursor-pointer'}
             `}
             role={selectorType}
             aria-checked={isSelected}
@@ -118,50 +133,55 @@ const PricingOption: React.FC<PricingOptionProps> = ({
             tabIndex={isClientMode ? -1 : 0}
             onKeyDown={(e) => { if (!isClientMode && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); onToggle(); } }}
         >
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-5">
                 {/* Custom Checkbox/Radio */}
                 <div className={`
-                    flex-shrink-0 w-5 h-5 mt-1 border-2 flex items-center justify-center transition-all duration-300 ease-out
-                    ${isRadio ? 'rounded-full' : 'rounded'}
-                    ${isSelected ? 'bg-blue-600 border-blue-600 text-white scale-110 shadow-sm' : 'bg-white border-slate-300 group-hover:border-blue-400'}
-                    ${isClientMode ? 'opacity-70' : ''}
+                    flex-shrink-0 w-6 h-6 mt-1 border-2 flex items-center justify-center transition-all duration-300 ease-out
+                    ${isRadio ? 'rounded-full' : 'rounded-lg'}
+                    ${isSelected ? 'bg-blue-600 border-blue-600 text-white scale-110 shadow-md shadow-blue-200' : 'bg-white border-slate-300 group-hover:border-blue-400'}
                 `}>
-                    <div className={`transform transition-all duration-200 ${isSelected ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}>
-                         {isRadio ? <div className="w-2 h-2 bg-white rounded-full"></div> : <CheckIcon />}
+                    <div className={`transform transition-all duration-300 ${isSelected ? 'scale-100 opacity-100 rotate-0' : 'scale-0 opacity-0 -rotate-45'}`}>
+                         {isRadio ? <div className="w-2.5 h-2.5 bg-white rounded-full shadow-sm"></div> : <CheckIcon className="h-4 w-4 stroke-[3]" />}
                     </div>
                 </div>
 
                 <div className="flex-grow">
-                    <div className="flex flex-col sm:flex-row justify-between sm:items-center">
-                        <div className="flex items-center gap-3">
-                            <h4 className={`font-bold transition-colors duration-300 ${isSelected ? 'text-blue-900' : 'text-slate-800'}`}>{option.name}</h4>
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-3">
+                        <div className="flex-1">
+                            <h4 className={`text-lg font-bold transition-colors duration-300 ${isSelected ? 'text-blue-900' : 'text-slate-800'}`}>
+                                {option.name}
+                            </h4>
                         </div>
-                        <div className={`font-semibold transition-colors duration-300 ${isSelected ? 'text-blue-900' : 'text-slate-900'} ${language === 'ar' ? 'sm:text-left' : 'sm:text-right'}`}>
-                            {option.hasQuantity && quantity > 1 && !isClientMode ? (
-                                <div>
-                                    <p className="text-lg">${totalOptionPrice.toLocaleString()}</p>
-                                    <p className="text-xs text-slate-500 font-normal mt-1">
-                                        ({quantity} &times; ${currentUnitPrice.toLocaleString()})
+                        <div className={`transition-all duration-300 ${language === 'ar' ? 'sm:text-left' : 'sm:text-right'}`}>
+                            <div className={`${pricePulse ? 'animate-value-pop' : ''}`}>
+                                {option.hasQuantity && quantity > 1 && !isClientMode ? (
+                                    <div className="flex flex-col items-end">
+                                        <p className={`text-xl font-black ${isSelected ? 'text-blue-700' : 'text-slate-900'}`}>
+                                            ${totalOptionPrice.toLocaleString()}
+                                        </p>
+                                        <p className="text-xs text-slate-400 font-medium mt-0.5">
+                                            ({quantity} × ${currentUnitPrice.toLocaleString()})
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <p className={`text-xl font-black ${isSelected ? 'text-blue-700' : 'text-slate-900'}`}>
+                                        ${currentUnitPrice.toLocaleString()}
+                                        {option.hasQuantity && <span className="text-sm text-slate-400 font-normal"> {option.priceSuffix || t.perPageSuffix}</span>}
                                     </p>
-                                </div>
-                            ) : (
-                                <p className="text-lg">
-                                    ${currentUnitPrice.toLocaleString()}
-                                    {option.hasQuantity && <span className="text-sm text-slate-500 font-normal"> {option.priceSuffix || t.perPageSuffix}</span>}
-                                </p>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
                     
                     {option.items && (
-                        <ul className={`mt-2 text-sm text-slate-600 space-y-1 ${language === 'ar' ? 'pr-4' : 'pl-4'} list-disc list-inside`}>
+                        <ul className={`mt-3 text-sm text-slate-600 space-y-1.5 ${language === 'ar' ? 'pr-4 border-r-2 border-slate-100' : 'pl-4 border-l-2 border-slate-100'} transition-opacity duration-300 ${isSelected ? 'opacity-100' : 'opacity-80'}`}>
                             {option.items.map((item, index) => (
-                                <li key={index} dangerouslySetInnerHTML={{ __html: item.replace(/__(.*?)__/g, '<strong>$1</strong>') }} />
+                                <li key={index} className="leading-relaxed" dangerouslySetInnerHTML={{ __html: item.replace(/__(.*?)__/g, '<strong class="text-slate-800 font-bold">$1</strong>') }} />
                             ))}
                         </ul>
                     )}
 
-                    <div className="mt-4 flex flex-wrap items-center gap-4">
+                    <div className="mt-5 flex flex-wrap items-center gap-4">
                         {option.hasQuantity && !isClientMode && (
                             <QuantitySelector quantity={quantity} onQuantityChange={onQuantityChange} t={t} label={option.quantityLabel} />
                         )}
@@ -171,7 +191,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
 
             {/* Print-only view */}
             {isSelected && (
-                <div className="hidden print:block pt-2">
+                <div className="hidden print:block pt-3 border-t border-slate-100 mt-3">
                     <div className="flex justify-between items-baseline">
                         <div className="flex items-center gap-2">
                            <h4 className="font-bold text-sm text-black">{option.name}</h4>
@@ -184,13 +204,6 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                         <div className="flex justify-end">
                             <p className="font-bold text-sm text-black">= ${totalOptionPrice.toLocaleString()}</p>
                         </div>
-                    )}
-                    {option.items && (
-                        <ul className="mt-1 text-xs text-gray-700 space-y-0.5 list-disc list-inside">
-                             {option.items.map((item, index) => (
-                                <li key={index} dangerouslySetInnerHTML={{ __html: item.replace(/__(.*?)__/g, '<strong>$1</strong>') }} />
-                            ))}
-                        </ul>
                     )}
                 </div>
             )}

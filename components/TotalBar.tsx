@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Translation } from '../i18n';
 
 interface TotalBarProps {
@@ -40,6 +39,16 @@ const TotalBar: React.FC<TotalBarProps> = ({
   formError,
   isClientMode,
 }) => {
+  const [pulseTotal, setPulseTotal] = useState(false);
+
+  useEffect(() => {
+    if (finalTotalPrice > 0) {
+      setPulseTotal(true);
+      const timer = setTimeout(() => setPulseTotal(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [finalTotalPrice]);
+
   if (finalTotalPrice <= 0 && !formError) {
     return null;
   }
@@ -62,7 +71,9 @@ const TotalBar: React.FC<TotalBarProps> = ({
             <>
               <div className="flex items-baseline gap-2">
                 <span className="text-lg font-medium text-slate-600">{t.totalPrice}:</span>
-                <span className="text-4xl font-extrabold text-slate-800">${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className={`text-4xl font-extrabold text-slate-800 transition-transform inline-block ${pulseTotal ? 'animate-value-pop' : ''}`}>
+                    ${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
                 {discount > 0 && !isClientMode && (
                   <span className="text-base font-medium text-slate-500 line-through">${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 )}
@@ -84,7 +95,7 @@ const TotalBar: React.FC<TotalBarProps> = ({
                 <button
                   onClick={onSendEmail}
                   disabled={isSending}
-                  className="w-full sm:w-auto justify-center flex items-center gap-2 px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300"
+                  className="w-full sm:w-auto justify-center flex items-center gap-2 px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 transition-transform active:scale-95"
                 >
                   {isClientMode ? (
                       isSending ? t.sending : t.sendProposal
@@ -98,7 +109,7 @@ const TotalBar: React.FC<TotalBarProps> = ({
                 {!isClientMode && (
                   <button
                     onClick={onClearSelection}
-                    className="w-full sm:w-auto justify-center flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-slate-700 bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                    className="w-full sm:w-auto justify-center flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-slate-700 bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-colors"
                   >
                     {t.clearSelection}
                   </button>
