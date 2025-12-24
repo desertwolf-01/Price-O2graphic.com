@@ -76,15 +76,15 @@ const StaticSection: React.FC<StaticSectionProps> = ({
           {/* Client Phone */}
           <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
             <label htmlFor="phone" className="block text-sm font-medium text-slate-700">{t.clientPhoneLabel}</label>
-            <div className="mt-1 flex rounded-md shadow-sm">
+            <div className={`mt-1 flex rounded-md shadow-sm ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
                 <select
                     name="countryCode"
                     id="countryCode"
                     value={clientInfo.countryCode}
                     onChange={onClientInfoChange}
                     disabled={isClientMode}
-                    className={`block appearance-none border border-slate-300 py-2 bg-slate-50 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 ${language === 'ar' ? 'rounded-r-md border-l-0 pl-3 pr-8' : 'rounded-l-md border-r-0 pr-3 pl-8'}`}
-                    style={{ backgroundImage: 'none' }} // Remove default arrow
+                    className={`block appearance-none border border-slate-300 py-2 bg-slate-50 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 ${language === 'ar' ? 'rounded-l-md border-r-0 pl-3 pr-8' : 'rounded-l-md border-r-0 pr-3 pl-8'}`}
+                    style={{ backgroundImage: 'none' }}
                 >
                     {countries.map(country => (
                         <option key={country.code} value={country.dial_code}>{`${country.code} (${country.dial_code})`}</option>
@@ -98,7 +98,7 @@ const StaticSection: React.FC<StaticSectionProps> = ({
                     onChange={onClientInfoChange}
                     placeholder={t.clientPhonePlaceholder}
                     disabled={isClientMode}
-                    className={`block w-full flex-1 px-3 py-2 bg-white border border-slate-300 text-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none ${language === 'ar' ? 'rounded-l-md' : 'rounded-r-md'}`}
+                    className={`block w-full flex-1 px-3 py-2 bg-white border border-slate-300 text-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none ${language === 'ar' ? 'rounded-r-md border-l-0' : 'rounded-r-md border-l-0'}`}
                 />
             </div>
           </div>

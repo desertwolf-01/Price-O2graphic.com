@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -34,15 +33,12 @@ function getInitialLanguage() {
 }
 
 function getInitialClientInfo(): ClientInfo {
-    if (IS_CLIENT_MODE) {
-        return {
-            name: URL_PARAMS.get('name') || '',
-            phone: URL_PARAMS.get('phone') || '',
-            email: URL_PARAMS.get('email') || '',
-            countryCode: URL_PARAMS.get('countryCode') || '+90',
-        };
-    }
-    return { name: '', phone: '', email: '', countryCode: '+90' };
+    return {
+        name: URL_PARAMS.get('name') || '',
+        phone: URL_PARAMS.get('phone') || '',
+        email: URL_PARAMS.get('email') || '',
+        countryCode: URL_PARAMS.get('countryCode') || '+966',
+    };
 }
 
 function App() {
@@ -63,25 +59,16 @@ function App() {
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   
-  // Use a ref to track the previous discount percentage to avoid extra renders
   const prevDiscountPercentageRef = useRef(0);
 
   const t = useMemo(() => translations[language], [language]);
   const serviceCategories = useMemo(() => {
     const allCategories = getServiceCategories(language);
-    if (isClientMode && CLIENT_SERVICE_IDS.length > 0) {
-      const clientCategories = allCategories
-        .map(category => ({
-          ...category,
-          options: category.options.filter(option => CLIENT_SERVICE_IDS.includes(option.id)),
-        }))
-        .filter(category => category.options.length > 0);
-      return clientCategories;
-    }
+    // In Dynamic mode, we show all categories so client can see alternatives, 
+    // but pre-select the ones from the URL.
     return allCategories;
-  }, [language, isClientMode]);
+  }, [language]);
 
-  // Language side effect
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
@@ -113,31 +100,25 @@ function App() {
   };
 
   const handleServiceToggle = (optionId: string, category: ServiceCategory) => {
+    // Dynamic interaction allowed for everyone
     setSelectedIds(prevIds => {
       let newIds = [...prevIds];
       const isSelected = newIds.includes(optionId);
 
       if (category.isRadio) {
-        // Deselect all options in this category first
         category.options.forEach(opt => {
           const index = newIds.indexOf(opt.id);
           if (index > -1) newIds.splice(index, 1);
         });
-        // Then select the new one if it wasn't selected
         if (!isSelected) {
           newIds.push(optionId);
         }
       } else if (category.isPhased) {
         const selectedOptionIndex = category.options.findIndex(o => o.id === optionId);
-        
-        // First, clear all selections in this category
         category.options.forEach(opt => {
           const index = newIds.indexOf(opt.id);
           if (index > -1) newIds.splice(index, 1);
         });
-        
-        // If it was not currently selected, select it and all previous phases.
-        // If it was selected, it is now deselected (cleared above).
         if (!isSelected) {
           for (let i = 0; i <= selectedOptionIndex; i++) {
             newIds.push(category.options[i].id);
@@ -161,7 +142,6 @@ function App() {
   };
 
   const handleClearSelection = () => {
-    if (isClientMode) return;
     setSelectedIds([]);
     setQuantities({});
   };
@@ -173,16 +153,13 @@ function App() {
 
   const subTotalPrice = useMemo(() => {
     return selectedOptions.reduce((total, option) => {
-      const quantity = !isClientMode && option.hasQuantity ? (quantities[option.id] || 1) : 1;
+      const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
       const unitPrice = getUnitPrice(option, quantity);
       return total + (unitPrice * quantity);
     }, 0);
-  }, [selectedOptions, quantities, isClientMode]);
+  }, [selectedOptions, quantities]);
 
   const discountPercentage = useMemo(() => {
-    if (isClientMode) return 0; // No discounts in client mode
-    
-    // 1. Tiered discount based on count of selected services
     let basePercentage = 0;
     const count = selectedIds.length;
     
@@ -194,29 +171,25 @@ function App() {
       basePercentage = 10;
     }
 
-    // 2. Additional discount for high total price
     let bonusPercentage = 0;
     if (subTotalPrice > 5000) {
       bonusPercentage = 5;
     }
 
     return basePercentage + bonusPercentage;
-  }, [selectedIds.length, isClientMode, subTotalPrice]);
+  }, [selectedIds.length, subTotalPrice]);
 
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
   const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);
   
-  // Logic to trigger celebratory animation when discount tier increases
   useEffect(() => {
-    if (isClientMode) return;
-
     if (discountPercentage > prevDiscountPercentageRef.current) {
         setShowCelebration(true);
     }
     prevDiscountPercentageRef.current = discountPercentage;
-  }, [discountPercentage, isClientMode]);
+  }, [discountPercentage]);
 
-  const validateAdminInfo = useCallback(() => {
+  const validateInfo = useCallback(() => {
     const { name, phone, email } = clientInfo;
     const isEmailValid = email && !emailError;
     if (!name || !phone || !isEmailValid) {
@@ -226,21 +199,10 @@ function App() {
     setFormError('');
     return true;
   }, [clientInfo, emailError, t.fillInfoAlert]);
-
-  const validateClientInfo = useCallback(() => {
-      const { name, phone, email } = clientInfo;
-      const isEmailValid = email && !emailError;
-      if (!name || !phone || !isEmailValid) {
-        setFormError(t.fillInfoAlertClient);
-        return false;
-      }
-      setFormError('');
-      return true;
-  }, [clientInfo, emailError, t.fillInfoAlertClient]);
   
   const handleSendViaWhatsApp = () => {
     setFormError('');
-    if (!validateAdminInfo()) return;
+    if (!validateInfo()) return;
 
     const formattedDate = proposalDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
         year: 'numeric',
@@ -286,10 +248,9 @@ ${t.proposalTo(clientInfo.name)}
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 };
 
-
-  const handleClientSubmission = () => {
+  const handleSubmission = () => {
     setFormError('');
-    if (!validateClientInfo() || actionType) return;
+    if (!validateInfo() || actionType) return;
     
     if (!isEmailConfigured()) {
         setFormError(t.emailConfigMissing);
@@ -312,26 +273,12 @@ ${t.proposalTo(clientInfo.name)}
       proposalDate
     })
       .then((response) => {
-        console.log('SUCCESS! Both emails sent on client submission.', response);
         setShowSuccessScreen(true);
         setActionType(null);
       }, (err) => {
-        console.error('FAILED... EmailJS Error on client submission:', err);
-        let userMessage = t.emailSendError;
-        if (err && typeof err.status === 'number') {
-            if (err.status === 400) {
-                userMessage = t.emailSendErrorConfig;
-            } else if (err.status === 0) {
-                userMessage = t.emailSendErrorNetwork;
-            }
-        }
-        setFormError(userMessage);
+        setFormError(t.emailSendError);
         setActionType(null);
       });
-  };
-
-  const handleCloseSuccessScreen = () => {
-    setShowSuccessScreen(false);
   };
 
   return (
@@ -349,7 +296,7 @@ ${t.proposalTo(clientInfo.name)}
           onClientInfoChange={handleClientInfoChange}
           emailError={emailError}
           proposalDate={proposalDate}
-          isClientMode={isClientMode}
+          isClientMode={false} // Allow editing info in client mode too
         />
         <PricingSection
           categories={serviceCategories}
@@ -359,7 +306,7 @@ ${t.proposalTo(clientInfo.name)}
           onQuantityChange={handleQuantityChange}
           language={language}
           t={t}
-          isClientMode={isClientMode}
+          isClientMode={false} // Dynamic interaction always enabled
         />
         <TermsAndConditions t={t} language={language} />
       </main>
@@ -369,7 +316,7 @@ ${t.proposalTo(clientInfo.name)}
         finalTotalPrice={finalTotalPrice}
         discount={discount}
         discountPercentage={discountPercentage}
-        onSendEmail={isClientMode ? handleClientSubmission : handleSendViaWhatsApp}
+        onSendEmail={isClientMode ? handleSubmission : handleSendViaWhatsApp}
         onClearSelection={handleClearSelection}
         language={language}
         t={t}
@@ -381,7 +328,7 @@ ${t.proposalTo(clientInfo.name)}
         <SuccessScreen 
             t={t}
             isClientMode={isClientMode}
-            onClose={handleCloseSuccessScreen}
+            onClose={() => setShowSuccessScreen(false)}
         />
       )}
       {showCelebration && (

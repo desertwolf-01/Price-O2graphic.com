@@ -1,5 +1,3 @@
-
-
 import type { ServiceCategory, ServiceOption } from './types';
 
 export const getUnitPrice = (option: ServiceOption, quantity: number): number => {
@@ -13,6 +11,13 @@ export const getUnitPrice = (option: ServiceOption, quantity: number): number =>
         
     return tier ? tier.price : option.price;
 }
+
+const CORPORATE_PRICE_TIERS = [
+    { minQuantity: 1, price: 20 },
+    { minQuantity: 20, price: 18 },
+    { minQuantity: 30, price: 15 },
+    { minQuantity: 51, price: 12 },
+];
 
 export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
   {
@@ -92,7 +97,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         price: 500,
         items: [
           '__اللوحة الخارجية للمكتب:__<br/>o تصميم احترافي يعرض اسم الشركة، الشعار، ونشاطها الرئيسي<br/>o متوافق مع متطلبات الرؤية من مسافات بعيدة<br/>o يراعي التناسق البصري مع الهوية الثنائية',
-          '__رول أب (Roll-up Banner):__<br/>o تصميم جذاب ومناسب للاستخدام في المعارض، المؤتمرات، أو عند مدخل المكتب<br/>o يحتوي على رسالة رئيسية واضحة، شعار، ومعلومات التواصل<br/>o جاهز للطباعة بأبعاد قياسية (عادةً 85×200 سم)',
+          '__رول أب (Roll-up Banner):__<br/>o تصميم جذاب ومناسب للاستخدام في المعارض, المؤتمرات، أو عند مدخل المكتب<br/>o يحتوي على رسالة رئيسية واضحة، شعار، ومعلومات التواصل<br/>o جاهز للطباعة بأبعاد قياسية (عادةً 85×200 سم)',
           '__فلاير إعلاني قابل للطباعة:__<br/>o تصميم مزدوج الوجه (أمامي/خلفي) أو وحيد الوجه حسب الحاجة<br/>o مصمم لعرض عرض خاص، خدمة جديدة، أو معلومات ترويجية موجزة<br/>o متوافق مع معايير الطباعة (CMYK، دقة 300 DPI، هوامش آمنة)',
           '__بوستر جداري كبير:__<br/>o تصميم بصري قوي للاستخدام في الجدران الداخلية أو الخارجية<br/>o يركّز على رسالة رئيسية مع دعم بصري جذاب<br/>o جاهز للطباعة بأحجام كبيرة (مثل A1 أو حسب الطلب)',
           '__بطاقات تهنئة موسمية:__<br/>o تصميمات مخصصة لمناسبات رئيسية: رمضان، عيد الفطر، عيد الأضحى، رأس السنة الميلادية<br/>o تُطبَع أو تُرسَل رقميًا<br/>o تجمع بين الذوق المحلي والهوية البصرية للشركة',
@@ -240,6 +245,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         name: 'كتالوج المنتجات / الخدمات (Catalog)',
         price: 20,
         hasQuantity: true,
+        priceTiers: CORPORATE_PRICE_TIERS,
         items: [
           'عرض مرئي منظم للمنتجات أو الخدمات مع صور عالية الجودة، أوصاف واضحة، وأسعار.',
           'يُسلم كملف PDF جاهز للطباعة مع نسخة رقمية اختيارية.',
@@ -255,6 +261,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         name: 'بروفايل الشركة (Company Profile)',
         price: 20,
         hasQuantity: true,
+        priceTiers: CORPORATE_PRICE_TIERS,
         items: [
           'وثيقة احترافية تعكس هوية الشركة وقيمتها السوقية، وتشمل نبذة عن الشركة، إنجازاتها، فريقها، ومعلومات الاتصال.',
           'نبذة عن الشركة (الرؤية، الرسالة، القيم)',
@@ -270,6 +277,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         name: 'العرض التقديمي (Presentation / Pitch Deck)',
         price: 20,
         hasQuantity: true,
+        priceTiers: CORPORATE_PRICE_TIERS,
         items: [
           'شرائح احترافية مخصصة لـ Google Slides أو PowerPoint، مثالية لعروض العملاء، المستثمرين، أو الاجتماعات الداخلية.',
           'تصميم موحد مع هوية العلامة',
@@ -284,6 +292,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         name: 'التقرير السنوي (Annual Report)',
         price: 20,
         hasQuantity: true,
+        priceTiers: CORPORATE_PRICE_TIERS,
         items: [
           'وثيقة رسمية تلخص أداء الشركة السنوي، تُصمم بأسلوب يعكس المصداقية والنجاح مع الحفاظ على هوية بصرية جذابة، ويُسلم كملف جاهز للطباعة.',
           'أهداف العام القادم',
@@ -363,7 +372,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             { minQuantity: 15, price: 150 }, // 70% discount
         ],
         items: [
-            '__الباقة الذهبية للأنيميشن 2D الكامل__',
+            '__الذهبية للأنيميشن 2D الكامل__',
             '__📝 المرحلة 1: التطوير والإعداد__',
             'جلسة العصف الذهبي - جلسة افتراضية/حضورية لفهم الأهداف والجمهور',
             'صياغة الفكرة وترتيب الأفكار وهيكلة المحتوى',
@@ -380,7 +389,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             '__🔊 المرحلة 4: الصوت__',
             'اختيار وتسجيل التعليق الصوتي في استوديو احترافي',
             'اختيار موسيقى أصلية أو حصرية',
-            'المؤثرات الصوتية (SFX) والمكساج الاحترافي',
+            'المؤثرات الصوتية (SFX) والمكساج احترافي',
             '__🎬 المرحلة 5: المخرجات النهائية__',
             'المراجعة الأولى، التعديلات (حتى 3 جولات)، والفحص النهائي',
             '__📦 حزمة التسليم الكاملة:__',
@@ -691,6 +700,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         name: 'Product / Service Catalog',
         price: 20,
         hasQuantity: true,
+        priceTiers: CORPORATE_PRICE_TIERS,
         items: [
           'Organized visual display of products or services with high-quality images, clear descriptions, and prices.',
           'Delivered as print-ready PDF with optional digital version.',
@@ -706,6 +716,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         name: 'Company Profile',
         price: 20,
         hasQuantity: true,
+        priceTiers: CORPORATE_PRICE_TIERS,
         items: [
           'Professional document reflecting company identity and market value, including company overview, achievements, team, and contact info.',
           'Company Overview (Vision, Mission, Values)',
@@ -721,6 +732,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         name: 'Presentation / Pitch Deck',
         price: 20,
         hasQuantity: true,
+        priceTiers: CORPORATE_PRICE_TIERS,
         items: [
           'Professional slides customized for Google Slides or PowerPoint, ideal for client pitches, investors, or internal meetings.',
           'Unified design with brand identity',
@@ -735,6 +747,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         name: 'Annual Report',
         price: 20,
         hasQuantity: true,
+        priceTiers: CORPORATE_PRICE_TIERS,
         items: [
           'Official document summarizing annual company performance, designed to reflect credibility and success while maintaining attractive visual identity, delivered as print-ready file.',
           'Goals for the coming year',

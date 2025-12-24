@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import type { ServiceOption } from '../types';
 import { getUnitPrice } from '../constants';
@@ -29,25 +27,52 @@ const QuantitySelector: React.FC<{
     t: Translation,
     label?: string,
 }> = ({ quantity, onQuantityChange, t, label }) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const val = parseInt(e.target.value, 10);
+        if (!isNaN(val)) {
+            onQuantityChange(val);
+        } else if (e.target.value === '') {
+            onQuantityChange(0); // Allow typing from scratch
+        }
+    };
+
+    const handleBlur = () => {
+        if (quantity < 1) onQuantityChange(1);
+    };
+
     return (
-        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
-            <span className="text-sm font-medium text-slate-700">{label || t.pagesLabel}</span>
-            <div className="flex items-center">
-                <button
-                    onClick={(e) => { e.stopPropagation(); onQuantityChange(quantity - 1); }}
-                    disabled={quantity <= 1}
-                    className="px-2 py-1 border border-slate-300 rounded-l-md text-slate-600 hover:bg-slate-100 disabled:opacity-50 transition-colors"
-                    aria-label={t.decreaseQuantity}
-                >
-                    -
-                </button>
-                <span className="px-3 py-1 border-t border-b border-slate-300 text-slate-800 bg-white" aria-label={t.currentQuantity} role="status">{quantity}</span>
+        <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+            {label && <span className="text-sm font-medium text-slate-700">{label}</span>}
+            <div className="flex items-center border border-slate-200 rounded-lg shadow-sm bg-white overflow-hidden h-8" style={{ minWidth: '110px' }}>
+                {/* Plus Button (Matches image position) */}
                 <button
                     onClick={(e) => { e.stopPropagation(); onQuantityChange(quantity + 1); }}
-                    className="px-2 py-1 border border-slate-300 rounded-r-md text-slate-600 hover:bg-slate-100 transition-colors"
+                    className="w-8 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-blue-600 transition-colors font-bold text-lg"
                     aria-label={t.increaseQuantity}
                 >
                     +
+                </button>
+                
+                {/* Number Input with White Background and Black Text */}
+                <div className="flex-1 bg-white h-full flex items-center justify-center border-x border-slate-100">
+                    <input
+                        type="number"
+                        value={quantity === 0 ? '' : quantity}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        className="w-full bg-transparent border-none text-slate-900 font-bold text-center text-sm focus:outline-none focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none p-0"
+                        aria-label={t.currentQuantity}
+                    />
+                </div>
+
+                {/* Minus Button (Matches image position) */}
+                <button
+                    onClick={(e) => { e.stopPropagation(); onQuantityChange(Math.max(1, quantity - 1)); }}
+                    disabled={quantity <= 1}
+                    className="w-8 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-red-500 disabled:opacity-20 transition-colors font-bold text-lg"
+                    aria-label={t.decreaseQuantity}
+                >
+                    -
                 </button>
             </div>
         </div>
