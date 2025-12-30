@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Translation } from '../i18n';
+import { formatCurrency } from '../utils/format';
 
 interface TotalBarProps {
   subTotalPrice: number;
@@ -71,11 +72,11 @@ const TotalBar: React.FC<TotalBarProps> = ({
             <>
               <div className="flex items-baseline gap-2">
                 <span className="text-lg font-medium text-slate-600">{t.totalPrice}:</span>
-                <span className={`text-4xl font-extrabold text-slate-800 transition-transform inline-block ${pulseTotal ? 'animate-value-pop' : ''}`}>
-                    ${finalTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <span className={`text-3xl font-extrabold text-slate-800 transition-transform inline-block ${pulseTotal ? 'animate-value-pop' : ''}`}>
+                    {formatCurrency(finalTotalPrice)}
                 </span>
                 {discount > 0 && !isClientMode && (
-                  <span className="text-base font-medium text-slate-500 line-through">${subTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className="text-base font-medium text-slate-500 line-through">{formatCurrency(subTotalPrice)}</span>
                 )}
               </div>
               {discountText && (

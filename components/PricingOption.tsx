@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { ServiceOption } from '../types';
 import { getUnitPrice } from '../constants';
 import type { Translation } from '../i18n';
+import { formatCurrency } from '../utils/format';
 
 interface PricingOptionProps {
   option: ServiceOption;
@@ -157,15 +158,15 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                                 {option.hasQuantity && quantity > 1 && !isClientMode ? (
                                     <div className="flex flex-col items-end">
                                         <p className={`text-xl font-black ${isSelected ? 'text-blue-700' : 'text-slate-900'}`}>
-                                            ${totalOptionPrice.toLocaleString()}
+                                            {formatCurrency(totalOptionPrice)}
                                         </p>
                                         <p className="text-xs text-slate-400 font-medium mt-0.5">
-                                            ({quantity} × ${currentUnitPrice.toLocaleString()})
+                                            ({quantity} × {formatCurrency(currentUnitPrice)})
                                         </p>
                                     </div>
                                 ) : (
                                     <p className={`text-xl font-black ${isSelected ? 'text-blue-700' : 'text-slate-900'}`}>
-                                        ${currentUnitPrice.toLocaleString()}
+                                        {formatCurrency(currentUnitPrice)}
                                         {option.hasQuantity && <span className="text-sm text-slate-400 font-normal"> {option.priceSuffix || t.perPageSuffix}</span>}
                                     </p>
                                 )}
@@ -197,12 +198,12 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                            <h4 className="font-bold text-sm text-black">{option.name}</h4>
                         </div>
                         <p className="font-semibold text-sm text-black">
-                            {option.hasQuantity ? `${quantity} x $${currentUnitPrice.toLocaleString()}` : `$${currentUnitPrice.toLocaleString()}`}
+                            {option.hasQuantity ? `${quantity} x ${formatCurrency(currentUnitPrice)}` : `${formatCurrency(currentUnitPrice)}`}
                         </p>
                     </div>
                     {option.hasQuantity && (
                         <div className="flex justify-end">
-                            <p className="font-bold text-sm text-black">= ${totalOptionPrice.toLocaleString()}</p>
+                            <p className="font-bold text-sm text-black">= {formatCurrency(totalOptionPrice)}</p>
                         </div>
                     )}
                 </div>

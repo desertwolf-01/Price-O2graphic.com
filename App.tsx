@@ -12,6 +12,7 @@ import PrintHeader from './components/PrintHeader';
 import SuccessScreen from './components/SuccessScreen';
 import DiscountCelebration from './components/DiscountCelebration';
 import { isEmailConfigured, sendProposalEmails } from './email';
+import { formatCurrency } from './utils/format';
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
 const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
@@ -210,15 +211,14 @@ function App() {
         day: 'numeric',
     });
 
-    const formatPrice = (price: number) => `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     const fullPhoneNumber = `${clientInfo.countryCode}${clientInfo.phone}`;
 
     const servicesText = selectedOptions.map(option => {
         const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
         const unitPrice = getUnitPrice(option, quantity);
         const price = unitPrice * quantity;
-        const quantityText = option.hasQuantity ? ` (${quantity} × ${formatPrice(unitPrice).replace('$', '')})` : '';
-        return `- ${option.name}${quantityText}: *${formatPrice(price)}*`;
+        const quantityText = option.hasQuantity ? ` (${quantity} × ${formatCurrency(unitPrice)})` : '';
+        return `- ${option.name}${quantityText}: *${formatCurrency(price)}*`;
     }).join('\n');
 
     const message = `
@@ -234,9 +234,9 @@ ${t.proposalDateLabel}: ${formattedDate}
 ${servicesText}
 
 *${t.priceSummaryTitle}:*
-${t.subtotal}: ${formatPrice(subTotalPrice)}
-${language === 'en' ? t.discountLabel(discountPercentage) : `خصم (${discountPercentage}%)`}: -${formatPrice(discount)}
-*${t.totalPrice}: ${formatPrice(finalTotalPrice)}*
+${t.subtotal}: ${formatCurrency(subTotalPrice)}
+${language === 'en' ? t.discountLabel(discountPercentage) : `خصم (${discountPercentage}%)`}: -${formatCurrency(discount)}
+*${t.totalPrice}: ${formatCurrency(finalTotalPrice)}*
 
 ${t.proposalTo(clientInfo.name)}
     `.trim().replace(/^\s+/gm, "");
@@ -310,7 +310,7 @@ ${t.proposalTo(clientInfo.name)}
         />
         <TermsAndConditions t={t} language={language} />
       </main>
-      <Footer />
+      <Footer language={language} />
       <TotalBar
         subTotalPrice={subTotalPrice}
         finalTotalPrice={finalTotalPrice}

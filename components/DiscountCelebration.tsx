@@ -1,7 +1,6 @@
-
-
 import React, { useEffect } from 'react';
 import { Translation } from '../i18n';
+import { formatCurrency } from '../utils/format';
 
 interface DiscountCelebrationProps {
   t: Translation;
@@ -48,7 +47,7 @@ const DiscountCelebration: React.FC<DiscountCelebrationProps> = ({ t, discountPe
             {t.discountUnlockedMessage(discountPercentage)}
           </p>
           <div className="bg-green-100 text-green-800 px-4 py-2 rounded-full inline-block font-bold text-lg animate-pulse relative z-10 border border-green-200 shadow-sm">
-            {t.youSaved(`$${savedAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`)}
+            {t.youSaved(formatCurrency(savedAmount))}
           </div>
        </div>
 

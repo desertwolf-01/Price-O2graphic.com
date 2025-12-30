@@ -1,4 +1,10 @@
 import React from 'react';
+import VisitorCounter from './VisitorCounter';
+import { translations } from '../i18n';
+
+interface FooterProps {
+  language: 'ar' | 'en';
+}
 
 const FacebookIcon = () => (
     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -19,12 +25,18 @@ const LinkedInIcon = () => (
 );
 
 
-const Footer: React.FC = () => {
+const Footer: React.FC<FooterProps> = ({ language }) => {
+  const t = translations[language];
+
   return (
     <footer className="bg-white border-t border-slate-200 print:hidden">
-      <div className="max-w-4xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
-        <p className="order-2 sm:order-1 mt-4 sm:mt-0">&copy; {new Date().getFullYear()} O2Graphic. All rights reserved.</p>
-        <div className="flex items-center gap-x-6 order-1 sm:order-2">
+      <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-500">
+        <div className={`flex flex-col md:flex-row items-center gap-4 ${language === 'ar' ? 'md:flex-row-reverse' : ''}`}>
+           <p className="order-2 sm:order-1">&copy; {new Date().getFullYear()} O2Graphic. All rights reserved.</p>
+           <VisitorCounter t={t} language={language} />
+        </div>
+        
+        <div className="flex items-center gap-x-6">
             <a href="https://www.facebook.com/o2graphic" target="_blank" rel="noopener noreferrer" aria-label="O2Graphic on Facebook" className="hover:text-blue-600 transition-colors">
                 <FacebookIcon />
             </a>

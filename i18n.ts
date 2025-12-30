@@ -1,4 +1,3 @@
-
 export interface Translation {
   // App.tsx & StaticSection.tsx
   proposalTitle: string;
@@ -68,6 +67,9 @@ export interface Translation {
   discountUnlockedTitle: string;
   discountUnlockedMessage: (percentage: number) => string;
   youSaved: (amount: string) => string;
+
+  // Footer.tsx
+  visitorCount: string;
 }
 
 const en: Translation = {
@@ -137,6 +139,7 @@ const en: Translation = {
   discountUnlockedTitle: 'Discount Unlocked!',
   discountUnlockedMessage: (percentage) => `You've unlocked a ${percentage}% discount!`,
   youSaved: (amount) => `You saved ${amount}!`,
+  visitorCount: 'Total Visitors',
 };
 
 const ar: Translation = {
@@ -206,6 +209,7 @@ const ar: Translation = {
   discountUnlockedTitle: 'تم فتح الخصم!',
   discountUnlockedMessage: (percentage) => `لقد حصلت على خصم ${percentage}%!`,
   youSaved: (amount) => `وفرت ${amount}!`,
+  visitorCount: 'عدد الزوار',
 };
 
 export const translations = { en, ar };
