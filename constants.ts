@@ -35,7 +35,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
           '__أيقونة رقمية:__<br/>- تصميم مُبسّط للشعار للاستخدام في التطبيقات والمواقع الإلكترونية',
           '__لوحة الألوان الرسمية:__<br/>- ألوان أساسية<br/>- ألوان ثانوية داعمة',
           '__قيم الألوان المعيارية:__<br/>- CMYK للطباعة<br/>- RGB للشاشات والرقمي',
-          '__الخطوط المعتمدة:__<br/>- خط عربي رسمي متناسق مع هوية العلامة،<br/>- خط لاتيني (إنجليزي) متناغم مع الخط العربي.',
+          '__الخطوط المعتمدة:__<br/>- خط عربي رسمي متناسق مع هوية العلامة،<br/>- خط لاتيني (إنجليزي) متناغم مع خط العربي.',
           '__دليل ألوان بصري (PDF):__<br/>- مستند احترافي يوضح استخدام الألوان والخطوط في سياقات مختلفة، معدّ للتحميل والمشاركة مع فرق التصميم والتسويق.',
         ],
       },
@@ -45,7 +45,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         price: 250,
         items: [
           'يُبنى بعد اعتماد الهوية الأساسية، ليشرح كيف تُستخدم كل العناصر.',
-          'قواعد استخدام الشعار (الهوامش، الأحجام، الخلفيات، الممنوعات)',
+          'قواعد استخدام الشعار (الهوامش، الأحجام، خلفيات، الممنوعات)',
           'تفاصيل الألوان الكاملة (بما في ذلك Pantone)',
           'قواعد الخطوط (بما في ذلك بدائل مؤقتة)',
           'الأنماط، الأيقونات، أنماط الصور',
@@ -125,7 +125,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             '__حقيبة ظهر أو حقيبة يد ترويجية (Tote Bag / Backpack):__<br/>شائعة جدًّا في الفعاليات والمعارض. حقيبة قماش قوية (Tote) تحمل رسالة مستدامة + شعار، أو حقيبة ظهر صغيرة يمكن توزيعها كهدية قيّمة للعملاء المميزين.',
             '__شاحن لاسلكي أو باور بانك مخصص:__<br/>هدايا عملية وعصرية، خاصة في عالم رقمي. تُخصّص بطباعة الشعار أو تصميم معدني أنيق لتترك انطباعًا "ذكيًّا" عن علامتك.',
             '__مغناطيس ثلاجة (Fridge Magnet):__<br/>صغير، رخيص الإنتاج، لكنه فعّال. يُبقي شعارك في بيوت العملاء (خاصة إذا كنت تقدم خدمات استهلاكية أو يومية).',
-            '__بطاقة خصم أو عرض حصري (Loyalty Card / VIP Pass):__<br/>مصنوعة من كرتون فاخر أو بلاستيك، تُستخدم لتشجيع التفاعل المتكرر مع العميل (QR Code أو ملموسة).',
+            '__بطاقة خصم أو عرض حصري (Loyalty Card / VIP Pass):__<br/>مصنوعة من كرتون فاخر أو بلاستيك, تُستخدم لتشجيع التفاعل المتكرر مع العميل (QR Code أو ملموسة).',
             '__علبة مناديل صغيرة (مع شعار):__<br/>شائعة في المطاعم، العيادات، والمعارض. عملية وشخصية تُستخدم في لحظات يومية.',
             '__ملصقات (Stickers) عالية الجودة:__<br/>شائعة جدًّا بين الجمهور الشاب والمجتمعات الإبداعية. تُلصق على الأجهزة، الدفاتر، السيارات. تكلفة منخفضة، انتشار عالٍ.',
         ]
@@ -196,41 +196,66 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
   },
   {
     id: 'social-media-design',
-    name: 'تصميمات السوشيال ميديا',
-    description: 'نظام متدرج لإدارة المحتوى. اختر مرحلة لتضمينها مع كل المراحل السابقة تلقائيًا.',
-    isPhased: true,
+    name: 'تصميمات السوشيال ميديا (باقة متكاملة شهريا)',
+    description: 'باقات مصممة لنمو حضورك الرقمي باحترافية. يمكنك اختيار المكونات التي تناسب احتياجاتك.',
     options: [
       {
-        id: 'social-strategy',
-        name: '1. التخطيط البصري والاستراتيجية (الأساس الذي يضمن فعالية المحتوى)',
+        id: 'social-planning',
+        name: 'الباقة 1: التخطيط البصري والاستراتيجية',
         price: 75,
         items: [
-            "جلسة تخطيط محتوى شهرية (30 دقيقة)",
-            "اقتراح نصوص أولية + توزيع بصري لكل منشور",
-            "موودبورد أو سكتشات أولية لـ 15 فكرة",
-            "تجديد أنواع المنشورات (ترويج، تعليم، تفاعل، عروض...)",
-            "الالتزام الكامل بهوية العلامة (ألوان، خطوط، أنماط،)",
+          '__(الأساس الذي يضمن فعالية كل محتوى لاحق)__',
+          'جلسة تخطيط محتوى شهرية (30 دقيقة)',
+          'اقتراح نصوص أولية + توزيع بصري مسبق لكل منشور',
+          'مودبورد أو سكتشات أولية لأفكار المحتوى',
+          'تجديد أنواع المنشورات: ترويج، تعليم، تفاعل، عروض...',
+          '⚠️ هذه الباقة مطلوبة كأساس لأي باقة تنفيذ تالية.',
         ]
       },
       {
-        id: 'social-professional-design',
-        name: '2. التصميم الاحترافي (جودة عالية تُنافس كبار العلامات)',
-        price: 300,
+        id: 'social-basic-9',
+        name: 'الباقة 2: الأساسية – 9 تصاميم افتتاحية',
+        price: 315,
         items: [
-          "15 تصميمًا احترافيًا (صور ثابتة أو كاروسيل)",
-          "التسليم بتنسيقات جاهزة للنشر: PNG + JPG عالية الجودة",
-          "استخدام عناصر الهوية: الشعار، الأنماط، الأيقونات، الخطوط",
-          "متوافق مع فيسبوك وإنستغرام (المقاسات المثالية)",
+          '9 تصاميم احترافية (صور ثابتة أو كاروسيل)',
+          'التسليم بتنسيقات جاهزة للنشر: PNG + JPG عالية الجودة',
+          'مقاسات متوافقة مع إنستغرام وفيسبوك',
+          '__إجمالي البوستات: 9 بوست (كلها ثابتة)__',
+          'الالتزام الكامل بهوية علامتك (ألوان، خطوط، أنماط)',
         ]
       },
       {
-        id: 'social-publishing',
-        name: '3. النشر والجدولة الذكية (لضمان أقصى وصول)',
+        id: 'social-emerging-18',
+        name: 'الباقة 3: الناشئة – 18 تصميماً استراتيجياً',
+        price: 600,
+        items: [
+          '18 تصميماً احترافياً (صور ثابتة أو كاروسيل)',
+          'التسليم بتنسيقات جاهزة للنشر: PNG + JPG عالية الجودة',
+          'مقاسات متوافقة مع إنستغرام وفيسبوك',
+          '__إجمالي البوستات: 18 بوست (كلها ثابتة)__',
+          'الالتزام الكامل بهوية علامتك (ألوان، خطوط، أنماط)',
+        ]
+      },
+      {
+        id: 'social-advanced-30',
+        name: 'الباقة 4: المتقدمة – 30 تصميماً شهريًا',
+        price: 900,
+        items: [
+          '30 تصميماً احترافياً (صور ثابتة أو كاروسيل)',
+          'حتى 3 جولات تعديل على التصاميم',
+          'خطة محتوى شهرية مبسّطة (توزيع أنواع المنشورات حسب الأهداف)',
+          '__إجمالي البوستات: 30 بوست (كلها ثابتة)__',
+          'الالتزام الكامل بهوية علامتك (ألوان، خطوط، أنماط)',
+        ]
+      },
+      {
+        id: 'social-posting',
+        name: 'الباقة 5: النشر والجدولة الذكية',
         price: 75,
         items: [
-          "جدولة المنشورات في الأوقات المثالية",
-          "نشر تلقائي دون تدخل العميل",
-          "تقرير شهري مبسط لأفضل المنشورات أداءً",
+          'جدولة جميع المنشورات في الأوقات المثالية بناءً على جمهورك',
+          'نشر تلقائي دون أي تدخل منك',
+          'تقرير أداء شهري مبسّط (أفضل 3 منشورات من حيث الوصول والتفاعل)',
         ]
       }
     ]
@@ -454,7 +479,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         items: [
           'تطوير التغليف القديم ليكون أكثر حداثة وجاذبية.',
           'تحسين الألوان، الخطوط، أو الصور.',
-          'إضافة عناصر جديدة مثل (ختم "جديد"، "عرض محدود"، إلخ).',
+          'إضافة عناصر جديدة مثل (ختم "جديد"، "عرض محدود","إلخ).',
         ],
       },
       {
@@ -504,7 +529,6 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
           'Typography rules (including fallback fonts)',
           'Patterns, Icons, and Imagery styles',
           'Application examples for social media, print, stationery, etc.',
-          'Cultural guidelines for the Saudi market',
           'Professional interactive PDF file',
         ],
       },
@@ -651,41 +675,66 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
   },
   {
     id: 'social-media-design',
-    name: 'Social Media Designs',
-    description: 'Tiered content management system. Choose a phase to automatically include all previous phases.',
-    isPhased: true,
+    name: 'Social Media Designs (Monthly Integrated Package)',
+    description: 'Packages designed for professional growth of your digital presence. You can choose the components that fit your needs.',
     options: [
       {
-        id: 'social-strategy',
-        name: '1. Visual Planning & Strategy (Foundation for Content Effectiveness)',
+        id: 'social-planning',
+        name: 'Package 1: Visual Planning & Strategy',
         price: 75,
         items: [
-            "Monthly content planning session (30 mins)",
-            "Initial text suggestions + visual distribution per post",
-            "Moodboard or initial sketches for 15 ideas",
-            "Content variety renewal (Promo, Educational, Engagement, Offers...)",
-            "Full adherence to brand identity (Colors, Fonts, Patterns)",
+          '__(Foundation ensuring content effectiveness)__',
+          'Monthly content planning session (30 mins)',
+          'Initial text suggestions + visual distribution for each post',
+          'Initial moodboard or sketches for content ideas',
+          'Renewal of post types: promo, edu, engagement, offers...',
+          '⚠️ This package is required as a basis for any execution package.',
         ]
       },
       {
-        id: 'social-professional-design',
-        name: '2. Professional Design (High Quality Rivalling Top Brands)',
-        price: 300,
+        id: 'social-basic-9',
+        name: 'Package 2: Basic – 9 Initial Designs',
+        price: 315,
         items: [
-          "15 Professional designs (Static images or Carousels)",
-          "Delivery in ready-to-publish formats: High-quality PNG + JPG",
-          "Usage of identity elements: Logo, patterns, icons, fonts",
-          "Compatible with Facebook and Instagram (Ideal sizes)",
+          '9 Professional designs (Static or Carousel)',
+          'Delivery in ready-to-publish formats: High-quality PNG + JPG',
+          'Compatible with Instagram + Facebook sizes',
+          '__Total Posts: 9 Posts (All static)__',
+          'Full commitment to brand identity (colors, fonts, patterns)',
         ]
       },
       {
-        id: 'social-publishing',
-        name: '3. Smart Publishing & Scheduling (Ensuring Max Reach)',
+        id: 'social-emerging-18',
+        name: 'Package 3: Emerging – 18 Strategic Designs',
+        price: 600,
+        items: [
+          '18 Professional designs (Static or Carousel)',
+          'Delivery in ready-to-publish formats: High-quality PNG + JPG',
+          'Compatible with Instagram + Facebook sizes',
+          '__Total Posts: 18 Posts (All static)__',
+          'Full commitment to brand identity (colors, fonts, patterns)',
+        ]
+      },
+      {
+        id: 'social-advanced-30',
+        name: 'Package 4: Advanced – 30 Monthly Designs',
+        price: 900,
+        items: [
+          '30 Professional designs (Static or Carousel)',
+          'Up to 3 rounds of design revisions',
+          'Simplified monthly content plan (Distribution based on goals)',
+          '__Total Posts: 30 Posts (All static)__',
+          'Full commitment to brand identity (colors, fonts, patterns)',
+        ]
+      },
+      {
+        id: 'social-posting',
+        name: 'Package 5: Smart Posting & Scheduling',
         price: 75,
         items: [
-          "Scheduling posts at optimal times",
-          "Auto-publishing without client intervention",
-          "Monthly simple report for top performing posts",
+          'Scheduling all posts at optimal times based on audience',
+          'Automatic posting without intervention',
+          'Simplified monthly performance report (Top 3 posts by reach/engagement)',
         ]
       }
     ]
@@ -786,143 +835,143 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
   },
    {
     id: 'video-motion-graphics',
-    name: 'Video & Motion Graphics Design',
-    description: 'Specialized services in producing short videos and animations to enhance your digital presence.',
+    name: 'تصميم الفيديو والموشن جرافيك',
+    description: 'خدمات متخصصة في إنتاج الفيديوهات القصيرة والرسوم المتحركة لتعزيز حضورك الرقمي.',
     options: [
       {
         id: 'reels-package',
-        name: 'Reels Design Package',
+        name: 'باقة تصميم ريلز',
         price: 150,
         hasQuantity: true,
-        quantityLabel: 'Number of Videos',
-        priceSuffix: 'per video',
+        quantityLabel: 'عدد الفيديوهات',
+        priceSuffix: 'لكل فيديو',
         priceTiers: [
             { minQuantity: 1, price: 150 },
             { minQuantity: 10, price: 75 }, // 50% discount
             { minQuantity: 15, price: 45 }, // 70% discount
         ],
         items: [
-            '__Custom service for designing elements for Reels/Shorts/TikTok — ready for editing or publishing.__',
-            '__Delivery Formats:__',
-            'Final high-quality MP4 video (1080x1920) - Ready to publish',
-            '__Professional Motion Graphics:__',
-            'Designing attractive Scenes compatible with your brand visual identity',
-            'Animated Typography with simple and elegant effects',
-            'Backgrounds, shapes, patterns, and supporting icons reflecting your brand style',
-            'Integrating Logo and Key Messages visually consistently',
-            '__Number of Revisions:__',
-            'Up to two rounds of revisions per Reel (Text, Color, Scene order edits)',
+            '__خدمة مخصصة لتصميم العناصر لمقاطع الريلز/الشورتس/تيك توك — جاهزة للمونتاج أو النشر.__',
+            '__تنسيقات التسليم:__',
+            'ملف فيديو نهائي بصيغة MP4 عالي الجودة (1080x1920) - جاهز للنشر',
+            '__جرافيك متحرك احترافي:__',
+            'تصميم إطارات (Scenes) جذابة ومتوافقة مع هوية علامتك البصرية',
+            'نصوص متحركة بتأثيرات (Animated Typography) بسيطة وأنيقة',
+            'خلفيات، أشكال، أنماط، وأيقونات داعمة تعكس طابع علامتك',
+            'دمج الشعار والرسائل الأساسية بشكل بصري متناسق',
+            '__عدد المراجعات:__',
+            'حتى مرتين تعديل لكل ريلز (تعديل نص، لون، ترتيب المشاهد)',
         ]
       },
       {
         id: '2d-animation-package',
-        name: '2D Animation Package (Idea to Delivery)',
+        name: 'باقة إنتاج أنيميشن 2D متكاملة (من الفكرة إلى التسليم)',
         price: 500,
         hasQuantity: true,
-        quantityLabel: 'Number of Minutes',
-        priceSuffix: 'per minute',
+        quantityLabel: 'عدد الدقائق',
+        priceSuffix: 'لكل دقيقة',
         priceTiers: [
             { minQuantity: 1, price: 500 },
             { minQuantity: 10, price: 250 }, // 50% discount
             { minQuantity: 15, price: 150 }, // 70% discount
         ],
         items: [
-            '__Gold Package for Full 2D Animation__',
-            '__📝 Phase 1: Development & Preparation__',
-            'Brainstorming session - Virtual/In-person session to understand goals and audience',
-            'Idea formulation, thought arrangement, and content structuring',
-            'Script writing - Professional script with precise timing',
-            'Character development (if needed) - Design of 1-3 main characters',
-            '__🎨 Phase 2: Visual Design__',
-            'Storyboard - Detailed illustrated panels for each scene',
-            'Unified Art Style - Defining drawing style and colors (Flat, Cartoon, Minimal, etc.)',
-            'Drawing and coloring main scenes - Applying approved color palette',
-            '__✨ Phase 3: Animation & Production__',
-            'Scene animation - Adding movement and life to drawings',
-            'Character Rigging & Animation - If characters exist',
-            'Visual Effects and Compositing',
-            '__🔊 Phase 4: Audio__',
-            'Voiceover selection and recording in professional studio',
-            'Original or exclusive music selection',
-            'Sound Effects (SFX) and professional mixing',
-            '__🎬 Phase 5: Final Output__',
-            'First review, revisions (up to 3 rounds), and final check',
-            '__📦 Full Delivery Package:__',
-            'Main Video MP4 HD (1920x1080) + Social Media version',
-            'Music/Text-free version for future edits',
-            'Project files (After Effects, PSD) - (Optional at extra cost)',
-            'Attachments: Storyboard, Script, and Still Images',
+            '__الذهبية للأنيميشن 2D الكامل__',
+            '__📝 المرحلة 1: التطوير والإعداد__',
+            'جلسة العصف الذهبي - جلسة افتراضية/حضورية لفهم الأهداف والجمهور',
+            'صياغة الفكرة وترتيب الأفكار وهيكلة المحتوى',
+            'كتابة السيناريو - سيناريو احترافي بتوقيت دقيق',
+            'تطوير الشخصيات (إذا لزم الأمر) - تصميم 1-3 شخصيات رئيسية',
+            '__🎨 المرحلة 2: التصميم المرئي__',
+            'القصة المصورة (Storyboard) - لوحات مصورة مفصلة لكل مشهد',
+            'أسلوب فني موحد - تحديد نمط الرسم والألوان (Flat, Cartoon, Minimal, etc.)',
+            'رسم وتلوين المشاهد الرئيسية - تطبيق لوحة الألوان المعتمدة',
+            '__✨ المرحلة 3: التحريك والإنتاج__',
+            'تحريك المشهد - إضافة الحركة والحياة للرسومات',
+            'تحريك وهيكلة الشخصيات (Rigging) - إذا وجدت شخصيات',
+            'المؤثرات البصرية والتركيب (Compositing)',
+            '__🔊 المرحلة 4: الصوت__',
+            'اختيار وتسجيل التعليق الصوتي في استوديو احترافي',
+            'اختيار موسيقى أصلية أو حصرية',
+            'المؤثرات الصوتية (SFX) والمكساج احترافي',
+            '__🎬 المرحلة 5: المخرجات النهائية__',
+            'المراجعة الأولى، التعديلات (حتى 3 جولات)، والفحص النهائي',
+            '__📦 حزمة التسليم الكاملة:__',
+            'الفيديو الرئيسي MP4 HD (1920x1080) + نسخة لوسائل التواصل الاجتماعي',
+            'نسخة خالية من الموسيقى/النصوص للتعديلات المستقبلية',
+            'ملفات المشروع (After Effects, PSD) - (اختياري بتكلفة إضافية)',
+            'المرفقات: القصة المصورة، السيناريو، والصور الثابتة',
         ]
       },
       {
         id: 'corporate-intro-video',
-        name: 'Package 2: Corporate Intro / Explainer Video',
+        name: 'باقة 2: فيديو تعريفي للشركات / فيديو توضيحي (Corporate Intro / Explainer)',
         price: 600,
         hasQuantity: true,
-        quantityLabel: 'Number of Minutes',
-        priceSuffix: 'per minute',
+        quantityLabel: 'عدد الدقائق',
+        priceSuffix: 'لكل دقيقة',
         priceTiers: [
             { minQuantity: 1, price: 600 },
             { minQuantity: 10, price: 300 }, // 50% discount
             { minQuantity: 15, price: 180 }, // 70% discount
         ],
         items: [
-            '__Goal:__ A professional short video (60-90 seconds) explaining the company identity, mission, services, or main product in an engaging and easy-to-understand way.',
-            '__Deliverables:__',
-            'High-quality final video in MP4 format (Square 1080x1080 for social platforms + Horizontal 1920x1080 for website and presentations).',
-            'Music-Free version for use with voiceovers in different languages.',
-            'Template for English + Arabic (if the identity is bilingual) – editable for main texts only.',
-            '__Detailed Scope of Service:__',
-            'Discovery Phase: Gathering information (USPs, target audience, tone of voice).',
-            'Script & Voice: Writing an impactful and clear script, with professional voiceover suggestion (voiceover service can be added).',
-            'Storyboard: Providing a detailed sketch for each scene.',
-            '__Design & Production:__',
-            'Custom Visual Scenario: Designing unique scenes reflecting company culture (using actual team/office photos if possible).',
-            'Advanced Motion Graphics: Complex animated infographics to explain processes or statistics.',
-            'Voiceover Recording: Coordinating recording with a professional voiceover artist (included or as an add-on).',
-            'Music & Sound Effects: Selecting authentic music reflecting the brand personality.',
-            'Review & Revision: At least two major reviews (one on the storyboard, and one on the initial video draft).',
+            '__الهدف:__ فيديو احترافي قصير (60-90 ثانية) يشرح هوية الشركة، رسالتها، خدماتها، أو منتجها الرئيسي بطريقة جذابة وسهلة الفهم.',
+            '__المخرجات:__',
+            'فيديو نهائي عالي الجودة بصيغة MP4 (مربع 1080x1080 لمنصات التواصل + أفقي 1920x1080 للموقع والعروض التقديمية).',
+            'نسخة خالية من الموسيقى للاستخدام مع تعليق صوتي بلغات مختلفة.',
+            'قالب باللغة الإنجليزية + العربية (إذا كانت الهوية ثنائية اللغة) - قابل للتعديل للنصوص الرئيسية فقط.',
+            '__نطاق الخدمة التفصيلي:__',
+            'مرحلة الاكتشاف: جمع المعلومات (نقاط البيع الفريدة، الجمهور المستهدف، نبرة الصوت).',
+            'السيناريو والصوت: كتابة سيناريو مؤثر وواضح، مع اقتراح تعليق صوتي احترافي (يمكن إضافة خدمة التعليق الصوتي).',
+            'القصة المصورة (Storyboard): تقديم رسم تخطيطي مفصل لكل مشهد.',
+            '__التصميم والإنتاج:__',
+            'سيناريو بصري مخصص: تصميم مشاهد فريدة تعكس ثقافة الشركة (استخدام صور حقيقية للفريق/المكتب إذا أمكن).',
+            'موشن جرافيك متقدم: إنفوجرافيك متحرك معقد لشرح العمليات أو الإحصائيات.',
+            'تسجيل التعليق الصوتي: التنسيق للتسجيل مع فنان تعليق صوتي محترف (مشمول أو كإضافة).',
+            'الموسيقى والمؤثرات الصوتية: اختيار موسيقى أصلية تعكس شخصية العلامة التجارية.',
+            'المراجعة والتنقيح: مراجعتان رئيسيتان على الأقل (واحدة للقصة المصورة، وواحدة لمسودة الفيديو الأولية).',
         ]
       }
     ]
   },
   {
     id: 'packaging-design',
-    name: 'Packaging Design',
-    description: 'Services for designing and modifying packaging and labels for your products.',
+    name: 'تصميم التغليف والعبوات',
+    description: 'خدمات لتصميم وتعديل العبوات والملصقات لمنتجاتك.',
     options: [
       {
         id: 'packaging-design-new',
-        name: 'Packaging Design for Bags or Boxes per Product',
+        name: 'تصميم عبوات (أكياس أو صناديق) لكل منتج',
         price: 500,
         items: [
-          'Professional graphic design for boxes or bags',
-          'Consideration of a complete visual identity.',
-          'Design that suits the nature of the products.',
-          'Consideration of visual appeal and marketing standards.',
+          'تصميم جرافيكي احترافي للصناديق أو الأكياس',
+          'مراعاة الهوية البصرية الكاملة.',
+          'تصميم يناسب طبيعة المنتجات.',
+          'مراعاة الجاذبية البصرية ومعايير التسويق.',
         ],
       },
       {
         id: 'packaging-design-edit',
-        name: 'Modification of Current Packaging Designs for Bags or Boxes',
+        name: 'تعديل تصاميم العبوات الحالية (أكياس أو صناديق)',
         price: 100,
         items: [
-          'Developing old packaging to be more modern and attractive.',
-          'Improving colors, fonts, or images.',
-          'Adding new elements like (a "new" stamp, "limited offer," etc.).',
+          'تطوير التغليف القديم ليكون أكثر حداثة وجاذبية.',
+          'تحسين الألوان، الخطوط، أو الصور.',
+          'إضافة عناصر جديدة مثل (ختم "جديد"، "عرض محدود","إلخ).',
         ],
       },
       {
         id: 'sticker-design-new',
-        name: 'Packaging Sticker Design per Product',
+        name: 'تصميم ملصق (Sticker) للعبوة لكل منتج',
         price: 150,
-        items: ['Sticker Design'],
+        items: ['تصميم ملصق'],
       },
       {
         id: 'sticker-design-edit',
-        name: 'Modification of Packaging Sticker Designs per Product',
+        name: 'تعديل تصميم ملصق (Sticker) للعبوة لكل منتج',
         price: 50,
-        items: ['Sticker Design Modification'],
+        items: ['تعديل تصميم الملصق'],
       },
     ]
   }
