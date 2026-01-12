@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import type { ServiceOption } from '../types';
 import { getUnitPrice } from '../constants';
@@ -6,6 +7,7 @@ import { formatCurrency } from '../utils/format';
 
 interface PricingOptionProps {
   option: ServiceOption;
+  displayNumber: string;
   isSelected: boolean;
   onToggle: () => void;
   quantity: number;
@@ -91,6 +93,7 @@ const QuantitySelector: React.FC<{
 
 const PricingOption: React.FC<PricingOptionProps> = ({
   option,
+  displayNumber,
   isSelected,
   onToggle,
   quantity,
@@ -149,9 +152,14 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                 <div className="flex-grow">
                     <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-3">
                         <div className="flex-1">
-                            <h4 className={`text-lg font-bold transition-colors duration-300 ${isSelected ? 'text-blue-900' : 'text-slate-800'}`}>
-                                {option.name}
-                            </h4>
+                            <div className="flex items-center gap-2 mb-0.5">
+                                <span className={`text-xs font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 ${isSelected ? 'bg-blue-200 text-blue-700' : ''}`}>
+                                    {displayNumber}
+                                </span>
+                                <h4 className={`text-lg font-bold transition-colors duration-300 ${isSelected ? 'text-blue-900' : 'text-slate-800'}`}>
+                                    {option.name}
+                                </h4>
+                            </div>
                         </div>
                         <div className={`transition-all duration-300 ${language === 'ar' ? 'sm:text-left' : 'sm:text-right'}`}>
                             <div className={`${pricePulse ? 'animate-value-pop' : ''}`}>
@@ -195,6 +203,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                 <div className="hidden print:block pt-3 border-t border-slate-100 mt-3">
                     <div className="flex justify-between items-baseline">
                         <div className="flex items-center gap-2">
+                           <span className="text-[10px] font-bold text-gray-400">{displayNumber}</span>
                            <h4 className="font-bold text-sm text-black">{option.name}</h4>
                         </div>
                         <p className="font-semibold text-sm text-black">

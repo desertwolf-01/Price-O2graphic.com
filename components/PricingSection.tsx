@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import PricingCategory from './PricingCategory';
 import { ServiceCategory } from '../types';
@@ -33,10 +32,11 @@ const PricingSection: React.FC<PricingSectionProps> = ({
         <p className="mt-2 text-md text-slate-600">{t.selectServicesDescription}</p>
       </div>
       <div className="space-y-6">
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           <PricingCategory
             key={category.id}
             category={category}
+            categoryIndex={index + 1}
             selectedIds={selectedIds}
             onServiceToggle={onServiceToggle}
             quantities={quantities}

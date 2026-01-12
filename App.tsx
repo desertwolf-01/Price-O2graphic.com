@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -65,8 +66,6 @@ function App() {
   const t = useMemo(() => translations[language], [language]);
   const serviceCategories = useMemo(() => {
     const allCategories = getServiceCategories(language);
-    // In Dynamic mode, we show all categories so client can see alternatives, 
-    // but pre-select the ones from the URL.
     return allCategories;
   }, [language]);
 
@@ -101,7 +100,6 @@ function App() {
   };
 
   const handleServiceToggle = (optionId: string, category: ServiceCategory) => {
-    // Dynamic interaction allowed for everyone
     setSelectedIds(prevIds => {
       let newIds = [...prevIds];
       const isSelected = newIds.includes(optionId);
@@ -152,6 +150,18 @@ function App() {
     return allOptions.filter(o => selectedIds.includes(o.id));
   }, [selectedIds, serviceCategories]);
 
+  // Helper to find hierarchical number for an option
+  const getOptionHierarchy = (optionId: string) => {
+    for (let i = 0; i < serviceCategories.length; i++) {
+        const cat = serviceCategories[i];
+        const optIdx = cat.options.findIndex(o => o.id === optionId);
+        if (optIdx !== -1) {
+            return `${i + 1}.${optIdx + 1}`;
+        }
+    }
+    return '';
+  };
+
   const subTotalPrice = useMemo(() => {
     return selectedOptions.reduce((total, option) => {
       const quantity = option.hasQuantity ? (quantities[option.id] || 1) : 1;
@@ -163,19 +173,12 @@ function App() {
   const discountPercentage = useMemo(() => {
     let basePercentage = 0;
     const count = selectedIds.length;
-    
-    if (count >= 10) {
-      basePercentage = 30;
-    } else if (count >= 8) {
-      basePercentage = 20;
-    } else if (count >= 4) {
-      basePercentage = 10;
-    }
+    if (count >= 10) basePercentage = 30;
+    else if (count >= 8) basePercentage = 20;
+    else if (count >= 4) basePercentage = 10;
 
     let bonusPercentage = 0;
-    if (subTotalPrice > 5000) {
-      bonusPercentage = 5;
-    }
+    if (subTotalPrice > 5000) bonusPercentage = 5;
 
     return basePercentage + bonusPercentage;
   }, [selectedIds.length, subTotalPrice]);
@@ -218,7 +221,8 @@ function App() {
         const unitPrice = getUnitPrice(option, quantity);
         const price = unitPrice * quantity;
         const quantityText = option.hasQuantity ? ` (${quantity} × ${formatCurrency(unitPrice)})` : '';
-        return `- ${option.name}${quantityText}: *${formatCurrency(price)}*`;
+        const hierarchy = getOptionHierarchy(option.id);
+        return `${hierarchy} - ${option.name}${quantityText}: *${formatCurrency(price)}*`;
     }).join('\n');
 
     const message = `
@@ -296,7 +300,7 @@ ${t.proposalTo(clientInfo.name)}
           onClientInfoChange={handleClientInfoChange}
           emailError={emailError}
           proposalDate={proposalDate}
-          isClientMode={false} // Allow editing info in client mode too
+          isClientMode={false}
         />
         <PricingSection
           categories={serviceCategories}
@@ -306,7 +310,7 @@ ${t.proposalTo(clientInfo.name)}
           onQuantityChange={handleQuantityChange}
           language={language}
           t={t}
-          isClientMode={false} // Dynamic interaction always enabled
+          isClientMode={false}
         />
         <TermsAndConditions t={t} language={language} />
       </main>

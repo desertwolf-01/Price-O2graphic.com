@@ -19,6 +19,24 @@ const CORPORATE_PRICE_TIERS = [
     { minQuantity: 51, price: 12 },
 ];
 
+const PACKAGING_BAG_PRICE_TIERS = [
+    { minQuantity: 1, price: 350 },
+    { minQuantity: 6, price: 300 },
+    { minQuantity: 15, price: 200 },
+];
+
+const PACKAGING_BOX_PRICE_TIERS = [
+    { minQuantity: 1, price: 350 },
+    { minQuantity: 6, price: 300 },
+    { minQuantity: 15, price: 250 },
+];
+
+const PACKAGING_STICKER_NEW_PRICE_TIERS = [
+    { minQuantity: 1, price: 150 },
+    { minQuantity: 6, price: 100 },
+    { minQuantity: 15, price: 50 },
+];
+
 export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
   {
     id: 'graphic-design-services',
@@ -109,7 +127,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         name: '7. الأدوات الترويجية والهدايا التفاعلية (لبناء الولاء وتعزيز الانتشار)',
         price: 550,
         items: [
-            '__أقلام مكتبية:__<br/>تصميم أنيق يحمل شعار الشركة، مناسب للتوزيع في الفعاليات أو كهدايا للعملاء.',
+            '__أقلام مكتبية:__<br/>تصميم أنيق يحمل شعار الشركة، مناسب للتوزيع في الفعاليات أو كهديا للعملاء.',
             '__أكواب (سيراميك / بلاستيك):__<br/>مخصصة للاستخدام اليومي، تحمل الشعار والهوية البصرية بشكل جذاب ودائم.',
             '__طاقية (قبعة):__<br/>تصميم عملي ومرن يعزز ظهور العلامة في المناسبات الخارجية أو كجزء من الزي الترويجي.',
             '__فلاشة USB:__<br/>هدية ذكية تحمل شعار الشركة، مفيدة للعملاء والشركاء، مع إمكانية تخصيص العبوة.',
@@ -459,40 +477,58 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
   {
     id: 'packaging-design',
     name: 'تصميم التغليف والعبوات',
-    description: 'خدمات لتصميم وتعديل العبوات والملصقات لمنتجاتك.',
+    description: 'خدمات متخصصة في تصميم وتطوير عبوات المنتجات لضمان الجاذبية وحماية المنتج.',
     options: [
       {
-        id: 'packaging-design-new',
-        name: 'تصميم عبوات (أكياس أو صناديق) لكل منتج',
-        price: 500,
+        id: 'bag-design',
+        name: '7.1 تصميم الأكياس (Bags)',
+        price: 350,
+        hasQuantity: true,
+        quantityLabel: 'عدد التصاميم',
+        priceSuffix: 'لكل تصميم',
+        priceTiers: PACKAGING_BAG_PRICE_TIERS,
         items: [
-          'تصميم جرافيكي احترافي للصناديق أو الأكياس',
-          'مراعاة الهوية البصرية الكاملة.',
-          'تصميم يناسب طبيعة المنتجات.',
-          'مراعاة الجاذبية البصرية ومعايير التسويق.',
+          '__النطاق:__ تصميم أكياس مرنة (بلاستيك، ورق، إلخ) حسب نوع المنتج.',
+          '__المحتوى:__ واجهة أمامية + خلفية بصورة متناسقة.',
+          '__تنسيق الطباعة:__ إعداد الملفات بنظام CMYK / Pantone لضمان دقة الألوان.',
+          '__دعم اللغات:__ تصميم يدعم اللغتين العربية والإنجليزية.',
+          '__التسليمات:__ ملفات AI, EPS, PDF جاهزة للطباعة + نسخ PNG/JPG للمراجعة.',
         ],
       },
       {
-        id: 'packaging-design-edit',
-        name: 'تعديل تصاميم العبوات الحالية (أكياس أو صناديق)',
-        price: 100,
+        id: 'box-design',
+        name: '7.2 تصميم الصناديق (Boxes)',
+        price: 350,
+        hasQuantity: true,
+        quantityLabel: 'عدد التصاميم',
+        priceSuffix: 'لكل تصميم',
+        priceTiers: PACKAGING_BOX_PRICE_TIERS,
         items: [
-          'تطوير التغليف القديم ليكون أكثر حداثة وجاذبية.',
-          'تحسين الألوان، الخطوط، أو الصور.',
-          'إضافة عناصر جديدة مثل (ختم "جديد"، "عرض محدود","إلخ).',
+          '__النطاق:__ تصميم علب كرتونية أو صناديق صلبة (Folding/Rigid boxes).',
+          '__الهيكل:__ تصميم كامل لجميع أوجه الصندوق (6 أوجه أو أكثر).',
+          '__القص والطي:__ دمج العناصر مع مراعاة خطوط القص (dieline).',
+          '__اللمسة الفنية:__ توازن بين الفخامة والبساطة حسب فئة المنتج.',
+          '__التسليمات:__ ملف AI مع dieline + PDF للطباعة + نماذج 3D mockups.',
         ],
       },
       {
         id: 'sticker-design-new',
-        name: 'تصميم ملصق (Sticker) للعبوة لكل منتج',
+        name: '7.3 تصميم ملصق (Sticker) جديد',
         price: 150,
-        items: ['تصميم ملصق'],
+        hasQuantity: true,
+        quantityLabel: 'عدد التصاميم',
+        priceSuffix: 'لكل تصميم',
+        priceTiers: PACKAGING_STICKER_NEW_PRICE_TIERS,
+        items: ['تصميم ملصق للمنتج متوافق مع الهوية'],
       },
       {
         id: 'sticker-design-edit',
-        name: 'تعديل تصميم ملصق (Sticker) للعبوة لكل منتج',
+        name: '7.4 تعديل تصميم ملصق (Sticker) موجود',
         price: 50,
-        items: ['تعديل تصميم الملصق'],
+        hasQuantity: true,
+        quantityLabel: 'عدد التصاميم',
+        priceSuffix: 'لكل تصميم',
+        items: ['تحسين أو تعديل بيانات ملصق حالي'],
       },
     ]
   }
@@ -937,41 +973,59 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
   },
   {
     id: 'packaging-design',
-    name: 'تصميم التغليف والعبوات',
-    description: 'خدمات لتصميم وتعديل العبوات والملصقات لمنتجاتك.',
+    name: 'Packaging & Box Design',
+    description: 'Specialized services for designing product packaging and boxes to ensure appeal and protection.',
     options: [
       {
-        id: 'packaging-design-new',
-        name: 'تصميم عبوات (أكياس أو صناديق) لكل منتج',
-        price: 500,
+        id: 'bag-design',
+        name: '7.1 Bags Design',
+        price: 350,
+        hasQuantity: true,
+        quantityLabel: 'Number of Designs',
+        priceSuffix: 'per design',
+        priceTiers: PACKAGING_BAG_PRICE_TIERS,
         items: [
-          'تصميم جرافيكي احترافي للصناديق أو الأكياس',
-          'مراعاة الهوية البصرية الكاملة.',
-          'تصميم يناسب طبيعة المنتجات.',
-          'مراعاة الجاذبية البصرية ومعايير التسويق.',
+          '__Scope:__ Flexible bag design (plastic, paper, etc.) based on product type.',
+          '__Content:__ Harmonious front and back design.',
+          '__Print Setup:__ Files prepared in CMYK / Pantone for color accuracy.',
+          '__Language Support:__ Design supports both Arabic and English.',
+          '__Deliverables:__ Print-ready AI, EPS, PDF files + PNG/JPG for review.',
         ],
       },
       {
-        id: 'packaging-design-edit',
-        name: 'تعديل تصاميم العبوات الحالية (أكياس أو صناديق)',
-        price: 100,
+        id: 'box-design',
+        name: '7.2 Boxes Design',
+        price: 350,
+        hasQuantity: true,
+        quantityLabel: 'Number of Designs',
+        priceSuffix: 'per design',
+        priceTiers: PACKAGING_BOX_PRICE_TIERS,
         items: [
-          'تطوير التغليف القديم ليكون أكثر حداثة وجاذبية.',
-          'تحسين الألوان، الخطوط، أو الصور.',
-          'إضافة عناصر جديدة مثل (ختم "جديد"، "عرض محدود","إلخ).',
+          '__Scope:__ Carton or rigid box design.',
+          '__Structure:__ Full design for all box faces (6 or more).',
+          '__Dieline Integration:__ Visual elements integrated with cut and fold lines.',
+          '__Artistic Touch:__ Balance between luxury and simplicity per product tier.',
+          '__Deliverables:__ AI file with dieline + Print PDF + 3D mockups.',
         ],
       },
       {
         id: 'sticker-design-new',
-        name: 'تصميم ملصق (Sticker) للعبوة لكل منتج',
+        name: '7.3 New Sticker Design',
         price: 150,
-        items: ['تصميم ملصق'],
+        hasQuantity: true,
+        quantityLabel: 'Number of Designs',
+        priceSuffix: 'per design',
+        priceTiers: PACKAGING_STICKER_NEW_PRICE_TIERS,
+        items: ['Professional product sticker design compatible with brand identity'],
       },
       {
         id: 'sticker-design-edit',
-        name: 'تعديل تصميم ملصق (Sticker) للعبوة لكل منتج',
+        name: '7.4 Edit Existing Sticker Design',
         price: 50,
-        items: ['تعديل تصميم الملصق'],
+        hasQuantity: true,
+        quantityLabel: 'Number of Designs',
+        priceSuffix: 'per design',
+        items: ['Updating or enhancing current sticker data and graphics'],
       },
     ]
   }
