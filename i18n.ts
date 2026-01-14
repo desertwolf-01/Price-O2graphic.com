@@ -42,6 +42,14 @@ export interface Translation {
   emailSendErrorConfig: string;
   emailSendErrorNetwork: string;
 
+  // Coupon
+  couponLabel: string;
+  couponPlaceholder: string;
+  applyBtn: string;
+  invalidCoupon: string;
+  couponApplied: (code: string, discount: number) => string;
+  removeCoupon: string;
+
   // TermsAndConditions.tsx
   termsTitle: string;
   term1Title: string;
@@ -98,7 +106,7 @@ const en: Translation = {
   fillInfoAlert: 'Please fill in all client information (Name, Phone, Email) before proceeding.',
   fillInfoAlertClient: 'Please fill in your name, phone, and email to submit your inquiry.',
   selectServicesTitle: 'Select Services',
-  selectServicesDescription: 'Choose from the services below to build your custom package. For services with quantities, the price is per page.',
+  selectServicesDescription: 'Choose from the services below to build your custom package.',
   pagesLabel: 'Pages:',
   perPageSuffix: 'per page',
   decreaseQuantity: 'Decrease quantity',
@@ -119,6 +127,12 @@ const en: Translation = {
   emailSendError: 'There was an error sending the email. Please try again later or contact support.',
   emailSendErrorConfig: 'There seems to be an issue with our email configuration. Please contact support.',
   emailSendErrorNetwork: 'A network error occurred. Please check your connection and try again.',
+  couponLabel: 'Coupon Code',
+  couponPlaceholder: 'Enter code here',
+  applyBtn: 'Apply',
+  invalidCoupon: 'Invalid coupon code',
+  couponApplied: (code, discount) => `Coupon "${code}" applied: ${discount}% extra discount!`,
+  removeCoupon: 'Remove',
   termsTitle: 'Terms & Conditions',
   term1Title: 'Payment Terms',
   term1Desc: 'A 50% deposit is required to start the project, with the remaining balance due upon completion.',
@@ -168,7 +182,7 @@ const ar: Translation = {
   fillInfoAlert: 'يرجى ملء جميع بيانات العميل (الاسم، الهاتف، البريد الإلكتروني) قبل المتابعة.',
   fillInfoAlertClient: 'يرجى ملء اسمك وهاتفك وبريدك الإلكتروني لإرسال استفسارك.',
   selectServicesTitle: 'اختر الخدمات',
-  selectServicesDescription: 'اختر من الخدمات أدناه لبناء باقتك المخصصة. بالنسبة للخدمات ذات الكميات، السعر للصفحة الواحدة.',
+  selectServicesDescription: 'اختر من الخدمات أدناه لبناء باقتك المخصصة.',
   pagesLabel: 'الصفحات:',
   perPageSuffix: 'لكل صفحة',
   decreaseQuantity: 'تقليل الكمية',
@@ -189,6 +203,12 @@ const ar: Translation = {
   emailSendError: 'حدث خطأ أثناء إرسال البريد الإلكتروني. يرجى المحاولة مرة أخرى لاحقًا أو الاتصال بالدعم.',
   emailSendErrorConfig: 'يبدو أن هناك مشكلة في إعدادات البريد الإلكتروني لدينا. يرجى الاتصال بالدعم.',
   emailSendErrorNetwork: 'حدث خطأ في الشبكة. يرجى التحقق من اتصالك والمحاولة مرة أخرى.',
+  couponLabel: 'كود الخصم (كوبون)',
+  couponPlaceholder: 'أدخل الكود هنا',
+  applyBtn: 'تطبيق',
+  invalidCoupon: 'كود غير صحيح',
+  couponApplied: (code, discount) => `تم تطبيق الكود "${code}": خصم إضافي بقيمة ${discount}%!`,
+  removeCoupon: 'إلغاء',
   termsTitle: 'الشروط والأحكام',
   term1Title: 'شروط الدفع',
   term1Desc: 'مطلوب دفعة مقدمة 50% لبدء المشروع، ويُستحق الرصيد المتبقي عند الانتهاء.',
@@ -204,7 +224,7 @@ const ar: Translation = {
   term6Desc: 'سنتعامل مع جميع المعلومات المتعلقة بالمشروع على أنها سرية.',
   successMessageTitle: 'تم إرسال الاستفسار!',
   successMessageClientBody: 'شكراً لاهتمامك!\nلقد استلمنا استفسارك وسنتصل بك قريباً لمناقشة التفاصيل.',
-  successMessageEmailBody: 'تم إرسال عرض السعر بنجاة.',
+  successMessageEmailBody: 'تم إرسال عرض السعر بنجاح.',
   backToProposal: 'العودة إلى العرض',
   discountUnlockedTitle: 'تم فتح الخصم!',
   discountUnlockedMessage: (percentage) => `لقد حصلت على خصم ${percentage}%!`,

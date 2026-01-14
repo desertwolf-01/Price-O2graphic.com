@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -6,6 +5,7 @@ import StaticSection from './components/StaticSection';
 import PricingSection from './components/PricingSection';
 import TotalBar from './components/TotalBar';
 import TermsAndConditions from './components/TermsAndConditions';
+import CouponSection from './components/CouponSection';
 import { getServiceCategories, getUnitPrice } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
@@ -56,6 +56,7 @@ function App() {
     return [];
   });
   const [quantities, setQuantities] = useState<{ [id: string]: number }>({});
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
   const [actionType, setActionType] = useState<string | null>(null);
   const [proposalDate] = useState(new Date());
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
@@ -143,6 +144,7 @@ function App() {
   const handleClearSelection = () => {
     setSelectedIds([]);
     setQuantities({});
+    setAppliedCoupon(null);
   };
 
   const selectedOptions = useMemo(() => {
@@ -150,7 +152,6 @@ function App() {
     return allOptions.filter(o => selectedIds.includes(o.id));
   }, [selectedIds, serviceCategories]);
 
-  // Helper to find hierarchical number for an option
   const getOptionHierarchy = (optionId: string) => {
     for (let i = 0; i < serviceCategories.length; i++) {
         const cat = serviceCategories[i];
@@ -179,9 +180,12 @@ function App() {
 
     let bonusPercentage = 0;
     if (subTotalPrice > 5000) bonusPercentage = 5;
+    
+    // Combine volume discount + coupon discount
+    const couponDiscount = appliedCoupon ? appliedCoupon.discount : 0;
 
-    return basePercentage + bonusPercentage;
-  }, [selectedIds.length, subTotalPrice]);
+    return Math.min(100, basePercentage + bonusPercentage + couponDiscount);
+  }, [selectedIds.length, subTotalPrice, appliedCoupon]);
 
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
   const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);
@@ -225,6 +229,8 @@ function App() {
         return `${hierarchy} - ${option.name}${quantityText}: *${formatCurrency(price)}*`;
     }).join('\n');
 
+    const couponInfo = appliedCoupon ? `\n*الكوبون المطبق:* ${appliedCoupon.code} (${appliedCoupon.discount}% خصم إضافي)` : '';
+
     const message = `
 *${t.proposalTitle}*
 
@@ -236,6 +242,7 @@ ${t.proposalDateLabel}: ${formattedDate}
 
 *${t.selectedServicesTitle}:*
 ${servicesText}
+${couponInfo}
 
 *${t.priceSummaryTitle}:*
 ${t.subtotal}: ${formatCurrency(subTotalPrice)}
@@ -302,6 +309,7 @@ ${t.proposalTo(clientInfo.name)}
           proposalDate={proposalDate}
           isClientMode={false}
         />
+        
         <PricingSection
           categories={serviceCategories}
           selectedIds={selectedIds}
@@ -312,6 +320,14 @@ ${t.proposalTo(clientInfo.name)}
           t={t}
           isClientMode={false}
         />
+
+        <CouponSection 
+          t={t}
+          language={language}
+          onApply={setAppliedCoupon}
+          appliedCoupon={appliedCoupon}
+        />
+
         <TermsAndConditions t={t} language={language} />
       </main>
       <Footer language={language} />
