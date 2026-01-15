@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -172,20 +173,22 @@ function App() {
   }, [selectedOptions, quantities]);
 
   const discountPercentage = useMemo(() => {
+    // Logic: 5% discount for each active category
     let basePercentage = 0;
-    const count = selectedIds.length;
-    if (count >= 10) basePercentage = 30;
-    else if (count >= 8) basePercentage = 20;
-    else if (count >= 4) basePercentage = 10;
-
-    let bonusPercentage = 0;
-    if (subTotalPrice > 5000) bonusPercentage = 5;
     
-    // Combine volume discount + coupon discount
+    serviceCategories.forEach(category => {
+        // Check if any option in this category is currently selected
+        const isCategoryActive = category.options.some(option => selectedIds.includes(option.id));
+        if (isCategoryActive) {
+            basePercentage += 5;
+        }
+    });
+    
+    // Combine calculated base + coupon
     const couponDiscount = appliedCoupon ? appliedCoupon.discount : 0;
 
-    return Math.min(100, basePercentage + bonusPercentage + couponDiscount);
-  }, [selectedIds.length, subTotalPrice, appliedCoupon]);
+    return Math.min(100, basePercentage + couponDiscount);
+  }, [selectedIds, serviceCategories, appliedCoupon]);
 
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
   const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);

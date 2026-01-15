@@ -14,9 +14,9 @@ export const getUnitPrice = (option: ServiceOption, quantity: number): number =>
 }
 
 export const VALID_COUPONS = [
-    { code: 'WELCOME10', discount: 10 },
-    { code: 'SAVE20', discount: 15 },
-    { code: 'O2SPECIAL', discount: 20 },
+    { code: 'WELCOME10', discount: 5 },
+    { code: 'SAVE20', discount: 10 },
+    { code: 'O2SPECIAL', discount: 15 },
     { code: 'FREE', discount: 1 }, // For testing or special cases
 ];
 
@@ -102,7 +102,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'stationery',
         name: '4. Stationery & Correspondence',
-        price: 350,
+        price: 300,
         items: [
           '__1. Business Cards:__ 5 designs for different roles.',
           '__2. Letterhead:__ A4 and A5 versions.',
@@ -117,7 +117,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'promotional-materials',
         name: '5. Signage & Promotional Displays',
-        price: 350,
+        price: 300,
         items: [
           '__1. Office Outdoor Sign:__ Main storefront signage.',
           '__2. Roll-up Banner:__ For events and entrances.',
@@ -549,7 +549,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'stationery',
         name: '4. المواد المكتبية والمراسلات (للاحترافية اليومية داخل المؤسسة)',
-        price: 350,
+        price: 300,
         items: [
           '__1. بطاقات أعمال:__<br/>• 5 تصاميم مخصصة لأدوار مختلفة (مثل: المدير، فريق المبيعات، الدعم الفني، إلخ)، متوافقة مع الهوية البصرية الثنائية (عربي/إنجليزي).',
           '__2. ورق المراسلات:__<br/>• نسخة بحجم A5<br/>• نسخة بحجم A4<br/>• يتضمن رأس صفحة معتمد للاستخدام الرسمي.',
@@ -564,7 +564,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'promotional-materials',
         name: '5. اللافتات والعروض الترويجية (للفعاليات، المعارض، والمكتب)',
-        price: 350,
+        price: 300,
         items: [
           '__1. اللوحة الخارجية للمكتب:__<br/>o تصميم احترافي يعرض اسم الشركة، الشعار، ونشاطها الرئيسي<br/>o متوافق مع متطلبات الرؤية من مسافات بعيدة<br/>o يراعي التناسق البصري مع الهوية الثنائية',
           '__2. رول أب (Roll-up Banner):__<br/>o تصميم جذاب ومناسب للاستخدام في المعارض, المؤتمرات، أو عند مدخل المكتب<br/>o يحتوي على رسالة رئيسية واضحة، شعار، ومعلومات التواصل<br/>o جاهز للطباعة بأبعاد قياسية (عادةً 85×200 سم)',
