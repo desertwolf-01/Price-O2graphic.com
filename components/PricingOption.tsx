@@ -107,6 +107,9 @@ const PricingOption: React.FC<PricingOptionProps> = ({
     const selectorType = isRadio ? 'radio' : 'checkbox';
     const currentUnitPrice = getUnitPrice(option, quantity);
     const totalOptionPrice = currentUnitPrice * (option.hasQuantity ? quantity : 1);
+    
+    // Check if a tier discount is active
+    const hasTierDiscount = option.hasQuantity && quantity > 1 && currentUnitPrice < option.price;
 
     useEffect(() => {
         setPricePulse(true);
@@ -168,8 +171,17 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                                         <p className={`text-xl font-black ${isSelected ? 'text-blue-700' : 'text-slate-900'}`}>
                                             {formatCurrency(totalOptionPrice)}
                                         </p>
-                                        <p className="text-xs text-slate-400 font-medium mt-0.5">
-                                            ({quantity} × {formatCurrency(currentUnitPrice)})
+                                        <p className="text-xs text-slate-400 font-medium mt-0.5 flex items-center justify-end gap-1">
+                                            <span>({quantity} ×</span>
+                                            {hasTierDiscount && (
+                                                <span className="text-red-400 line-through decoration-red-400/70">
+                                                    {formatCurrency(option.price)}
+                                                </span>
+                                            )}
+                                            <span className={hasTierDiscount ? 'text-green-600 font-bold' : ''}>
+                                                {formatCurrency(currentUnitPrice)}
+                                            </span>
+                                            <span>)</span>
                                         </p>
                                     </div>
                                 ) : (

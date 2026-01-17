@@ -45,6 +45,30 @@ const PACKAGING_STICKER_NEW_PRICE_TIERS = [
     { minQuantity: 15, price: 50 },
 ];
 
+const SOCIAL_PKG_3_TIERS = [
+    { minQuantity: 1, price: 600 },
+    { minQuantity: 3, price: 500 },
+    { minQuantity: 5, price: 400 },
+];
+
+const SOCIAL_PKG_4_TIERS = [
+    { minQuantity: 1, price: 900 },
+    { minQuantity: 3, price: 800 },
+    { minQuantity: 5, price: 700 },
+];
+
+const SOCIAL_PKG_45_TIERS = [
+    { minQuantity: 1, price: 1250 },
+    { minQuantity: 3, price: 1150 },
+    { minQuantity: 5, price: 1050 },
+];
+
+const SOCIAL_PKG_5_TIERS = [
+    { minQuantity: 1, price: 1700 },
+    { minQuantity: 3, price: 1600 },
+    { minQuantity: 5, price: 1500 },
+];
+
 export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
   {
     id: 'graphic-design-services',
@@ -238,6 +262,10 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'social-emerging-18',
         name: 'Package 3: Emerging – 18 Strategic Designs',
         price: 600,
+        hasQuantity: true,
+        quantityLabel: 'Months',
+        priceSuffix: 'per month',
+        priceTiers: SOCIAL_PKG_3_TIERS,
         items: [
           '18 Professional designs (Static or Carousel)',
           'Delivery in ready-to-publish formats: High-quality PNG + JPG',
@@ -250,6 +278,10 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'social-advanced-30',
         name: 'Package 4: Advanced – 36 Monthly Designs',
         price: 900,
+        hasQuantity: true,
+        quantityLabel: 'Months',
+        priceSuffix: 'per month',
+        priceTiers: SOCIAL_PKG_4_TIERS,
         items: [
           '36 Professional designs (Static or Carousel)',
           'Up to 3 rounds of design revisions',
@@ -262,12 +294,16 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'social-intermediate-54',
         name: 'Package 4.5: Intermediate Advanced – 54 Monthly Designs',
         price: 1250,
+        hasQuantity: true,
+        quantityLabel: 'Months',
+        priceSuffix: 'per month',
+        priceTiers: SOCIAL_PKG_45_TIERS,
         items: [
           '54 Professional designs (Static or Carousel)',
           'Delivery in ready-to-publish formats: High-quality PNG + JPG',
           'Compatible with Instagram + Facebook sizes (Feed, Story, Reels Cover)',
           'Full commitment to brand identity (colors, fonts, patterns)',
-          'Up to 4 rounds of design revisions',
+          'Up to 4 rounds of design revisions (More than Package 4, Less than Package 5)',
           'Customized monthly content plan (Smart distribution based on goals)',
           'Visual Planning & Strategy (Free)',
           'Smart Posting & Scheduling (Free)',
@@ -277,6 +313,10 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'social-advanced-72',
         name: 'Package 5: Advanced Plus – 72 Monthly Designs',
         price: 1700,
+        hasQuantity: true,
+        quantityLabel: 'Months',
+        priceSuffix: 'per month',
+        priceTiers: SOCIAL_PKG_5_TIERS,
         items: [
           '72 Professional designs (Static or Carousel)',
           'Up to 5 rounds of design revisions',
@@ -727,6 +767,10 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'social-emerging-18',
         name: 'الباقة 3: الناشئة – 18 تصميم استراتيجي',
         price: 600,
+        hasQuantity: true,
+        quantityLabel: 'عدد الأشهر',
+        priceSuffix: 'لكل شهر',
+        priceTiers: SOCIAL_PKG_3_TIERS,
         items: [
           '18 تصميم احترافي (ثابتة أو كاروسيل)',
           'التسليم بصيغ جاهزة للنشر: PNG + JPG عالية الجودة',
@@ -739,6 +783,10 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'social-advanced-30',
         name: 'الباقة 4: المتقدمة – 36 تصميم شهري',
         price: 900,
+        hasQuantity: true,
+        quantityLabel: 'عدد الأشهر',
+        priceSuffix: 'لكل شهر',
+        priceTiers: SOCIAL_PKG_4_TIERS,
         items: [
           '36 تصميم احترافي (ثابتة أو كاروسيل)',
           'ما يصل إلى 3 جولات من التعديلات على التصميم',
@@ -751,12 +799,16 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'social-intermediate-54',
         name: 'الباقة 4.5: المتقدمة المتوسطة – 54 تصميم شهري',
         price: 1250,
+        hasQuantity: true,
+        quantityLabel: 'عدد الأشهر',
+        priceSuffix: 'لكل شهر',
+        priceTiers: SOCIAL_PKG_45_TIERS,
         items: [
           '54 تصميمًا احترافيًا (ثابت أو كاروسيل)',
           'التسليم بصيغ جاهزة للنشر: PNG + JPG عالية الجودة',
           'متوافقة مع مقاسات إنستغرام + فيسبوك (Feed, Story, Reels Cover)',
           'التزام تام بالهوية البصرية (الألوان، الخطوط، الأنماط)',
-          'حتى 4 جولات تعديل',
+          'حتى 4 جولات تعديل (أكثر من الباقة 4، أقل من الباقة 5)',
           'خطة محتوى شهرية مخصصة (توزيع ذكي حسب الأهداف: توعية، تحويل، ولاء)',
           'التخطيط البصري والاستراتيجي مجانا',
           'النشر والجدولة الذكية مجانا',
@@ -766,6 +818,10 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'social-advanced-72',
         name: 'الباقة 5: المتقدمة بلس – 72 تصميم شهري',
         price: 1700,
+        hasQuantity: true,
+        quantityLabel: 'عدد الأشهر',
+        priceSuffix: 'لكل شهر',
+        priceTiers: SOCIAL_PKG_5_TIERS,
         items: [
           '72 تصاميم احترافية (ثابتة أو كاروسيل)',
           'ما يصل إلى 5 جولات من التعديلات على التصميم',
@@ -982,64 +1038,6 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             'المراجعة والتنقيح: مراجعتان رئيسيتان على الأقل (واحدة للقصة المصورة، وواحدة لمسودة الفيديو الأولية).',
         ]
       }
-    ]
-  },
-  {
-    id: 'packaging-design',
-    name: 'تصميم العبوات والتغليف',
-    description: 'خدمات متخصصة لتصميم أغلفة وعبوات المنتجات لضمان الجاذبية والحماية.',
-    options: [
-      {
-        id: 'bag-design',
-        name: '7.1 تصميم الأكياس',
-        price: 350,
-        hasQuantity: true,
-        quantityLabel: 'عدد التصاميم',
-        priceSuffix: 'لكل تصميم',
-        priceTiers: PACKAGING_BAG_PRICE_TIERS,
-        items: [
-          '__النطاق:__ تصميم أكياس مرنة (بلاستيك، ورق، إلخ) حسب نوع المنتج.',
-          '__المحتوى:__ تصميم متناسق للوجهين الأمامي والخلفي.',
-          '__إعداد الطباعة:__ تجهيز الملفات بنظام ألوان CMYK / Pantone لضمان دقة الألوان.',
-          '__دعم اللغات:__ التصميم يدعم اللغتين العربية والإنجليزية.',
-          '__المخرجات:__ ملفات جاهزة للطباعة (AI, EPS, PDF) + صور (PNG/JPG) للمراجعة.',
-        ],
-      },
-      {
-        id: 'box-design',
-        name: '7.2 تصميم العبوات والصناديق',
-        price: 350,
-        hasQuantity: true,
-        quantityLabel: 'عدد التصاميم',
-        priceSuffix: 'لكل تصميم',
-        priceTiers: PACKAGING_BOX_PRICE_TIERS,
-        items: [
-          '__النطاق:__ تصميم عبوة كرتونية أو صلبة (Rigid Box).',
-          '__الهيكل:__ تصميم كامل لجميع أوجه العبوة (6 أوجه أو أكثر).',
-          '__دمج مخطط القص (Dieline):__ دمج العناصر البصرية مع خطوط القص (dieline).',
-          '__اللمسة الفنية:__ توازن بين الفخامة والبساطة حسب فئة المنتج.',
-          '__المخرجات:__ ملف AI مع مخطط القص + PDF للطباعة + موك أب (3D Mockup) للتخيل.',
-        ],
-      },
-      {
-        id: 'sticker-design-new',
-        name: '7.3 تصميم ملصق (Sticker) جديد',
-        price: 150,
-        hasQuantity: true,
-        quantityLabel: 'عدد التصاميم',
-        priceSuffix: 'لكل تصميم',
-        priceTiers: PACKAGING_STICKER_NEW_PRICE_TIERS,
-        items: ['تصميم ملصق منتج احترافي متوافق مع الهوية البصرية'],
-      },
-      {
-        id: 'sticker-design-edit',
-        name: '7.4 تعديل تصميم ملصق قائم',
-        price: 50,
-        hasQuantity: true,
-        quantityLabel: 'عدد التصاميم',
-        priceSuffix: 'لكل تصميم',
-        items: ['تحديث أو تحسين بيانات ورسوميات ملصق حالي'],
-      },
     ]
   }
 ];
