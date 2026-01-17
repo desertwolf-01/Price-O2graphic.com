@@ -237,6 +237,9 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'social-planning',
         name: 'Package 1: Visual Planning & Strategy',
         price: 75,
+        hasQuantity: true,
+        quantityLabel: 'Months',
+        priceSuffix: 'per month',
         items: [
           '__(Foundation ensuring content effectiveness)__',
           'Monthly content planning session (30 mins)',
@@ -250,6 +253,9 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'social-basic-9',
         name: 'Package 2: Basic – 9 Initial Designs',
         price: 315,
+        hasQuantity: true,
+        quantityLabel: 'Months',
+        priceSuffix: 'per month',
         items: [
           '9 Professional designs (Static or Carousel)',
           'Delivery in ready-to-publish formats: High-quality PNG + JPG',
@@ -331,6 +337,9 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'social-posting',
         name: 'Package 6: Smart Posting & Scheduling',
         price: 75,
+        hasQuantity: true,
+        quantityLabel: 'Months',
+        priceSuffix: 'per month',
         items: [
           'Scheduling all posts at optimal times based on audience',
           'Automatic posting without intervention',
@@ -742,6 +751,9 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'social-planning',
         name: 'الباقة 1: التخطيط البصري والاستراتيجي',
         price: 75,
+        hasQuantity: true,
+        quantityLabel: 'عدد الأشهر',
+        priceSuffix: 'لكل شهر',
         items: [
           '__(الأساس لضمان فاعلية المحتوى)__',
           'جلسة تخطيط محتوى شهرية (30 دقيقة)',
@@ -755,6 +767,9 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'social-basic-9',
         name: 'الباقة 2: الأساسية – 9 تصاميم',
         price: 315,
+        hasQuantity: true,
+        quantityLabel: 'عدد الأشهر',
+        priceSuffix: 'لكل شهر',
         items: [
           '9 تصاميم احترافية (ثابتة أو كاروسيل)',
           'التسليم بصيغ جاهزة للنشر: PNG + JPG عالية الجودة',
@@ -836,6 +851,9 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'social-posting',
         name: 'الباقة 6: النشر والجدولة الذكية',
         price: 75,
+        hasQuantity: true,
+        quantityLabel: 'عدد الأشهر',
+        priceSuffix: 'لكل شهر',
         items: [
           'جدولة جميع المنشورات في الأوقات المثالية حسب الجمهور',
           'نشر تلقائي دون تدخل منك',
