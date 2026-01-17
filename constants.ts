@@ -259,6 +259,21 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ]
       },
       {
+        id: 'social-intermediate-54',
+        name: 'Package 4.5: Intermediate Advanced – 54 Monthly Designs',
+        price: 1250,
+        items: [
+          '54 Professional designs (Static or Carousel)',
+          'Delivery in ready-to-publish formats: High-quality PNG + JPG',
+          'Compatible with Instagram + Facebook sizes (Feed, Story, Reels Cover)',
+          'Full commitment to brand identity (colors, fonts, patterns)',
+          'Up to 4 rounds of design revisions',
+          'Customized monthly content plan (Smart distribution based on goals)',
+          'Visual Planning & Strategy (Free)',
+          'Smart Posting & Scheduling (Free)',
+        ]
+      },
+      {
         id: 'social-advanced-72',
         name: 'Package 5: Advanced Plus – 72 Monthly Designs',
         price: 1700,
@@ -268,6 +283,8 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
           'Simplified monthly content plan (Distribution based on goals)',
           '__Total Posts: 72 Posts (All static)__',
           'Full commitment to brand identity (colors, fonts, patterns)',
+          'Visual Planning & Strategy (Free)',
+          'Smart Posting & Scheduling (Free)',
         ]
       },
       {
@@ -731,6 +748,21 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         ]
       },
       {
+        id: 'social-intermediate-54',
+        name: 'الباقة 4.5: المتقدمة المتوسطة – 54 تصميم شهري',
+        price: 1250,
+        items: [
+          '54 تصميمًا احترافيًا (ثابت أو كاروسيل)',
+          'التسليم بصيغ جاهزة للنشر: PNG + JPG عالية الجودة',
+          'متوافقة مع مقاسات إنستغرام + فيسبوك (Feed, Story, Reels Cover)',
+          'التزام تام بالهوية البصرية (الألوان، الخطوط، الأنماط)',
+          'حتى 4 جولات تعديل',
+          'خطة محتوى شهرية مخصصة (توزيع ذكي حسب الأهداف: توعية، تحويل، ولاء)',
+          'التخطيط البصري والاستراتيجي مجانا',
+          'النشر والجدولة الذكية مجانا',
+        ]
+      },
+      {
         id: 'social-advanced-72',
         name: 'الباقة 5: المتقدمة بلس – 72 تصميم شهري',
         price: 1700,
@@ -740,6 +772,8 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
           'خطة محتوى شهرية مبسطة (توزيع بناءً على الأهداف)',
           'إجمالي المنشورات: 72 منشور (جميعها ثابتة)',
           'التزام تام بالهوية البصرية (الألوان، الخطوط، الأنماط)',
+          'التخطيط البصري والاستراتيجي مجانا',
+          'النشر والجدولة الذكية مجانا',
         ]
       },
       {
