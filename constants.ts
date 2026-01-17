@@ -259,8 +259,20 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ]
       },
       {
+        id: 'social-advanced-72',
+        name: 'Package 5: Advanced Plus – 72 Monthly Designs',
+        price: 1700,
+        items: [
+          '72 Professional designs (Static or Carousel)',
+          'Up to 5 rounds of design revisions',
+          'Simplified monthly content plan (Distribution based on goals)',
+          '__Total Posts: 72 Posts (All static)__',
+          'Full commitment to brand identity (colors, fonts, patterns)',
+        ]
+      },
+      {
         id: 'social-posting',
-        name: 'Package 5: Smart Posting & Scheduling',
+        name: 'Package 6: Smart Posting & Scheduling',
         price: 75,
         items: [
           'Scheduling all posts at optimal times based on audience',
@@ -719,8 +731,20 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         ]
       },
       {
+        id: 'social-advanced-72',
+        name: 'الباقة 5: المتقدمة بلس – 72 تصميم شهري',
+        price: 1700,
+        items: [
+          '72 تصاميم احترافية (ثابتة أو كاروسيل)',
+          'ما يصل إلى 5 جولات من التعديلات على التصميم',
+          'خطة محتوى شهرية مبسطة (توزيع بناءً على الأهداف)',
+          'إجمالي المنشورات: 72 منشور (جميعها ثابتة)',
+          'التزام تام بالهوية البصرية (الألوان، الخطوط، الأنماط)',
+        ]
+      },
+      {
         id: 'social-posting',
-        name: 'الباقة 5: النشر والجدولة الذكية',
+        name: 'الباقة 6: النشر والجدولة الذكية',
         price: 75,
         items: [
           'جدولة جميع المنشورات في الأوقات المثالية حسب الجمهور',
