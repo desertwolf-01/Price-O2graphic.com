@@ -248,13 +248,13 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       },
       {
         id: 'social-advanced-30',
-        name: 'Package 4: Advanced – 30 Monthly Designs',
+        name: 'Package 4: Advanced – 36 Monthly Designs',
         price: 900,
         items: [
-          '30 Professional designs (Static or Carousel)',
+          '36 Professional designs (Static or Carousel)',
           'Up to 3 rounds of design revisions',
           'Simplified monthly content plan (Distribution based on goals)',
-          '__Total Posts: 30 Posts (All static)__',
+          '__Total Posts: 36 Posts (All static)__',
           'Full commitment to brand identity (colors, fonts, patterns)',
         ]
       },
@@ -708,13 +708,13 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       },
       {
         id: 'social-advanced-30',
-        name: 'الباقة 4: المتقدمة – 30 تصميم شهري',
+        name: 'الباقة 4: المتقدمة – 36 تصميم شهري',
         price: 900,
         items: [
-          '30 تصميم احترافي (ثابتة أو كاروسيل)',
+          '36 تصميم احترافي (ثابتة أو كاروسيل)',
           'ما يصل إلى 3 جولات من التعديلات على التصميم',
           'خطة محتوى شهرية مبسطة (توزيع بناءً على الأهداف)',
-          '__إجمالي المنشورات: 30 منشور (جميعها ثابتة)__',
+          '__إجمالي المنشورات: 36 منشور (جميعها ثابتة)__',
           'التزام تام بالهوية البصرية (الألوان، الخطوط، الأنماط)',
         ]
       },
