@@ -14,6 +14,10 @@ export interface ServiceOption {
   quantityLabel?: string;
   priceSuffix?: string;
   priceTiers?: PriceTier[];
+  ribbon?: {
+    text: string;
+    color: string;
+  };
 }
 
 export interface ServiceCategory {

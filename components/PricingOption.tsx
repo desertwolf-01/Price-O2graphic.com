@@ -140,6 +140,15 @@ const PricingOption: React.FC<PricingOptionProps> = ({
             tabIndex={isClientMode ? -1 : 0}
             onKeyDown={(e) => { if (!isClientMode && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); onToggle(); } }}
         >
+            {option.ribbon && (
+                <div
+                    className={`absolute top-0 ${language === 'ar' ? 'left-0 rounded-br-xl' : 'right-0 rounded-bl-xl'} px-3 py-1 text-[10px] sm:text-xs font-bold z-20 shadow-sm`}
+                    style={{ backgroundColor: option.ribbon.color, color: '#0f172a' }}
+                >
+                    {option.ribbon.text}
+                </div>
+            )}
+            
             <div className="flex items-start gap-5">
                 {/* Custom Checkbox/Radio */}
                 <div className={`
