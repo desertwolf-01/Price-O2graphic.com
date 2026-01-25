@@ -1,4 +1,3 @@
-
 import type { ServiceCategory, ServiceOption } from './types';
 
 export const getUnitPrice = (option: ServiceOption, quantity: number): number => {
@@ -581,6 +580,61 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ]
       }
     ]
+  },
+  {
+    id: 'packaging-design',
+    name: 'Packaging Design Services',
+    description: 'Professional packaging solutions that combine functionality with aesthetics to make your product stand out on the shelf.',
+    options: [
+      {
+        id: 'box-design',
+        name: 'Box Design',
+        price: 350,
+        hasQuantity: true,
+        quantityLabel: 'Designs',
+        priceSuffix: 'per design',
+        priceTiers: PACKAGING_BOX_PRICE_TIERS,
+        items: [
+            '__Custom Structure (Die-line):__ Creation of the cutting layout based on exact product dimensions.',
+            '__Visual Design:__ Full coverage design for all sides of the box adhering to brand identity.',
+            '__3D Mockup:__ Realistic visualization of the final box to review before printing.',
+            '__Print-Ready Files:__ High-resolution CMYK files with bleed and trim marks.',
+            '__Source Files:__ Editable AI/PDF files.',
+        ]
+      },
+      {
+        id: 'bag-design',
+        name: 'Bag Design',
+        price: 350,
+        hasQuantity: true,
+        quantityLabel: 'Designs',
+        priceSuffix: 'per design',
+        priceTiers: PACKAGING_BAG_PRICE_TIERS,
+        items: [
+            '__Layout Design:__ Custom design for shopping or gift bags.',
+            '__Brand Integration:__ Strategic placement of logo and patterns for maximum visibility.',
+            '__Material Advice:__ Suggestions for paper types and finishes (matte, glossy, foil).',
+            '__3D Mockup:__ Realistic preview of the bag.',
+            '__Print-Ready Files:__ Production-ready files.',
+        ]
+      },
+      {
+        id: 'sticker-design',
+        name: 'Sticker / Label Design',
+        price: 150,
+        hasQuantity: true,
+        quantityLabel: 'Designs',
+        priceSuffix: 'per design',
+        priceTiers: PACKAGING_STICKER_NEW_PRICE_TIERS,
+        items: [
+            '__Custom Shape:__ Design for die-cut or standard shapes (circle, square, custom).',
+            '__Product Labeling:__ For bottles, jars, pouches, or boxes.',
+            '__Information Layout:__ Clear hierarchy for product name, ingredients, and barcodes.',
+            '__3D Mockup:__ Visual preview on the product.',
+            '__Print-Ready Files:__ Ready for production.',
+        ]
+      }
+    ]
   }
 ];
 
@@ -1111,6 +1165,61 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             'تسجيل التعليق الصوتي: التنسيق للتسجيل مع فنان تعليق صوتي محترف (مشمول أو كإضافة).',
             'الموسيقى والمؤثرات الصوتية: اختيار موسيقى أصلية تعكس شخصية العلامة التجارية.',
             'المراجعة والتنقيح: مراجعتان رئيسيتان على الأقل (واحدة للقصة المصورة، وواحدة لمسودة الفيديو الأولية).',
+        ]
+      }
+    ]
+  },
+  {
+    id: 'packaging-design',
+    name: 'خدمات تصميم التغليف والعلب',
+    description: 'حلول تغليف احترافية تجمع بين الوظيفة والجمال لتجعل منتجك يبرز على الرف ويجذب العملاء.',
+    options: [
+      {
+        id: 'box-design',
+        name: 'تصميم العلب (Box Design)',
+        price: 350,
+        hasQuantity: true,
+        quantityLabel: 'تصميم',
+        priceSuffix: 'لكل تصميم',
+        priceTiers: PACKAGING_BOX_PRICE_TIERS,
+        items: [
+            '__هيكل القص (Die-line):__ إنشاء مخطط القص بناءً على أبعاد المنتج الدقيقة.',
+            '__التصميم المرئي:__ تغطية كاملة لجميع جوانب العلبة مع الالتزام بالهوية البصرية.',
+            '__نموذج ثلاثي الأبعاد (3D Mockup):__ تصور واقعي للعلبة النهائية للمراجعة قبل الطباعة.',
+            '__ملفات الطباعة:__ ملفات CMYK عالية الدقة مع علامات القص.',
+            '__الملفات المصدرية:__ ملفات AI/PDF قابلة للتعديل.',
+        ]
+      },
+      {
+        id: 'bag-design',
+        name: 'تصميم الأكياس (Bag Design)',
+        price: 350,
+        hasQuantity: true,
+        quantityLabel: 'تصميم',
+        priceSuffix: 'لكل تصميم',
+        priceTiers: PACKAGING_BAG_PRICE_TIERS,
+        items: [
+            '__تخطيط التصميم:__ تصميم مخصص لأكياس التسوق أو الهدايا.',
+            '__دمج العلامة التجارية:__ وضع استراتيجي للشعار والأنماط لضمان أقصى ظهور.',
+            '__استشارة الخامات:__ اقتراحات لأنواع الورق والتشطيبات (مات، لامع، بصمة).',
+            '__نموذج ثلاثي الأبعاد:__ معاينة واقعية للكيس.',
+            '__ملفات الطباعة:__ ملفات جاهزة للإنتاج.',
+        ]
+      },
+      {
+        id: 'sticker-design',
+        name: 'تصميم الملصقات (Sticker / Label)',
+        price: 150,
+        hasQuantity: true,
+        quantityLabel: 'تصميم',
+        priceSuffix: 'لكل تصميم',
+        priceTiers: PACKAGING_STICKER_NEW_PRICE_TIERS,
+        items: [
+            '__شكل مخصص:__ تصميم لأشكال مقصوصة (Die-cut) أو قياسية (دائري، مربع).',
+            '__ملصقات المنتجات:__ للزجاجات، البرطمانات، الأكياس، أو العلب.',
+            '__تنسيق المعلومات:__ تسلسل هرمي واضح لاسم المنتج، المكونات، والباركود.',
+            '__نموذج ثلاثي الأبعاد:__ معاينة بصرية على المنتج.',
+            '__ملفات الطباعة:__ جاهزة للإنتاج.',
         ]
       }
     ]

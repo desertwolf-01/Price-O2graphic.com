@@ -311,6 +311,7 @@ ${t.proposalTo(clientInfo.name)}
           emailError={emailError}
           proposalDate={proposalDate}
           isClientMode={false}
+          categories={serviceCategories}
         />
         
         <PricingSection

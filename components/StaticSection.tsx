@@ -2,6 +2,7 @@
 import React from 'react';
 import { Translation } from '../i18n';
 import { countries } from '../constants/countries';
+import { ServiceCategory } from '../types';
 
 interface ClientInfo {
   name: string;
@@ -18,6 +19,7 @@ interface StaticSectionProps {
   emailError: string;
   proposalDate: Date;
   isClientMode: boolean;
+  categories: ServiceCategory[];
 }
 
 const StaticSection: React.FC<StaticSectionProps> = ({
@@ -28,6 +30,7 @@ const StaticSection: React.FC<StaticSectionProps> = ({
   emailError,
   proposalDate,
   isClientMode,
+  categories,
 }) => {
   const formattedDate = proposalDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
     year: 'numeric',
@@ -41,6 +44,28 @@ const StaticSection: React.FC<StaticSectionProps> = ({
       <div className={`p-4 md:p-6 bg-white rounded-2xl shadow-lg border border-slate-200/80 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
         <h1 className="text-3xl font-extrabold text-slate-900">{t.proposalTitle}</h1>
         <div className="mt-4 prose prose-slate max-w-none text-slate-700" dangerouslySetInnerHTML={{ __html: t.proposalDescription }} />
+        
+        {/* Quick Navigation */}
+        {categories && categories.length > 0 && (
+            <div className="mt-8 pt-6 border-t border-slate-100">
+                <div className={`flex flex-wrap gap-2 ${language === 'ar' ? 'justify-start' : 'justify-start'}`}>
+                    {categories.map((cat) => (
+                        <button
+                            key={cat.id}
+                            onClick={() => {
+                                const element = document.getElementById(cat.id);
+                                if (element) {
+                                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                            }}
+                            className="px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-lg text-xs md:text-sm font-semibold text-slate-600 hover:text-blue-600 transition-all duration-200 shadow-sm"
+                        >
+                            {cat.name}
+                        </button>
+                    ))}
+                </div>
+            </div>
+        )}
       </div>
 
       {/* Client Info Section */}
