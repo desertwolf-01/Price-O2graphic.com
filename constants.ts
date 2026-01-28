@@ -1,3 +1,4 @@
+
 import type { ServiceCategory, ServiceOption } from './types';
 
 export const getUnitPrice = (option: ServiceOption, quantity: number): number => {
@@ -143,7 +144,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'stationery',
         name: '4. Stationery & Correspondence',
-        price: 300,
+        price: 400,
         items: [
           '__1. Business Cards__',
           'A professional first impression for meetings; they carry essential contact information with a design that accurately reflects the brand identity.',
@@ -170,7 +171,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'promotional-materials',
         name: '5. Signage & Promotional Displays',
-        price: 300,
+        price: 350,
         items: [
           '__1. Office Outdoor Sign__',
           'A sign installed on the office or shop facade; serves as the first official interface of the brand, displaying the name, logo, and contact info clearly and attractively.',
@@ -635,6 +636,89 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ]
       }
     ]
+  },
+  {
+    id: 'branding-workshops',
+    name: 'Branding Workshops',
+    description: 'Interactive educational sessions designed to align your team and deepen their understanding of your brand’s potential and strategy.',
+    options: [
+      {
+        id: 'workshop-awareness',
+        name: 'Brand Awareness Workshop',
+        price: 500,
+        items: [
+            '__Target Audience:__ Employees and internal teams.',
+            '__Goal:__ Educate the team on the basics of branding and the importance of consistent identity.',
+            '__Format:__ 2-hour interactive session.',
+            '__Deliverables:__ Presentation slides + Q&A session.',
+        ]
+      },
+      {
+        id: 'workshop-strategy',
+        name: 'Strategy & Vision Workshop',
+        price: 1200,
+        items: [
+            '__Target Audience:__ Stakeholders and decision-makers.',
+            '__Goal:__ Define the brand’s Mission, Vision, Values, and Market Positioning.',
+            '__Format:__ Half-day (4 hours) deep-dive session.',
+            '__Deliverables:__ Strategic summary report (PDF).',
+        ]
+      },
+      {
+        id: 'workshop-content',
+        name: 'Social Media Content Workshop',
+        price: 800,
+        items: [
+            '__Target Audience:__ Marketing and social media teams.',
+            '__Goal:__ Training on creating on-brand content and maintaining visual consistency across platforms.',
+            '__Format:__ 3-hour practical workshop.',
+            '__Deliverables:__ Content guidelines cheat sheet.',
+        ]
+      }
+    ]
+  },
+  {
+    id: 'consulting-services',
+    name: 'Consulting Services',
+    description: 'Expert guidance to navigate complex design challenges, ensuring strategic alignment and maintaining high-quality visual standards.',
+    options: [
+      {
+        id: 'consult-audit',
+        name: 'Brand Health Audit',
+        price: 400,
+        items: [
+            '__Scope:__ Comprehensive review of current brand assets (logo, website, social media).',
+            '__Goal:__ Identify inconsistencies and areas for improvement.',
+            '__Deliverables:__ Detailed audit report with actionable recommendations.',
+        ]
+      },
+      {
+        id: 'consult-hourly',
+        name: 'Hourly Creative Consultation',
+        price: 150,
+        hasQuantity: true,
+        quantityLabel: 'Hours',
+        priceSuffix: 'per hour',
+        items: [
+            '__Scope:__ Ad-hoc advice on specific design challenges or strategic decisions.',
+            '__Format:__ Video call or in-person meeting.',
+            '__Ideal for:__ Quick feedback loops or specific problem-solving.',
+        ]
+      },
+      {
+        id: 'consult-retainer',
+        name: 'Monthly Creative Direction (Retainer)',
+        price: 2000,
+        hasQuantity: true,
+        quantityLabel: 'Months',
+        priceSuffix: 'per month',
+        items: [
+            '__Scope:__ Ongoing oversight of all design outputs to ensure quality and consistency.',
+            '__Includes:__ Weekly review meetings, direct access to Creative Director.',
+            '__Goal:__ Act as an external Art Director for your internal team.',
+        ]
+      }
+    ]
   }
 ];
 
@@ -709,7 +793,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'stationery',
         name: '4. القرطاسية والمراسلات',
-        price: 300,
+        price: 400,
         items: [
           '__1. بطاقات أعمال__',
           'أول انطباع مهني عند اللقاءات؛ تحمل بيانات التواصل الأساسية مع تصميم يعكس هوية العلامة بدقة.',
@@ -736,7 +820,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'promotional-materials',
         name: '5. اللوحات الإعلانية وشاشات العرض',
-        price: 300,
+        price: 350,
         items: [
           '__1. لوحة المكتب الخارجية__',
           'لوحة تُثبّت على واجهة المكتب أو المحل؛ تُعد الواجهة الرسمية الأولى للعلامة، وتُظهر الاسم، الشعار، ومعلومات التواصل بوضوح وجاذبية.',
@@ -1220,6 +1304,89 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             '__تنسيق المعلومات:__ تسلسل هرمي واضح لاسم المنتج، المكونات، والباركود.',
             '__نموذج ثلاثي الأبعاد:__ معاينة بصرية على المنتج.',
             '__ملفات الطباعة:__ جاهزة للإنتاج.',
+        ]
+      }
+    ]
+  },
+  {
+    id: 'branding-workshops',
+    name: 'ورش عمل العلامة التجارية',
+    description: 'جلسات تعليمية تفاعلية مصممة لتوحيد فريقك وتعميق فهمهم لإمكانيات واستراتيجية علامتك التجارية.',
+    options: [
+      {
+        id: 'workshop-awareness',
+        name: 'ورشة الوعي بالعلامة التجارية',
+        price: 500,
+        items: [
+            '__الجمهور المستهدف:__ الموظفين والفرق الداخلية.',
+            '__الهدف:__ تثقيف الفريق بأساسيات العلامة التجارية وأهمية الهوية المتسقة.',
+            '__التنسيق:__ جلسة تفاعلية لمدة ساعتين.',
+            '__المخرجات:__ شرائح العرض التقديمي + جلسة أسئلة وأجوبة.',
+        ]
+      },
+      {
+        id: 'workshop-strategy',
+        name: 'ورشة الاستراتيجية والرؤية',
+        price: 1200,
+        items: [
+            '__الجمهور المستهدف:__ أصحاب المصلحة وصناع القرار.',
+            '__الهدف:__ تحديد رسالة العلامة التجارية، رؤيتها، قيمها، وتموضعها في السوق.',
+            '__التنسيق:__ جلسة نصف يوم (4 ساعات) للتعمق في التفاصيل.',
+            '__المخرجات:__ تقرير ملخص استراتيجي (PDF).',
+        ]
+      },
+      {
+        id: 'workshop-content',
+        name: 'ورشة صناعة محتوى التواصل الاجتماعي',
+        price: 800,
+        items: [
+            '__الجمهور المستهدف:__ فرق التسويق والتواصل الاجتماعي.',
+            '__الهدف:__ التدريب على إنشاء محتوى متوافق مع الهوية والحفاظ على الاتساق البصري عبر المنصات.',
+            '__التنسيق:__ ورشة عمل عملية لمدة 3 ساعات.',
+            '__المخرجات:__ ورقة إرشادات سريعة للمحتوى.',
+        ]
+      }
+    ]
+  },
+  {
+    id: 'consulting-services',
+    name: 'الخدمات الاستشارية',
+    description: 'توجيه الخبراء للتغلب على تحديات التصميم المعقدة، وضمان التوافق الاستراتيجي والحفاظ على معايير بصرية عالية الجودة.',
+    options: [
+      {
+        id: 'consult-audit',
+        name: 'تدقيق صحة العلامة التجارية',
+        price: 400,
+        items: [
+            '__النطاق:__ مراجعة شاملة لأصول العلامة التجارية الحالية (الشعار، الموقع، التواصل الاجتماعي).',
+            '__الهدف:__ تحديد التناقضات ومجالات التحسين.',
+            '__المخرجات:__ تقرير تدقيق مفصل مع توصيات قابلة للتنفيذ.',
+        ]
+      },
+      {
+        id: 'consult-hourly',
+        name: 'استشارة إبداعية بالساعة',
+        price: 150,
+        hasQuantity: true,
+        quantityLabel: 'ساعات',
+        priceSuffix: 'لكل ساعة',
+        items: [
+            '__النطاق:__ نصائح مخصصة حول تحديات تصميم محددة أو قرارات استراتيجية.',
+            '__التنسيق:__ مكالمة فيديو أو اجتماع شخصي.',
+            '__مثالي لـ:__ حلقات التغذية الراجعة السريعة أو حل المشكلات المحددة.',
+        ]
+      },
+      {
+        id: 'consult-retainer',
+        name: 'الإدارة الإبداعية الشهرية (عقد سنوي)',
+        price: 2000,
+        hasQuantity: true,
+        quantityLabel: 'أشهر',
+        priceSuffix: 'شهرياً',
+        items: [
+            '__النطاق:__ إشراف مستمر على جميع مخرجات التصميم لضمان الجودة والاتساق.',
+            '__يشمل:__ اجتماعات مراجعة أسبوعية، وصول مباشر للمدير الإبداعي.',
+            '__الهدف:__ العمل كمدير فني خارجي لفريقك الداخلي.',
         ]
       }
     ]
