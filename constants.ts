@@ -101,6 +101,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'brand-identity',
         name: '2. Core Identity (Brand Pillar)',
         price: 750,
+        description: '<strong>⏱️ Duration: 10 business days.</strong>',
         items: [
             '__01. Primary Logo__',
             'The main brand design used in most official applications, combining text and symbol (if any) in a balanced and distinctive way.',
@@ -636,46 +637,6 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ]
       }
     ]
-  },
-  {
-    id: 'branding-workshops',
-    name: 'Branding Workshops',
-    description: 'Interactive educational sessions designed to align your team and deepen their understanding of your brand’s potential and strategy.',
-    options: [
-      {
-        id: 'workshop-awareness',
-        name: 'Brand Awareness Workshop',
-        price: 500,
-        items: [
-            '__Target Audience:__ Employees and internal teams.',
-            '__Goal:__ Educate the team on the basics of branding and the importance of consistent identity.',
-            '__Format:__ 2-hour interactive session.',
-            '__Deliverables:__ Presentation slides + Q&A session.',
-        ]
-      },
-      {
-        id: 'workshop-strategy',
-        name: 'Strategy & Vision Workshop',
-        price: 1200,
-        items: [
-            '__Target Audience:__ Stakeholders and decision-makers.',
-            '__Goal:__ Define the brand’s Mission, Vision, Values, and Market Positioning.',
-            '__Format:__ Half-day (4 hours) deep-dive session.',
-            '__Deliverables:__ Strategic summary report (PDF).',
-        ]
-      },
-      {
-        id: 'workshop-content',
-        name: 'Social Media Content Workshop',
-        price: 800,
-        items: [
-            '__Target Audience:__ Marketing and social media teams.',
-            '__Goal:__ Training on creating on-brand content and maintaining visual consistency across platforms.',
-            '__Format:__ 3-hour practical workshop.',
-            '__Deliverables:__ Content guidelines cheat sheet.',
-        ]
-      }
-    ]
   }
 ];
 
@@ -707,6 +668,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'brand-identity',
         name: '2. الهوية الأساسية (عمود العلامة التجارية)',
         price: 750,
+        description: '<strong>⏱️ مدة العمل: 10 أيام عمل.</strong>',
         items: [
             '__01. الشعار الرئيسي__',
             'التصميم الأساسي للعلامة الذي يُستخدم في أغلب التطبيقات الرسمية، ويجمع بين النص والرمز (إن وُجد) بشكل متوازن ومميز.',
@@ -1261,46 +1223,6 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             '__تنسيق المعلومات:__ تسلسل هرمي واضح لاسم المنتج، المكونات، والباركود.',
             '__نموذج ثلاثي الأبعاد:__ معاينة بصرية على المنتج.',
             '__ملفات الطباعة:__ جاهزة للإنتاج.',
-        ]
-      }
-    ]
-  },
-  {
-    id: 'branding-workshops',
-    name: 'ورش عمل العلامة التجارية',
-    description: 'جلسات تعليمية تفاعلية مصممة لتوحيد فريقك وتعميق فهمهم لإمكانيات واستراتيجية علامتك التجارية.',
-    options: [
-      {
-        id: 'workshop-awareness',
-        name: 'ورشة الوعي بالعلامة التجارية',
-        price: 500,
-        items: [
-            '__الجمهور المستهدف:__ الموظفين والفرق الداخلية.',
-            '__الهدف:__ تثقيف الفريق بأساسيات العلامة التجارية وأهمية الهوية المتسقة.',
-            '__التنسيق:__ جلسة تفاعلية لمدة ساعتين.',
-            '__المخرجات:__ شرائح العرض التقديمي + جلسة أسئلة وأجوبة.',
-        ]
-      },
-      {
-        id: 'workshop-strategy',
-        name: 'ورشة الاستراتيجية والرؤية',
-        price: 1200,
-        items: [
-            '__الجمهور المستهدف:__ أصحاب المصلحة وصناع القرار.',
-            '__الهدف:__ تحديد رسالة العلامة التجارية، رؤيتها، قيمها، وتموضعها في السوق.',
-            '__التنسيق:__ جلسة نصف يوم (4 ساعات) للتعمق في التفاصيل.',
-            '__المخرجات:__ تقرير ملخص استراتيجي (PDF).',
-        ]
-      },
-      {
-        id: 'workshop-content',
-        name: 'ورشة صناعة محتوى التواصل الاجتماعي',
-        price: 800,
-        items: [
-            '__الجمهور المستهدف:__ فرق التسويق والتواصل الاجتماعي.',
-            '__الهدف:__ التدريب على إنشاء محتوى متوافق مع الهوية والحفاظ على الاتساق البصري عبر المنصات.',
-            '__التنسيق:__ ورشة عمل عملية لمدة 3 ساعات.',
-            '__المخرجات:__ ورقة إرشادات سريعة للمحتوى.',
         ]
       }
     ]
