@@ -203,6 +203,13 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                         </div>
                     </div>
                     
+                    {option.description && (
+                        <div 
+                            className="mt-2 text-sm text-slate-500 leading-relaxed"
+                            dangerouslySetInnerHTML={{ __html: option.description }}
+                        />
+                    )}
+
                     {option.items && (
                         <ul className={`mt-3 text-sm text-slate-600 space-y-1.5 ${language === 'ar' ? 'pr-4 border-r-2 border-slate-100' : 'pl-4 border-l-2 border-slate-100'} transition-opacity duration-300 ${isSelected ? 'opacity-100' : 'opacity-80'}`}>
                             {option.items.map((item, index) => (
@@ -231,6 +238,12 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                             {option.hasQuantity ? `${quantity} x ${formatCurrency(currentUnitPrice)}` : `${formatCurrency(currentUnitPrice)}`}
                         </p>
                     </div>
+                    {option.description && (
+                         <div 
+                            className="mt-1 text-xs text-gray-500"
+                            dangerouslySetInnerHTML={{ __html: option.description }}
+                        />
+                    )}
                     {option.hasQuantity && (
                         <div className="flex justify-end">
                             <p className="font-bold text-sm text-black">= {formatCurrency(totalOptionPrice)}</p>

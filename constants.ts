@@ -131,6 +131,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'digital-presence',
         name: '3. Digital Presence & Social Media',
         price: 350,
+        description: '<strong>⏱️ Duration: 3 business days.</strong>',
         items: [
           '__1. Social Media Covers__',
           'Custom designs for Cover Photos on platforms like Facebook and LinkedIn, expressing brand identity and serving as an attractive digital facade.',
@@ -146,6 +147,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'stationery',
         name: '4. Stationery & Correspondence',
         price: 650,
+        description: '<strong>⏱️ Duration: 5 business days.</strong>',
         items: [
           '__1. Business Cards__',
           'A professional first impression for meetings; they carry essential contact information with a design that accurately reflects the brand identity.',
@@ -173,6 +175,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'promotional-materials',
         name: '5. Signage & Promotional Displays',
         price: 500,
+        description: '<strong>⏱️ Duration: 5 business days.</strong>',
         items: [
           '__1. Office Outdoor Sign__',
           'A sign installed on the office or shop facade; serves as the first official interface of the brand, displaying the name, logo, and contact info clearly and attractively.',
@@ -192,6 +195,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         id: 'promotional-tools-package',
         name: '6. Promotional Tools & Giveaways',
         price: 650,
+        description: '<strong>⏱️ Duration: 7 business days.</strong>',
         items: [
             '__1. Office Pens__',
             'A practical daily tool bearing your logo, constantly used in offices and meetings, ensuring continuous visibility for your brand.',
@@ -698,6 +702,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'digital-presence',
         name: '3. التواجد الرقمي ووسائل التواصل الاجتماعي',
         price: 350,
+        description: '<strong>⏱️ مدة العمل: 3 أيام عمل.</strong>',
         items: [
           '__1. أغلفة وسائل التواصل الاجتماعي__',
           'تصاميم مخصصة لصور الغلاف (Cover Photos) على منصات مثل Facebook، LinkedIn، تُعبّر عن هوية العلامة وتُستخدم كواجهة رقمية جذابة.',
@@ -713,6 +718,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'stationery',
         name: '4. القرطاسية والمراسلات',
         price: 650,
+        description: '<strong>⏱️ مدة العمل: 5 أيام عمل.</strong>',
         items: [
           '__1. بطاقات أعمال__',
           'أول انطباع مهني عند اللقاءات؛ تحمل بيانات التواصل الأساسية مع تصميم يعكس هوية العلامة بدقة.',
@@ -740,6 +746,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'promotional-materials',
         name: '5. اللوحات الإعلانية وشاشات العرض',
         price: 500,
+        description: '<strong>⏱️ مدة العمل: 5 أيام عمل.</strong>',
         items: [
           '__1. لوحة المكتب الخارجية__',
           'لوحة تُثبّت على واجهة المكتب أو المحل؛ تُعد الواجهة الرسمية الأولى للعلامة، وتُظهر الاسم، الشعار، ومعلومات التواصل بوضوح وجاذبية.',
@@ -759,6 +766,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         id: 'promotional-tools-package',
         name: '6. الأدوات الترويجية والهدايا',
         price: 650,
+        description: '<strong>⏱️ مدة العمل: 7 أيام عمل.</strong>',
         items: [
             '__1. أقلام مكتبية__',
             'أداة يومية عملية تحمل شعارك، تُستخدم باستمرار في المكاتب والاجتماعات، مما يضمن رؤية مستمرة لعلامتك.',
