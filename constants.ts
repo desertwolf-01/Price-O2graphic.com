@@ -82,8 +82,8 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'visual-strategy',
         name: '1. Visual Strategy (The Foundation)',
-        price: 350,
-        description: '“Don’t start designing before you know who you are, why you are here, and how you differ.” We don’t just draw — we build an identity based on vision.',
+        price: 500,
+        description: '“Don’t start designing before you know who you are, why you are here, and how you differ.” We don’t just draw — we build an identity based on vision.<br/><br/><strong>⏱️ Duration: 5 business days.</strong>',
         items: [
             '__1. About Brand:__ Who are we? What is our field? Our story?',
             '__2. Values:__ Principles we believe in (e.g., Quality, Trust).',
@@ -100,7 +100,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'brand-identity',
         name: '2. Core Identity (Brand Pillar)',
-        price: 500,
+        price: 750,
         items: [
             '__01. Primary Logo__',
             'The main brand design used in most official applications, combining text and symbol (if any) in a balanced and distinctive way.',
@@ -144,7 +144,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'stationery',
         name: '4. Stationery & Correspondence',
-        price: 400,
+        price: 650,
         items: [
           '__1. Business Cards__',
           'A professional first impression for meetings; they carry essential contact information with a design that accurately reflects the brand identity.',
@@ -171,7 +171,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'promotional-materials',
         name: '5. Signage & Promotional Displays',
-        price: 350,
+        price: 500,
         items: [
           '__1. Office Outdoor Sign__',
           'A sign installed on the office or shop facade; serves as the first official interface of the brand, displaying the name, logo, and contact info clearly and attractively.',
@@ -190,7 +190,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'promotional-tools-package',
         name: '6. Promotional Tools & Giveaways',
-        price: 450,
+        price: 650,
         items: [
             '__1. Office Pens__',
             'A practical daily tool bearing your logo, constantly used in offices and meetings, ensuring continuous visibility for your brand.',
@@ -274,7 +274,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       {
         id: 'website-package',
         name: 'Complete Website Package',
-        price: 1200,
+        price: 1500,
         items: [
           '__1. Design__',
           'Attractive and user-friendly UI designs, consistent with brand identity, supporting all devices (Responsive).',
@@ -676,49 +676,6 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ]
       }
     ]
-  },
-  {
-    id: 'consulting-services',
-    name: 'Consulting Services',
-    description: 'Expert guidance to navigate complex design challenges, ensuring strategic alignment and maintaining high-quality visual standards.',
-    options: [
-      {
-        id: 'consult-audit',
-        name: 'Brand Health Audit',
-        price: 400,
-        items: [
-            '__Scope:__ Comprehensive review of current brand assets (logo, website, social media).',
-            '__Goal:__ Identify inconsistencies and areas for improvement.',
-            '__Deliverables:__ Detailed audit report with actionable recommendations.',
-        ]
-      },
-      {
-        id: 'consult-hourly',
-        name: 'Hourly Creative Consultation',
-        price: 150,
-        hasQuantity: true,
-        quantityLabel: 'Hours',
-        priceSuffix: 'per hour',
-        items: [
-            '__Scope:__ Ad-hoc advice on specific design challenges or strategic decisions.',
-            '__Format:__ Video call or in-person meeting.',
-            '__Ideal for:__ Quick feedback loops or specific problem-solving.',
-        ]
-      },
-      {
-        id: 'consult-retainer',
-        name: 'Monthly Creative Direction (Retainer)',
-        price: 2000,
-        hasQuantity: true,
-        quantityLabel: 'Months',
-        priceSuffix: 'per month',
-        items: [
-            '__Scope:__ Ongoing oversight of all design outputs to ensure quality and consistency.',
-            '__Includes:__ Weekly review meetings, direct access to Creative Director.',
-            '__Goal:__ Act as an external Art Director for your internal team.',
-        ]
-      }
-    ]
   }
 ];
 
@@ -731,8 +688,8 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'visual-strategy',
         name: '1. الاستراتيجية البصرية (الأساس)',
-        price: 350,
-        description: '“لا تبدأ التصميم قبل أن تعرف من أنت، ولماذا أنت هنا، وكيف تختلف.” نحن لا نرسم فقط - بل نبني هوية مبنية على رؤية.',
+        price: 500,
+        description: '“لا تبدأ التصميم قبل أن تعرف من أنت، ولماذا أنت هنا، وكيف تختلف.” نحن لا نرسم فقط - بل نبني هوية مبنية على رؤية.<br/><br/><strong>⏱️ مدة العمل: 5 أيام عمل.</strong>',
         items: [
             '__1. عن العلامة التجارية:__ من نحن؟ ما هو مجالنا؟ قصتنا؟',
             '__2. القيم:__ المبادئ التي نؤمن بها (مثل الجودة، الثقة).',
@@ -749,7 +706,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'brand-identity',
         name: '2. الهوية الأساسية (عمود العلامة التجارية)',
-        price: 500,
+        price: 750,
         items: [
             '__01. الشعار الرئيسي__',
             'التصميم الأساسي للعلامة الذي يُستخدم في أغلب التطبيقات الرسمية، ويجمع بين النص والرمز (إن وُجد) بشكل متوازن ومميز.',
@@ -793,7 +750,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'stationery',
         name: '4. القرطاسية والمراسلات',
-        price: 400,
+        price: 650,
         items: [
           '__1. بطاقات أعمال__',
           'أول انطباع مهني عند اللقاءات؛ تحمل بيانات التواصل الأساسية مع تصميم يعكس هوية العلامة بدقة.',
@@ -820,7 +777,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'promotional-materials',
         name: '5. اللوحات الإعلانية وشاشات العرض',
-        price: 350,
+        price: 500,
         items: [
           '__1. لوحة المكتب الخارجية__',
           'لوحة تُثبّت على واجهة المكتب أو المحل؛ تُعد الواجهة الرسمية الأولى للعلامة، وتُظهر الاسم، الشعار، ومعلومات التواصل بوضوح وجاذبية.',
@@ -839,7 +796,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'promotional-tools-package',
         name: '6. الأدوات الترويجية والهدايا',
-        price: 450,
+        price: 650,
         items: [
             '__1. أقلام مكتبية__',
             'أداة يومية عملية تحمل شعارك، تُستخدم باستمرار في المكاتب والاجتماعات، مما يضمن رؤية مستمرة لعلامتك.',
@@ -923,7 +880,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       {
         id: 'website-package',
         name: 'باقة الموقع الإلكتروني المتكاملة',
-        price: 1200,
+        price: 1500,
         items: [
           '__1. التصميم (Design)__',
           'تصاميم واجهات (UI) جذابة وسهلة الاستخدام، متناسقة مع الهوية البصرية، وتدعم جميع الأجهزة (Responsive).',
@@ -1344,49 +1301,6 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
             '__الهدف:__ التدريب على إنشاء محتوى متوافق مع الهوية والحفاظ على الاتساق البصري عبر المنصات.',
             '__التنسيق:__ ورشة عمل عملية لمدة 3 ساعات.',
             '__المخرجات:__ ورقة إرشادات سريعة للمحتوى.',
-        ]
-      }
-    ]
-  },
-  {
-    id: 'consulting-services',
-    name: 'الخدمات الاستشارية',
-    description: 'توجيه الخبراء للتغلب على تحديات التصميم المعقدة، وضمان التوافق الاستراتيجي والحفاظ على معايير بصرية عالية الجودة.',
-    options: [
-      {
-        id: 'consult-audit',
-        name: 'تدقيق صحة العلامة التجارية',
-        price: 400,
-        items: [
-            '__النطاق:__ مراجعة شاملة لأصول العلامة التجارية الحالية (الشعار، الموقع، التواصل الاجتماعي).',
-            '__الهدف:__ تحديد التناقضات ومجالات التحسين.',
-            '__المخرجات:__ تقرير تدقيق مفصل مع توصيات قابلة للتنفيذ.',
-        ]
-      },
-      {
-        id: 'consult-hourly',
-        name: 'استشارة إبداعية بالساعة',
-        price: 150,
-        hasQuantity: true,
-        quantityLabel: 'ساعات',
-        priceSuffix: 'لكل ساعة',
-        items: [
-            '__النطاق:__ نصائح مخصصة حول تحديات تصميم محددة أو قرارات استراتيجية.',
-            '__التنسيق:__ مكالمة فيديو أو اجتماع شخصي.',
-            '__مثالي لـ:__ حلقات التغذية الراجعة السريعة أو حل المشكلات المحددة.',
-        ]
-      },
-      {
-        id: 'consult-retainer',
-        name: 'الإدارة الإبداعية الشهرية (عقد سنوي)',
-        price: 2000,
-        hasQuantity: true,
-        quantityLabel: 'أشهر',
-        priceSuffix: 'شهرياً',
-        items: [
-            '__النطاق:__ إشراف مستمر على جميع مخرجات التصميم لضمان الجودة والاتساق.',
-            '__يشمل:__ اجتماعات مراجعة أسبوعية، وصول مباشر للمدير الإبداعي.',
-            '__الهدف:__ العمل كمدير فني خارجي لفريقك الداخلي.',
         ]
       }
     ]
