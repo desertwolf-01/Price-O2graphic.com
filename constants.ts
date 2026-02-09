@@ -45,28 +45,44 @@ const PACKAGING_STICKER_NEW_PRICE_TIERS = [
     { minQuantity: 15, price: 50 },
 ];
 
+// Social Media Price Tiers (10% off for 3+ months roughly)
+const SOCIAL_PKG_1_TIERS = [ // Base 75
+    { minQuantity: 1, price: 75 },
+    { minQuantity: 3, price: 67.5 }, // 10% off
+];
+
+const SOCIAL_PKG_2_TIERS = [ // Base 315
+    { minQuantity: 1, price: 315 },
+    { minQuantity: 3, price: 283.5 }, // 10% off
+];
+
 const SOCIAL_PKG_3_TIERS = [
     { minQuantity: 1, price: 600 },
-    { minQuantity: 3, price: 500 },
+    { minQuantity: 3, price: 540 }, // Adjusted to exactly 10% off (was 500)
     { minQuantity: 5, price: 400 },
 ];
 
 const SOCIAL_PKG_4_TIERS = [
     { minQuantity: 1, price: 900 },
-    { minQuantity: 3, price: 800 },
+    { minQuantity: 3, price: 810 }, // Adjusted to exactly 10% off (was 800)
     { minQuantity: 5, price: 700 },
 ];
 
 const SOCIAL_PKG_45_TIERS = [
     { minQuantity: 1, price: 1250 },
-    { minQuantity: 3, price: 1150 },
+    { minQuantity: 3, price: 1125 }, // Adjusted to exactly 10% off (was 1150)
     { minQuantity: 5, price: 1050 },
 ];
 
 const SOCIAL_PKG_5_TIERS = [
     { minQuantity: 1, price: 1700 },
-    { minQuantity: 3, price: 1600 },
+    { minQuantity: 3, price: 1530 }, // Adjusted to exactly 10% off (was 1600)
     { minQuantity: 5, price: 1500 },
+];
+
+const SOCIAL_PKG_6_TIERS = [ // Base 75
+    { minQuantity: 1, price: 75 },
+    { minQuantity: 3, price: 67.5 }, // 10% off
 ];
 
 // Ribbon Configurations
@@ -313,6 +329,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'Months',
         priceSuffix: 'per month',
+        priceTiers: SOCIAL_PKG_1_TIERS,
         items: [
           '__(Foundation ensuring content effectiveness)__',
           'Monthly content planning session (30 mins)',
@@ -329,6 +346,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'Months',
         priceSuffix: 'per month',
+        priceTiers: SOCIAL_PKG_2_TIERS,
         items: [
           '9 Professional designs (Static or Carousel)',
           'Delivery in ready-to-publish formats: High-quality PNG + JPG',
@@ -417,6 +435,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'Months',
         priceSuffix: 'per month',
+        priceTiers: SOCIAL_PKG_6_TIERS,
         items: [
           'Scheduling all posts at optimal times based on audience',
           'Automatic posting without intervention',
@@ -884,6 +903,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'أشهر',
         priceSuffix: 'شهرياً',
+        priceTiers: SOCIAL_PKG_1_TIERS,
         items: [
           '__(الأساس لضمان فعالية المحتوى)__',
           'جلسة تخطيط محتوى شهرية (30 دقيقة)',
@@ -900,6 +920,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'أشهر',
         priceSuffix: 'شهرياً',
+        priceTiers: SOCIAL_PKG_2_TIERS,
         items: [
           '9 تصاميم احترافية (ثابتة أو كاروسيل)',
           'تسليم بصيغ جاهزة للنشر: PNG + JPG عالية الجودة',
@@ -915,6 +936,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'أشهر',
         priceSuffix: 'شهرياً',
+        priceTiers: SOCIAL_PKG_3_TIERS,
         items: [
           '18 تصميم احترافي (ثابت أو كاروسيل)',
           'تسليم بصيغ جاهزة للنشر: PNG + JPG عالية الجودة',
@@ -930,6 +952,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'أشهر',
         priceSuffix: 'شهرياً',
+        priceTiers: SOCIAL_PKG_4_TIERS,
         items: [
           '36 تصميم احترافي (ثابت أو كاروسيل)',
           'ما يصل إلى 3 جولات من التعديلات على التصميم',
@@ -945,6 +968,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'أشهر',
         priceSuffix: 'شهرياً',
+        priceTiers: SOCIAL_PKG_45_TIERS,
         items: [
           '54 تصميم احترافي (ثابت أو كاروسيل)',
           'تسليم بصيغ جاهزة للنشر: PNG + JPG عالية الجودة',
@@ -963,6 +987,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'أشهر',
         priceSuffix: 'شهرياً',
+        priceTiers: SOCIAL_PKG_5_TIERS,
         items: [
           '72 تصميم احترافي (ثابت أو كاروسيل)',
           'ما يصل إلى 5 جولات من التعديلات على التصميم',
@@ -980,6 +1005,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         hasQuantity: true,
         quantityLabel: 'أشهر',
         priceSuffix: 'شهرياً',
+        priceTiers: SOCIAL_PKG_6_TIERS,
         items: [
           'جدولة جميع المنشورات في الأوقات المثالية بناءً على الجمهور',
           'نشر تلقائي دون تدخل',

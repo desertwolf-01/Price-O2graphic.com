@@ -110,6 +110,9 @@ const PricingOption: React.FC<PricingOptionProps> = ({
     
     // Check if a tier discount is active
     const hasTierDiscount = option.hasQuantity && quantity > 1 && currentUnitPrice < option.price;
+    
+    // Identify monthly packages
+    const isMonthlyService = option.quantityLabel === 'Months' || option.quantityLabel === 'أشهر';
 
     useEffect(() => {
         setPricePulse(true);
@@ -220,7 +223,28 @@ const PricingOption: React.FC<PricingOptionProps> = ({
 
                     <div className="mt-5 flex flex-wrap items-center gap-4">
                         {option.hasQuantity && !isClientMode && (
-                            <QuantitySelector quantity={quantity} onQuantityChange={onQuantityChange} t={t} label={option.quantityLabel} />
+                            <div className="flex flex-col gap-2">
+                                <QuantitySelector quantity={quantity} onQuantityChange={onQuantityChange} t={t} label={option.quantityLabel} />
+                                {isMonthlyService && (
+                                    <div className={`text-xs font-bold flex items-center gap-1.5 transition-colors ${quantity >= 3 ? 'text-green-600' : 'text-orange-500'}`}>
+                                        {quantity >= 3 ? (
+                                            <>
+                                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                {t.monthlyDiscountApplied}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <svg className="w-3.5 h-3.5 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                {t.monthlyDiscountHint}
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                         )}
                     </div>
                 </div>

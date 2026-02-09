@@ -1,3 +1,4 @@
+
 export interface Translation {
   // App.tsx & StaticSection.tsx
   proposalTitle: string;
@@ -24,6 +25,8 @@ export interface Translation {
   decreaseQuantity: string;
   increaseQuantity: string;
   currentQuantity: string;
+  monthlyDiscountHint: string;
+  monthlyDiscountApplied: string;
 
   // TotalBar.tsx
   priceSummaryTitle: string;
@@ -108,10 +111,12 @@ const en: Translation = {
   selectServicesTitle: 'Select Services',
   selectServicesDescription: 'Choose from the services below to build your custom package.',
   pagesLabel: 'Pages:',
-  perPageSuffix: 'per page',
+  perPageSuffix: 'per month',
   decreaseQuantity: 'Decrease quantity',
   increaseQuantity: 'Increase quantity',
   currentQuantity: 'Current quantity',
+  monthlyDiscountHint: '🔥 Get 10% off when selecting 3+ months!',
+  monthlyDiscountApplied: '✅ 10% Discount Applied!',
   priceSummaryTitle: 'Price Summary',
   selectedServicesTitle: 'Selected Services',
   subtotal: 'Subtotal',
@@ -184,10 +189,12 @@ const ar: Translation = {
   selectServicesTitle: 'اختر الخدمات',
   selectServicesDescription: 'اختر من الخدمات أدناه لبناء باقتك المخصصة.',
   pagesLabel: 'الصفحات:',
-  perPageSuffix: 'لكل صفحة',
+  perPageSuffix: 'شهرياً',
   decreaseQuantity: 'تقليل الكمية',
   increaseQuantity: 'زيادة الكمية',
   currentQuantity: 'الكمية الحالية',
+  monthlyDiscountHint: '🔥 وفر 10% عند اختيار 3 أشهر أو أكثر!',
+  monthlyDiscountApplied: '✅ تم تطبيق خصم 10%!',
   priceSummaryTitle: 'ملخص السعر',
   selectedServicesTitle: 'الخدمات المختارة',
   subtotal: 'المجموع الفرعي',
