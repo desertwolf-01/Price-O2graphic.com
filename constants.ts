@@ -369,7 +369,6 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         quantityLabel: 'Months',
         priceSuffix: 'per month',
         priceTiers: SOCIAL_PKG_3_TIERS,
-        ribbon: SOCIAL_MEDIA_RIBBON_EN,
         items: [
           '18 Professional designs (Static or Carousel)',
           'Delivery in ready-to-publish formats: High-quality PNG + JPG',
@@ -386,7 +385,6 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         quantityLabel: 'Months',
         priceSuffix: 'per month',
         priceTiers: SOCIAL_PKG_4_TIERS,
-        ribbon: SOCIAL_MEDIA_RIBBON_EN,
         items: [
           '36 Professional designs (Static or Carousel)',
           'Up to 3 rounds of design revisions',
@@ -403,7 +401,6 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         quantityLabel: 'Months',
         priceSuffix: 'per month',
         priceTiers: SOCIAL_PKG_45_TIERS,
-        ribbon: SOCIAL_MEDIA_RIBBON_EN,
         items: [
           '54 Professional designs (Static or Carousel)',
           'Delivery in ready-to-publish formats: High-quality PNG + JPG',
@@ -439,7 +436,6 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         quantityLabel: 'Months',
         priceSuffix: 'per month',
         priceTiers: SOCIAL_PKG_5_TIERS,
-        ribbon: SOCIAL_MEDIA_RIBBON_EN,
         items: [
           '72 Professional designs (Static or Carousel)',
           'Up to 5 rounds of design revisions',
