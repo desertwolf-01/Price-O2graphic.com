@@ -74,6 +74,12 @@ const SOCIAL_PKG_45_TIERS = [
     { minQuantity: 5, price: 1050 },
 ];
 
+const SOCIAL_PKG_48_TIERS = [
+    { minQuantity: 1, price: 450 },
+    { minQuantity: 3, price: 405 }, // 10% off
+    { minQuantity: 5, price: 380 },
+];
+
 const SOCIAL_PKG_5_TIERS = [
     { minQuantity: 1, price: 1700 },
     { minQuantity: 3, price: 1530 }, // Adjusted to exactly 10% off (was 1600)
@@ -391,7 +397,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       },
       {
         id: 'social-intermediate-54',
-        name: 'Package 4.5: Intermediate Advanced – 54 Monthly Designs',
+        name: 'Package 5: Intermediate Advanced – 54 Monthly Designs',
         price: 1250,
         hasQuantity: true,
         quantityLabel: 'Months',
@@ -410,8 +416,24 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ]
       },
       {
+        id: 'social-strategic-carousel-6',
+        name: 'Package 6: Strategic Carousel (Suitable for stores, coaches, and consulting services)',
+        price: 450,
+        hasQuantity: true,
+        quantityLabel: 'Months',
+        priceSuffix: 'per month',
+        priceTiers: SOCIAL_PKG_48_TIERS,
+        items: [
+          '6 Professional Carousels (5-7 slides each)',
+          'Unified narrative structure: Hook → Value explanation → Social proof → Call to action',
+          '1 revision round on overall sequence + 1 round for each carousel',
+          '__Total Posts: 30-42 posts (All static)__',
+          'Ready-to-publish delivery',
+        ]
+      },
+      {
         id: 'social-advanced-72',
-        name: 'Package 5: Advanced Plus – 72 Monthly Designs',
+        name: 'Package 7: Advanced Plus – 72 Monthly Designs',
         price: 1700,
         hasQuantity: true,
         quantityLabel: 'Months',
@@ -430,7 +452,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       },
       {
         id: 'social-posting',
-        name: 'Package 6: Smart Posting & Scheduling',
+        name: 'Package 8: Smart Posting & Scheduling',
         price: 75,
         hasQuantity: true,
         quantityLabel: 'Months',
@@ -963,7 +985,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       },
       {
         id: 'social-intermediate-54',
-        name: 'باقة 4.5: المتقدمة المتوسطة – 54 تصميم شهري',
+        name: 'باقة 5: المتقدمة المتوسطة – 54 تصميم شهري',
         price: 1250,
         hasQuantity: true,
         quantityLabel: 'أشهر',
@@ -981,8 +1003,24 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         ]
       },
       {
+        id: 'social-strategic-carousel-6',
+        name: 'باقة 6: الكاروسيل الاستراتيجي (مناسبة للمتاجر، المدربين، والخدمات الاستشارية)',
+        price: 450,
+        hasQuantity: true,
+        quantityLabel: 'أشهر',
+        priceSuffix: 'شهرياً',
+        priceTiers: SOCIAL_PKG_48_TIERS,
+        items: [
+          '6 كاروسيل احترافي (5-7 شرائح لكل منها)',
+          'هيكل سردي موحد: جذب الانتباه → شرح القيمة → إثبات اجتماعي → دعوة للفعل',
+          'جولة تعديل على التسلسل الكلي + جولة على كل كاروسيل',
+          '__إجمالي المنشورات: 30-42 منشور (جميعها ثابتة)__',
+          'تسليم جاهز للنشر',
+        ]
+      },
+      {
         id: 'social-advanced-72',
-        name: 'باقة 5: المتقدمة بلس – 72 تصميم شهري',
+        name: 'باقة 7: المتقدمة بلس – 72 تصميم شهري',
         price: 1700,
         hasQuantity: true,
         quantityLabel: 'أشهر',
@@ -1000,7 +1038,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       },
       {
         id: 'social-posting',
-        name: 'باقة 6: النشر والجدولة الذكية',
+        name: 'باقة 8: النشر والجدولة الذكية',
         price: 75,
         hasQuantity: true,
         quantityLabel: 'أشهر',
