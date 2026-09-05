@@ -6,7 +6,7 @@ interface WatermarkOverlayProps {
   primaryText?: string;
   /** Optional secondary text override */
   secondaryText?: string;
-  /** Opacity override (default: 0.15 / 15%) */
+  /** Opacity override (default: 0.10 / 10%) */
   opacity?: number;
   className?: string;
   /** Custom config */
@@ -16,7 +16,7 @@ interface WatermarkOverlayProps {
 export const WatermarkOverlay: React.FC<WatermarkOverlayProps> = ({
   primaryText = 'O2Graphic',
   secondaryText = 'CONFIDENTIAL PROPOSAL • DO NOT DISTRIBUTE',
-  opacity = 0.15,
+  opacity = 0.10,
   className = '',
   config = {},
 }) => {
