@@ -11,8 +11,7 @@ import {
   ChevronUp, 
   FileCode2, 
   Lock, 
-  Sparkles,
-  Check 
+  Sparkles 
 } from 'lucide-react';
 
 interface PricingOptionProps {
@@ -114,7 +113,6 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   isClientMode,
 }) => {
     const [pricePulse, setPricePulse] = useState(false);
-    const [checkedDeliverables, setCheckedDeliverables] = useState<number[]>([]);
     const [showStandards, setShowStandards] = useState(false);
     const selectorType = isRadio ? 'radio' : 'checkbox';
     const currentUnitPrice = getUnitPrice(option, quantity);
@@ -136,13 +134,6 @@ const PricingOption: React.FC<PricingOptionProps> = ({
         if (!isClientMode) {
             onToggle();
         }
-    };
-
-    const toggleDeliverableCheck = (idx: number, e: React.MouseEvent) => {
-        e.stopPropagation();
-        setCheckedDeliverables(prev => 
-            prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
-        );
     };
 
     return (
@@ -234,44 +225,15 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                     )}
 
                     {option.items && (
-                        <div className="mt-3">
-                            <div className="text-[11px] font-semibold text-slate-400 mb-1.5 flex items-center justify-between">
-                                <span>{language === 'ar' ? 'بنود التسليم والمواصفات (انقر لتحديد الأولويات):' : 'Deliverables & Specs (click to mark priorities):'}</span>
-                                {checkedDeliverables.length > 0 && (
-                                    <span className="text-blue-600 font-bold">
-                                        {checkedDeliverables.length} {language === 'ar' ? 'بند محدد' : 'marked'}
-                                    </span>
-                                )}
-                            </div>
-                            <ul className={`text-sm text-slate-600 space-y-1.5 ${language === 'ar' ? 'pr-2' : 'pl-2'} transition-opacity duration-300 ${isSelected ? 'opacity-100' : 'opacity-85'}`}>
-                                {option.items.map((item, index) => {
-                                    const isItemChecked = checkedDeliverables.includes(index);
-                                    return (
-                                        <li 
-                                            key={index} 
-                                            onClick={(e) => toggleDeliverableCheck(index, e)}
-                                            className={`group/item leading-relaxed p-1.5 rounded-lg border transition-all cursor-pointer flex items-start gap-2 ${
-                                                isItemChecked 
-                                                    ? 'bg-blue-100/60 border-blue-300 text-blue-950 font-medium' 
-                                                    : 'border-transparent hover:bg-slate-100/80 hover:border-slate-200'
-                                            }`}
-                                        >
-                                            <div className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-colors ${
-                                                isItemChecked ? 'bg-blue-600 text-white' : 'border border-slate-300 bg-white group-hover/item:border-blue-400'
-                                            }`}>
-                                                {isItemChecked && <Check className="w-3 h-3 stroke-[3]" />}
-                                            </div>
-                                            <div className="flex-1" dangerouslySetInnerHTML={{ __html: item.replace(/__(.*?)__/g, '<strong class="text-slate-800 font-bold">$1</strong>') }} />
-                                            {isItemChecked && (
-                                                <span className="text-[10px] px-1.5 py-0.5 bg-blue-200 text-blue-900 rounded font-bold whitespace-nowrap">
-                                                    {language === 'ar' ? 'أولوية قصوى' : 'Priority'}
-                                                </span>
-                                            )}
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        </div>
+                        <ul className={`mt-3 text-sm text-slate-600 space-y-1.5 ${language === 'ar' ? 'pr-4 border-r-2 border-slate-200' : 'pl-4 border-l-2 border-slate-200'} transition-opacity duration-300 ${isSelected ? 'opacity-100' : 'opacity-85'}`}>
+                            {option.items.map((item, index) => (
+                                <li 
+                                    key={index} 
+                                    className="leading-relaxed" 
+                                    dangerouslySetInnerHTML={{ __html: item.replace(/__(.*?)__/g, '<strong class="text-slate-800 font-bold">$1</strong>') }} 
+                                />
+                            ))}
+                        </ul>
                     )}
 
                     {/* Delivery Standards & Commercial Guarantee Drawer */}

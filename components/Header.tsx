@@ -1,6 +1,7 @@
 import React from 'react';
 import LanguageToggle from './LanguageToggle';
 import { fullLogoBase64 } from '../assets/logo';
+import { HelpCircle } from 'lucide-react';
 
 interface HeaderProps {
   language: 'ar' | 'en';
@@ -21,6 +22,14 @@ const Header: React.FC<HeaderProps> = ({ language, toggleLanguage }) => {
 
   const controls = (
     <div className="flex items-center gap-2">
+      <a
+        href="#faq-section"
+        className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-slate-100 rounded-lg transition-colors border border-slate-200/80"
+        title={language === 'ar' ? 'الأسئلة الشائعة وضمانات الملكية' : 'FAQ & Guarantees'}
+      >
+        <HelpCircle className="w-3.5 h-3.5 text-blue-600" />
+        <span className="hidden sm:inline">{language === 'ar' ? 'الأسئلة والضمانات' : 'FAQ & Guarantees'}</span>
+      </a>
       <LanguageToggle language={language} toggleLanguage={toggleLanguage} />
     </div>
   );

@@ -9,6 +9,7 @@ import TermsAndConditions from './components/TermsAndConditions';
 import CouponSection from './components/CouponSection';
 import SummaryBreakdown from './components/SummaryBreakdown';
 import InteractivePresentation from './components/InteractivePresentation';
+import FAQSection from './components/FAQSection';
 import { getServiceCategories, getUnitPrice } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
@@ -367,6 +368,8 @@ ${t.proposalTo(clientInfo.name)}
           onServiceToggle={handleServiceToggle}
           onQuantityChange={handleQuantityChange}
         />
+
+        <FAQSection language={language} />
 
         <TermsAndConditions t={t} language={language} />
       </main>
