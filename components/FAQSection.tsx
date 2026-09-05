@@ -7,7 +7,6 @@ import {
   FileCode2, 
   RotateCcw, 
   ShieldCheck, 
-  Search, 
   CheckCircle2, 
   MessageCircle,
   Sparkles,
@@ -32,8 +31,6 @@ interface FAQItem {
 const FAQSection: React.FC<FAQSectionProps> = ({ language }) => {
   const isArabic = language === 'ar';
   const [openId, setOpenId] = useState<string | null>('timeline-1');
-  const [activeCategory, setActiveCategory] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const faqs: FAQItem[] = [
     {
@@ -138,24 +135,6 @@ const FAQSection: React.FC<FAQSectionProps> = ({ language }) => {
     },
   ];
 
-  const categories = [
-    { id: 'all', label: isArabic ? 'جميع الأسئلة' : 'All Inquiries' },
-    { id: 'timeline', label: isArabic ? 'مواعيد التسليم ⏱️' : 'Timelines ⏱️' },
-    { id: 'ownership', label: isArabic ? 'ملفات المصدر والملكية 💼' : 'Source Files & Rights 💼' },
-    { id: 'revisions', label: isArabic ? 'آلية التعديلات 🔄' : 'Revisions 🔄' },
-    { id: 'payment', label: isArabic ? 'السداد والضمانات 🛡️' : 'Terms & Guarantees 🛡️' },
-  ];
-
-  const filteredFaqs = faqs.filter((faq) => {
-    const matchesCategory = activeCategory === 'all' || faq.category === activeCategory;
-    const q = isArabic ? faq.question.ar : faq.question.en;
-    const a = isArabic ? faq.answer.ar : faq.answer.en;
-    const matchesSearch = 
-      q.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      a.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
   const toggleFAQ = (id: string) => {
     setOpenId(openId === id ? null : id);
   };
@@ -204,51 +183,9 @@ const FAQSection: React.FC<FAQSectionProps> = ({ language }) => {
         </div>
       </div>
 
-      {/* Interactive Controls: Search & Category Chips */}
-      <div className="p-4 md:p-6 bg-slate-50/70 border-b border-slate-200 space-y-3">
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-          {/* Category Chips */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                  activeCategory === cat.id
-                    ? 'bg-blue-600 text-white shadow-xs'
-                    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 hover:text-slate-900'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Search Box */}
-          <div className="relative min-w-[200px] sm:w-64">
-            <Search className={`w-4 h-4 absolute top-2.5 text-slate-400 ${isArabic ? 'right-3' : 'left-3'}`} />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={isArabic ? 'ابحث في الأسئلة...' : 'Search questions...'}
-              className={`w-full py-1.5 text-xs rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 ${
-                isArabic ? 'pr-9 pl-3 text-right' : 'pl-9 pr-3 text-left'
-              }`}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Accordion FAQ List */}
+      {/* Accordion FAQ List - All Questions directly without division */}
       <div className="p-4 md:p-6 space-y-3">
-        {filteredFaqs.length === 0 ? (
-          <div className="text-center py-8 text-slate-500 text-xs">
-            {isArabic ? 'لم يتم العثور على أسئلة تطابق بحثك.' : 'No questions found matching your query.'}
-          </div>
-        ) : (
-          filteredFaqs.map((faq) => {
+        {faqs.map((faq) => {
             const isOpen = openId === faq.id;
             const IconComp = faq.icon;
 
@@ -311,8 +248,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ language }) => {
                 )}
               </div>
             );
-          })
-        )}
+          })}
       </div>
 
       {/* Bottom Direct Inquiry Box */}
@@ -327,13 +263,13 @@ const FAQSection: React.FC<FAQSectionProps> = ({ language }) => {
         </div>
 
         <a
-          href="https://wa.me/201111723145?text=Hello%20O2%20Design%20Studio%2C%20I%20have%20a%20question%20about%20the%20packages%20and%20deliverables"
+          href="https://wa.me/905342006606?text=Hello%20O2%20Design%20Studio%2C%20I%20have%20a%20question%20about%20the%20packages%20and%20deliverables"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition-all shadow-xs hover:shadow-md whitespace-nowrap"
         >
           <MessageCircle className="w-3.5 h-3.5" />
-          <span>{isArabic ? 'محادثة مستشار التصميم عبر واتساب' : 'Chat with Design Strategist'}</span>
+          <span>{isArabic ? 'محادثة مستشار التصميم' : 'Chat with Design Strategist'}</span>
         </a>
       </div>
     </section>

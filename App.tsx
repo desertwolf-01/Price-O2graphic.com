@@ -10,6 +10,7 @@ import CouponSection from './components/CouponSection';
 import SummaryBreakdown from './components/SummaryBreakdown';
 import InteractivePresentation from './components/InteractivePresentation';
 import FAQSection from './components/FAQSection';
+import ProposalProgressBar from './components/ProposalProgressBar';
 import { getServiceCategories, getUnitPrice } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
@@ -175,23 +176,21 @@ function App() {
     }, 0);
   }, [selectedOptions, quantities]);
 
+  const activeCategoriesCount = useMemo(() => {
+    return serviceCategories.filter(category =>
+      category.options.some(option => selectedIds.includes(option.id))
+    ).length;
+  }, [selectedIds, serviceCategories]);
+
   const discountPercentage = useMemo(() => {
     // Logic: 5% discount for each active category
-    let basePercentage = 0;
-    
-    serviceCategories.forEach(category => {
-        // Check if any option in this category is currently selected
-        const isCategoryActive = category.options.some(option => selectedIds.includes(option.id));
-        if (isCategoryActive) {
-            basePercentage += 5;
-        }
-    });
+    const basePercentage = activeCategoriesCount * 5;
     
     // Combine calculated base + coupon
     const couponDiscount = appliedCoupon ? appliedCoupon.discount : 0;
 
     return Math.min(100, basePercentage + couponDiscount);
-  }, [selectedIds, serviceCategories, appliedCoupon]);
+  }, [activeCategoriesCount, appliedCoupon]);
 
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
   const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);
@@ -316,6 +315,14 @@ ${t.proposalTo(clientInfo.name)}
       <Header 
         language={language}
         toggleLanguage={toggleLanguage}
+      />
+      <ProposalProgressBar
+        selectedCount={selectedIds.length}
+        activeCategoriesCount={activeCategoriesCount}
+        totalCategoriesCount={serviceCategories.length}
+        discountPercentage={discountPercentage}
+        finalTotalPrice={finalTotalPrice}
+        language={language}
       />
       <PrintHeader />
       <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-8 print:p-0 print:mx-0 print:max-w-full">
