@@ -5,6 +5,7 @@ interface SuccessScreenProps {
   t: Translation;
   onClose: () => void;
   isClientMode: boolean;
+  onOpenFeedback?: () => void;
 }
 
 const SuccessIcon = () => (
@@ -13,7 +14,7 @@ const SuccessIcon = () => (
     </svg>
 );
 
-const SuccessScreen: React.FC<SuccessScreenProps> = ({ t, onClose, isClientMode }) => {
+const SuccessScreen: React.FC<SuccessScreenProps> = ({ t, onClose, isClientMode, onOpenFeedback }) => {
   return (
     <div 
         className="fixed inset-0 bg-slate-800 bg-opacity-75 backdrop-blur-sm flex items-center justify-center z-50 p-4"
@@ -29,13 +30,27 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ t, onClose, isClientMode 
             <p className="mt-4 text-slate-600 dark:text-slate-300 whitespace-pre-line text-sm md:text-base">
                 {isClientMode ? t.successMessageClientBody : t.successMessageEmailBody}
             </p>
-            <button
-                onClick={onClose}
-                className="mt-8 w-full sm:w-auto justify-center flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900 focus:ring-blue-500"
-                aria-label={t.backToProposal}
-            >
-                {t.backToProposal}
-            </button>
+
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+              {onOpenFeedback && (
+                <button
+                    onClick={() => {
+                      onClose();
+                      onOpenFeedback();
+                    }}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 border border-amber-300 dark:border-amber-700 text-base font-semibold rounded-xl text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-colors"
+                >
+                    <span>⭐ شاركنا تقييمك للعرض</span>
+                </button>
+              )}
+              <button
+                  onClick={onClose}
+                  className="w-full sm:w-auto justify-center flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900 focus:ring-blue-500 transition-colors"
+                  aria-label={t.backToProposal}
+              >
+                  {t.backToProposal}
+              </button>
+            </div>
         </div>
     </div>
   );

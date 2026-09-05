@@ -28,3 +28,18 @@ export interface ServiceCategory {
   isPhased?: boolean;
   isRadio?: boolean;
 }
+
+export interface ClientFeedback {
+  id: string;
+  clientName: string;
+  companyOrRole?: string;
+  rating: number; // 1 to 5
+  clarityRating?: number;
+  pricingRating?: number;
+  speedRating?: number;
+  comment: string;
+  date: string;
+  timestamp: number;
+  projectScope?: string;
+  isVerified?: boolean;
+}

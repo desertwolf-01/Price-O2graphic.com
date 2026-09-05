@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ShieldAlert, Lock, EyeOff, AlertTriangle } from 'lucide-react';
+import WatermarkOverlay from './WatermarkOverlay';
 
 interface SecurityGuardProps {
   language: 'ar' | 'en';
@@ -189,23 +190,8 @@ export const SecurityGuard: React.FC<SecurityGuardProps> = ({ language }) => {
 
   return (
     <>
-      {/* 1. Subtle Background Anti-Scraping Security Watermark (Unobtrusive) */}
-      <div 
-        aria-hidden="true" 
-        className="fixed inset-0 pointer-events-none z-10 overflow-hidden select-none opacity-[0.025] dark:opacity-[0.035] flex items-center justify-center"
-      >
-        <div className="w-[180%] h-[180%] -rotate-12 flex flex-col justify-around gap-16 text-slate-900 dark:text-white font-mono font-black text-sm tracking-widest uppercase">
-          {Array.from({ length: 16 }).map((_, i) => (
-            <div key={i} className="whitespace-nowrap flex gap-12">
-              {Array.from({ length: 6 }).map((_, j) => (
-                <span key={j}>
-                  O2GRAPHIC • CONFIDENTIAL RATE PROPOSAL • NOT FOR REDISTRIBUTION • {new Date().getFullYear()}
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* 1. Subtle 'O2Graphic' Transparent Watermark Pattern Layer (Anti-Capture / Anti-Copy) */}
+      <WatermarkOverlay />
 
       {/* 2. Fullscreen Anti-Screenshot Privacy Shield */}
       {isShieldActive && (

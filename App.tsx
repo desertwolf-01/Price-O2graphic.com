@@ -12,6 +12,7 @@ import InteractivePresentation from './components/InteractivePresentation';
 import FAQSection from './components/FAQSection';
 import ProposalProgressBar from './components/ProposalProgressBar';
 import SecurityGuard from './components/SecurityGuard';
+import ClientFeedbackSection from './components/ClientFeedbackSection';
 import { getServiceCategories, getUnitPrice } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
@@ -405,6 +406,13 @@ ${t.proposalTo(clientInfo.name)}
           onQuantityChange={handleQuantityChange}
         />
 
+        <ClientFeedbackSection
+          language={language}
+          defaultClientName={clientInfo.name}
+          defaultClientEmail={clientInfo.email}
+          selectedServicesSummary={selectedOptions.map(o => o.name).slice(0, 3).join('، ')}
+        />
+
         <FAQSection language={language} />
 
         <TermsAndConditions t={t} language={language} />
@@ -428,6 +436,12 @@ ${t.proposalTo(clientInfo.name)}
             t={t}
             isClientMode={isClientMode}
             onClose={() => setShowSuccessScreen(false)}
+            onOpenFeedback={() => {
+              const el = document.getElementById('client-feedback-section');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
         />
       )}
       {showCelebration && (
