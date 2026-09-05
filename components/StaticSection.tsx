@@ -11,6 +11,16 @@ interface ClientInfo {
   countryCode: string;
 }
 
+const CATEGORY_EMOJIS: Record<string, string> = {
+  'graphic-design-services': '🎨',
+  'exhibition-branding': '🎪',
+  'website-design': '🌐',
+  'social-media-design': '📱',
+  'corporate-materials': '📑',
+  'video-motion-graphics': '🎬',
+  'packaging-design': '📦',
+};
+
 interface StaticSectionProps {
   t: Translation;
   language: 'ar' | 'en';
@@ -58,9 +68,10 @@ const StaticSection: React.FC<StaticSectionProps> = ({
                                     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                 }
                             }}
-                            className="px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-lg text-xs md:text-sm font-semibold text-slate-600 hover:text-blue-600 transition-all duration-200 shadow-sm"
+                            className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-lg text-xs md:text-sm font-semibold text-slate-600 hover:text-blue-600 transition-all duration-200 shadow-sm"
                         >
-                            {cat.name}
+                            <span className="text-base leading-none">{CATEGORY_EMOJIS[cat.id] || '✨'}</span>
+                            <span>{cat.name}</span>
                         </button>
                     ))}
                 </div>
