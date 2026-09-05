@@ -21,6 +21,11 @@ import SuccessScreen from './components/SuccessScreen';
 import DiscountCelebration from './components/DiscountCelebration';
 import { isEmailConfigured, sendProposalEmails } from './email';
 import { formatCurrency } from './utils/format';
+import { 
+  getSavedSelectionState, 
+  saveSelectionState, 
+  clearSavedSelectionState 
+} from './utils/selectionStorage';
 
 const URL_PARAMS = new URLSearchParams(window.location.search);
 const IS_CLIENT_MODE = URL_PARAMS.get('mode') === 'client' && URL_PARAMS.has('services');
@@ -72,10 +77,28 @@ function App() {
     if (IS_CLIENT_MODE) {
       return CLIENT_SERVICE_IDS;
     }
-    return [];
+    const saved = getSavedSelectionState();
+    return saved?.selectedIds || [];
   });
-  const [quantities, setQuantities] = useState<{ [id: string]: number }>({});
-  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
+  const [quantities, setQuantities] = useState<{ [id: string]: number }>(() => {
+    if (IS_CLIENT_MODE) {
+      return {};
+    }
+    const saved = getSavedSelectionState();
+    return saved?.quantities || {};
+  });
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(() => {
+    if (IS_CLIENT_MODE) {
+      return null;
+    }
+    const saved = getSavedSelectionState();
+    return saved?.appliedCoupon || null;
+  });
+  const [hasRestoredSession, setHasRestoredSession] = useState<boolean>(() => {
+    if (IS_CLIENT_MODE) return false;
+    const saved = getSavedSelectionState();
+    return Boolean(saved && saved.selectedIds && saved.selectedIds.length > 0);
+  });
   const [actionType, setActionType] = useState<string | null>(null);
   const [proposalDate] = useState(new Date());
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
@@ -104,6 +127,17 @@ function App() {
     }
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  // Auto-save selection and quantities state to localStorage
+  useEffect(() => {
+    if (!isClientMode) {
+      if (selectedIds.length > 0 || Object.keys(quantities).length > 0 || appliedCoupon) {
+        saveSelectionState(selectedIds, quantities, appliedCoupon);
+      } else {
+        clearSavedSelectionState();
+      }
+    }
+  }, [selectedIds, quantities, appliedCoupon, isClientMode]);
   
   const toggleLanguage = () => {
     const newLang = language === 'ar' ? 'en' : 'ar';
@@ -177,6 +211,8 @@ function App() {
     setSelectedIds([]);
     setQuantities({});
     setAppliedCoupon(null);
+    clearSavedSelectionState();
+    setHasRestoredSession(false);
   };
 
   const selectedOptions = useMemo(() => {
@@ -356,6 +392,38 @@ ${t.proposalTo(clientInfo.name)}
       />
       <PrintHeader />
       <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-8 print:p-0 print:mx-0 print:max-w-full">
+        {hasRestoredSession && selectedIds.length > 0 && (
+          <div 
+            className="bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 rounded-2xl p-3.5 flex items-center justify-between text-xs text-blue-900 dark:text-blue-200 shadow-xs transition-all print:hidden"
+            style={{ direction: language === 'ar' ? 'rtl' : 'ltr' }}
+          >
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse"></span>
+              <span className="font-semibold">
+                {language === 'ar'
+                  ? `تمت استعادة اختياراتك السابقة تلقائياً (${selectedIds.length} خدمة محددة مع الكميات)`
+                  : `Your previous proposal selection was restored (${selectedIds.length} services & quantities)`}
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={handleClearSelection}
+                className="text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400 text-[11px] underline cursor-pointer"
+              >
+                {language === 'ar' ? 'بدء اختيار جديد' : 'Clear & Start Fresh'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setHasRestoredSession(false)}
+                className="px-2.5 py-1 rounded-lg bg-blue-100 dark:bg-blue-900/60 hover:bg-blue-200 dark:hover:bg-blue-800 text-blue-800 dark:text-blue-100 font-bold text-[11px] transition-colors cursor-pointer"
+              >
+                {language === 'ar' ? 'متابعة' : 'Dismiss'}
+              </button>
+            </div>
+          </div>
+        )}
+
         <StaticSection 
           t={t}
           language={language}
