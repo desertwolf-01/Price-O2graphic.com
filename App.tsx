@@ -8,6 +8,7 @@ import TotalBar from './components/TotalBar';
 import TermsAndConditions from './components/TermsAndConditions';
 import CouponSection from './components/CouponSection';
 import SummaryBreakdown from './components/SummaryBreakdown';
+import InteractivePresentation from './components/InteractivePresentation';
 import { getServiceCategories, getUnitPrice } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
@@ -296,6 +297,19 @@ ${t.proposalTo(clientInfo.name)}
       });
   };
 
+  const handleNavigateToCategory = (categoryId: string, optionId?: string) => {
+    const targetElement = optionId ? document.getElementById(optionId) : document.getElementById(categoryId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (optionId) {
+        targetElement.classList.add('ring-4', 'ring-blue-500', 'shadow-2xl');
+        setTimeout(() => {
+          targetElement.classList.remove('ring-4', 'ring-blue-500', 'shadow-2xl');
+        }, 3000);
+      }
+    }
+  };
+
   return (
     <div className="bg-transparent min-h-screen">
       <Header 
@@ -313,6 +327,12 @@ ${t.proposalTo(clientInfo.name)}
           proposalDate={proposalDate}
           isClientMode={false}
           categories={serviceCategories}
+        />
+
+        <InteractivePresentation
+          language={language}
+          onNavigateToCategory={handleNavigateToCategory}
+          onApplyCoupon={setAppliedCoupon}
         />
         
         <PricingSection

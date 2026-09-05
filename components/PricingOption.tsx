@@ -4,6 +4,16 @@ import type { ServiceOption } from '../types';
 import { getUnitPrice } from '../constants';
 import type { Translation } from '../i18n';
 import { formatCurrency } from '../utils/format';
+import { 
+  ShieldCheck, 
+  CheckCircle2, 
+  ChevronDown, 
+  ChevronUp, 
+  FileCode2, 
+  Lock, 
+  Sparkles,
+  Check 
+} from 'lucide-react';
 
 interface PricingOptionProps {
   option: ServiceOption;
@@ -104,6 +114,8 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   isClientMode,
 }) => {
     const [pricePulse, setPricePulse] = useState(false);
+    const [checkedDeliverables, setCheckedDeliverables] = useState<number[]>([]);
+    const [showStandards, setShowStandards] = useState(false);
     const selectorType = isRadio ? 'radio' : 'checkbox';
     const currentUnitPrice = getUnitPrice(option, quantity);
     const totalOptionPrice = currentUnitPrice * (option.hasQuantity ? quantity : 1);
@@ -126,11 +138,19 @@ const PricingOption: React.FC<PricingOptionProps> = ({
         }
     };
 
+    const toggleDeliverableCheck = (idx: number, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setCheckedDeliverables(prev => 
+            prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
+        );
+    };
+
     return (
         <div
+            id={option.id}
             onClick={handleToggle}
             className={`
-                relative p-5 border rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform
+                scroll-mt-28 relative p-5 border rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform
                 ${isSelected
                     ? 'bg-blue-50 border-blue-500 shadow-xl scale-[1.015] ring-2 ring-blue-500/20 z-10'
                     : `bg-white border-slate-200 hover:border-blue-300 hover:shadow-lg hover:translate-y-[-2px] hover:bg-slate-50`
@@ -214,12 +234,95 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                     )}
 
                     {option.items && (
-                        <ul className={`mt-3 text-sm text-slate-600 space-y-1.5 ${language === 'ar' ? 'pr-4 border-r-2 border-slate-100' : 'pl-4 border-l-2 border-slate-100'} transition-opacity duration-300 ${isSelected ? 'opacity-100' : 'opacity-80'}`}>
-                            {option.items.map((item, index) => (
-                                <li key={index} className="leading-relaxed" dangerouslySetInnerHTML={{ __html: item.replace(/__(.*?)__/g, '<strong class="text-slate-800 font-bold">$1</strong>') }} />
-                            ))}
-                        </ul>
+                        <div className="mt-3">
+                            <div className="text-[11px] font-semibold text-slate-400 mb-1.5 flex items-center justify-between">
+                                <span>{language === 'ar' ? 'بنود التسليم والمواصفات (انقر لتحديد الأولويات):' : 'Deliverables & Specs (click to mark priorities):'}</span>
+                                {checkedDeliverables.length > 0 && (
+                                    <span className="text-blue-600 font-bold">
+                                        {checkedDeliverables.length} {language === 'ar' ? 'بند محدد' : 'marked'}
+                                    </span>
+                                )}
+                            </div>
+                            <ul className={`text-sm text-slate-600 space-y-1.5 ${language === 'ar' ? 'pr-2' : 'pl-2'} transition-opacity duration-300 ${isSelected ? 'opacity-100' : 'opacity-85'}`}>
+                                {option.items.map((item, index) => {
+                                    const isItemChecked = checkedDeliverables.includes(index);
+                                    return (
+                                        <li 
+                                            key={index} 
+                                            onClick={(e) => toggleDeliverableCheck(index, e)}
+                                            className={`group/item leading-relaxed p-1.5 rounded-lg border transition-all cursor-pointer flex items-start gap-2 ${
+                                                isItemChecked 
+                                                    ? 'bg-blue-100/60 border-blue-300 text-blue-950 font-medium' 
+                                                    : 'border-transparent hover:bg-slate-100/80 hover:border-slate-200'
+                                            }`}
+                                        >
+                                            <div className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-colors ${
+                                                isItemChecked ? 'bg-blue-600 text-white' : 'border border-slate-300 bg-white group-hover/item:border-blue-400'
+                                            }`}>
+                                                {isItemChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                                            </div>
+                                            <div className="flex-1" dangerouslySetInnerHTML={{ __html: item.replace(/__(.*?)__/g, '<strong class="text-slate-800 font-bold">$1</strong>') }} />
+                                            {isItemChecked && (
+                                                <span className="text-[10px] px-1.5 py-0.5 bg-blue-200 text-blue-900 rounded font-bold whitespace-nowrap">
+                                                    {language === 'ar' ? 'أولوية قصوى' : 'Priority'}
+                                                </span>
+                                            )}
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
                     )}
+
+                    {/* Delivery Standards & Commercial Guarantee Drawer */}
+                    <div className="mt-4 pt-3 border-t border-slate-100">
+                        <button
+                            type="button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowStandards(!showStandards);
+                            }}
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 transition-colors py-1"
+                        >
+                            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                            <span>{language === 'ar' ? 'معايير التسليم والضمان المعتمدة' : 'Delivery Standards & Quality Guarantee'}</span>
+                            {showStandards ? <ChevronUp className="w-3.5 h-3.5 text-slate-400" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-400" />}
+                        </button>
+
+                        {showStandards && (
+                            <div 
+                                onClick={(e) => e.stopPropagation()}
+                                className="mt-2.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 text-xs text-slate-600 space-y-2 animate-fadeIn"
+                            >
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <div className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200/70 shadow-xs">
+                                        <FileCode2 className="w-4 h-4 text-indigo-600 flex-shrink-0 mt-0.5" />
+                                        <span>
+                                            <strong>{language === 'ar' ? 'ملفات المصدر الأصلية:' : 'Source Files:'}</strong> {language === 'ar' ? 'تسليم ملفات الفكتور المفتوحة AI, SVG, PSD, PDF بدقة طباعة 300DPI.' : '100% open vector files (AI, SVG, PSD, PDF) at 300 DPI.'}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200/70 shadow-xs">
+                                        <Lock className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                                        <span>
+                                            <strong>{language === 'ar' ? 'ملكية تجارية تامة:' : 'Commercial Rights:'}</strong> {language === 'ar' ? 'تنازل كامل عن حقوق الملكية الفكرية والتجارية بدون أي قيود.' : 'Full 100% intellectual & commercial ownership transfer.'}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200/70 shadow-xs">
+                                        <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                                        <span>
+                                            <strong>{language === 'ar' ? 'تسليم مرحلي منظم:' : 'Milestone Delivery:'}</strong> {language === 'ar' ? 'مراحل مراجعة وتعديلات مرنة حتى الاعتماد النهائي.' : 'Step-by-step review cycles until 100% sign-off.'}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200/70 shadow-xs">
+                                        <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                                        <span>
+                                            <strong>{language === 'ar' ? 'حماية السرية (NDA):' : 'Confidentiality:'}</strong> {language === 'ar' ? 'التزام تام بحماية سرية البيانات وتوقيع اتفاقية سرية عند الطلب.' : 'Strict data confidentiality with NDA available on request.'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
 
                     <div className="mt-5 flex flex-wrap items-center gap-4">
                         {option.hasQuantity && !isClientMode && (
