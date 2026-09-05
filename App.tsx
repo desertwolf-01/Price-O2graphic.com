@@ -7,6 +7,7 @@ import PricingSection from './components/PricingSection';
 import TotalBar from './components/TotalBar';
 import TermsAndConditions from './components/TermsAndConditions';
 import CouponSection from './components/CouponSection';
+import SummaryBreakdown from './components/SummaryBreakdown';
 import { getServiceCategories, getUnitPrice } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
@@ -330,6 +331,21 @@ ${t.proposalTo(clientInfo.name)}
           language={language}
           onApply={setAppliedCoupon}
           appliedCoupon={appliedCoupon}
+        />
+
+        <SummaryBreakdown
+          selectedOptions={selectedOptions}
+          quantities={quantities}
+          categories={serviceCategories}
+          subTotalPrice={subTotalPrice}
+          discount={discount}
+          discountPercentage={discountPercentage}
+          appliedCoupon={appliedCoupon}
+          finalTotalPrice={finalTotalPrice}
+          language={language}
+          t={t}
+          onServiceToggle={handleServiceToggle}
+          onQuantityChange={handleQuantityChange}
         />
 
         <TermsAndConditions t={t} language={language} />
