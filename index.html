@@ -46,6 +46,25 @@
         print-color-adjust: exact;
         min-height: 100vh;
         transition: background-color 0.3s ease, color 0.3s ease;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+      }
+
+      /* Allow input and text fields to be typed and edited normally */
+      input, textarea, [contenteditable="true"] {
+        -webkit-user-select: text !important;
+        -moz-user-select: text !important;
+        -ms-user-select: text !important;
+        user-select: text !important;
+      }
+
+      /* Prevent dragging images */
+      img {
+        -webkit-user-drag: none;
+        user-drag: none;
       }
 
       html.dark body {

@@ -11,6 +11,7 @@ import SummaryBreakdown from './components/SummaryBreakdown';
 import InteractivePresentation from './components/InteractivePresentation';
 import FAQSection from './components/FAQSection';
 import ProposalProgressBar from './components/ProposalProgressBar';
+import SecurityGuard from './components/SecurityGuard';
 import { getServiceCategories, getUnitPrice } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
@@ -337,6 +338,7 @@ ${t.proposalTo(clientInfo.name)}
 
   return (
     <div className="bg-transparent min-h-screen">
+      <SecurityGuard language={language} />
       <Header 
         language={language}
         toggleLanguage={toggleLanguage}
