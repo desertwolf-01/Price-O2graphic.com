@@ -99,7 +99,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
   {
     id: 'graphic-design-services',
     name: 'Visual Identity & Graphic Design Services',
-    description: 'We offer creative and innovative design solutions to enhance your brand. Browse our services and choose what suits your needs for an instant quote.<br/><br/><strong>🔄 Workflow Summary:</strong><br/>1- Need a clear strategy? → Request "Visual Strategy".<br/>2- Need a logo? → Request "Core Identity".<br/>3- Need digital presence? → Request "Digital Presence".<br/>4- Need internal professionalism? → Request "Stationery".<br/>5- Participating in events? → Request "Signage".<br/>6- Distributing gifts? → Request "Promotional Tools".',
+    description: 'We offer creative and innovative design solutions to enhance your brand. Browse our services and choose what suits your needs for an instant quote.<br/><br/><strong>🔄 Workflow Summary:</strong><br/>1- Need a clear strategy? → Request "Visual Strategy".<br/>2- Need a foundational logo? → Request "Foundational Logo Package".<br/>3- Need a comprehensive core identity? → Request "Core Identity".<br/>4- Need digital presence? → Request "Digital Presence".<br/>5- Need internal professionalism? → Request "Stationery".<br/>6- Participating in events? → Request "Signage".<br/>7- Distributing gifts? → Request "Promotional Tools".',
     options: [
       {
         id: 'visual-strategy',
@@ -120,38 +120,40 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
         ]
       },
       {
+        id: 'foundational-logo',
+        name: '2. Foundational Logo Package',
+        price: 350,
+        description: '<strong>⏱️ Duration: 5 business days.</strong>',
+        items: [
+            '__01. Primary Logo:__ The main brand design used in most official applications, combining text and symbol (if any) in a balanced and distinctive way.',
+            '__02. Secondary Logo:__ An alternative version of the logo used in different contexts (such as confined spaces or complex backgrounds).',
+            '__03. Logo Variations:__ All possible formats of the logo (white, black, color, transparent, horizontal, vertical).',
+            '__04. Official Color Palette:__ The set of primary and secondary brand colors with their values (CMYK, RGB, HEX, Pantone).',
+            '__05. Approved Fonts:__ The official fonts (for Arabic and English) specifying their uses (headings, body text, logos).'
+        ],
+      },
+      {
         id: 'brand-identity',
-        name: '2. Core Identity (Brand Pillar)',
+        name: '3. Core Identity (Brand Pillar)',
         price: 750,
         description: '<strong>⏱️ Duration: 10 business days.</strong>',
         items: [
-            '__01. Primary Logo__',
-            'The main brand design used in most official applications, combining text and symbol (if any) in a balanced and distinctive way.',
-            '__02. Secondary Logo__',
-            'An alternative version of the logo used in different contexts (such as confined spaces or complex backgrounds), while maintaining clarity and identity.',
-            '__03. Logo Variations__',
-            'All possible formats of the logo (white, black, color, transparent, horizontal, vertical) to ensure its flexibility across various media.',
-            '__04. Minimum Sizes__',
-            'Defining the minimum size allowed for printing or display without losing detail clarity or logo quality.',
-            '__05. Misuse__',
-            'Visual examples of what not to do with the logo (such as stretching, changing colors, adding shadows) to protect the brand identity.',
-            '__06. Digital Icon__',
-            'A simplified symbol or favicon used on websites, applications, and social media to quickly represent the brand.',
-            '__07. Official Color Palette__',
-            'The set of primary and secondary brand colors with their values (CMYK, RGB, HEX, Pantone) to ensure consistency across print and digital media.',
-            '__08. Approved Fonts__',
-            'The official fonts (for Arabic and English) used in all visual materials, specifying their uses (headings, body text, logos).',
-            '__09. Repeating Visual Pattern__',
-            'A decorative or graphic element (pattern) used as a subtle background or decorative detail that enhances visual recognition of the brand.',
-            '__10. Background Patterns__',
-            'Ready-made background designs (static or customizable) used in presentations, websites, or social media.',
-            '__11. Packaging Style__',
-            'A unified visual system for product (or promotional gift) packaging that reflects the brand identity and attracts attention on the shelves.',
+            '__01. Primary Logo:__ The main brand design used in most official applications, combining text and symbol (if any) in a balanced and distinctive way.',
+            '__02. Secondary Logo:__ An alternative version of the logo used in different contexts (such as confined spaces or complex backgrounds).',
+            '__03. Logo Variations:__ All possible formats of the logo (white, black, color, transparent, horizontal, vertical).',
+            '__04. Minimum Sizes:__ Defining the minimum size allowed for printing or display without losing detail clarity or logo quality.',
+            '__05. Misuse Guidelines:__ Visual examples of what not to do with the logo (such as stretching, changing colors, adding shadows) to protect the brand identity.',
+            '__06. Digital Icon:__ A simplified symbol or Favicon used on websites, applications, and social media to quickly represent the brand.',
+            '__07. Official Color Palette:__ The set of primary and secondary brand colors with their values (CMYK, RGB, HEX, Pantone).',
+            '__08. Approved Fonts:__ The official fonts (for Arabic and English) specifying their uses (headings, body text, logos).',
+            '__09. Repeating Visual Pattern:__ A decorative or graphic element (pattern) used as a subtle background or decorative detail that enhances visual recognition of the brand.',
+            '__10. Background Patterns:__ Ready-made background designs (static or customizable) used in presentations, websites, or social media.',
+            '__11. Packaging Style:__ A unified visual system for product (or promotional gift) packaging that reflects the brand identity and attracts attention on the shelves.'
         ],
       },
       {
         id: 'digital-presence',
-        name: '3. Digital Presence & Social Media',
+        name: '4. Digital Presence & Social Media',
         price: 350,
         description: '<strong>⏱️ Duration: 3 business days.</strong>',
         items: [
@@ -167,7 +169,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       },
       {
         id: 'stationery',
-        name: '4. Stationery & Correspondence',
+        name: '5. Stationery & Correspondence',
         price: 650,
         description: '<strong>⏱️ Duration: 5 business days.</strong>',
         items: [
@@ -195,7 +197,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       },
       {
         id: 'promotional-materials',
-        name: '5. Signage & Promotional Displays',
+        name: '6. Signage & Promotional Displays',
         price: 500,
         description: '<strong>⏱️ Duration: 5 business days.</strong>',
         items: [
@@ -215,7 +217,7 @@ export const SERVICE_CATEGORIES_EN: ServiceCategory[] = [
       },
       {
         id: 'promotional-tools-package',
-        name: '6. Promotional Tools & Giveaways',
+        name: '7. Promotional Tools & Giveaways',
         price: 650,
         description: '<strong>⏱️ Duration: 7 business days.</strong>',
         items: [
@@ -685,7 +687,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
   {
     id: 'graphic-design-services',
     name: 'خدمات الهوية البصرية والتصميم الجرافيكي',
-    description: 'نقدم حلول تصميم إبداعية ومبتكرة لتعزيز علامتك التجارية. تصفح خدماتنا واختر ما يناسب احتياجاتك للحصول على عرض سعر فوري.<br/><br/><strong>🔄 ملخص سير العمل:</strong><br/>1- هل تحتاج إلى استراتيجية واضحة؟ ← اطلب "استراتيجية بصرية".<br/>2- هل تحتاج إلى شعار؟ ← اطلب "الهوية الأساسية".<br/>3- هل تحتاج إلى تواجد رقمي؟ ← اطلب "التواجد الرقمي".<br/>4- هل تحتاج إلى احترافية داخلية؟ ← اطلب "المطبوعات الورقية".<br/>5- هل تشارك في فعاليات؟ ← اطلب "اللوحات الإعلانية".<br/>6- هل توزع هدايا؟ ← اطلب "الأدوات الترويجية".',
+    description: 'نقدم حلول تصميم إبداعية ومبتكرة لتعزيز علامتك التجارية. تصفح خدماتنا واختر ما يناسب احتياجاتك للحصول على عرض سعر فوري.<br/><br/><strong>🔄 ملخص سير العمل:</strong><br/>1- هل تحتاج إلى استراتيجية واضحة؟ ← اطلب "استراتيجية بصرية".<br/>2- هل تحتاج إلى شعار تأسيسي معتمد؟ ← اطلب "باقة الشعار التأسيسي".<br/>3- هل تحتاج إلى هوية متكاملة؟ ← اطلب "الهوية الأساسية".<br/>4- هل تحتاج إلى تواجد رقمي؟ ← اطلب "التواجد الرقمي".<br/>5- هل تحتاج إلى احترافية داخلية؟ ← اطلب "القرطاسية والمراسلات".<br/>6- هل تشارك في فعاليات؟ ← اطلب "اللوحات الإعلانية وشاشات العرض".<br/>7- هل توزع هدايا؟ ← اطلب "الأدوات الترويجية والهدايا".',
     options: [
       {
         id: 'visual-strategy',
@@ -706,38 +708,40 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
         ]
       },
       {
+        id: 'foundational-logo',
+        name: '2. باقة الشعار التأسيسي (الباقة التأسيسية)',
+        price: 350,
+        description: '<strong>⏱️ مدة العمل: 5 أيام عمل.</strong>',
+        items: [
+            '__01. الشعار الرئيسي:__ التصميم الأساسي للعلامة الذي يُستخدم في أغلب التطبيقات الرسمية، ويجمع بين النص والرمز (إن وُجد) بشكل متوازن ومميز.',
+            '__02. الشعار الثانوي:__ نسخة بديلة من الشعار تُستخدم في سياقات مختلفة (مثل المساحات الضيقة أو الخلفيات المعقدة)، مع الحفاظ على الوضوح والهوية.',
+            '__03. إصدارات الشعار:__ جميع التنسيقات الممكنة للشعار (أبيض، أسود، ملون، شفاف، أفقي، عمودي) لضمان مرونته عبر مختلف الوسائط.',
+            '__04. لوحة الألوان الرسمية:__ مجموعة الألوان الأساسية والثانوية للعلامة مع قيمها (CMYK, RGB, HEX, Pantone) لضمان الاتساق عبر الطباعة والرقمي.',
+            '__05. الخطوط المعتمدة:__ الخطوط الرسمية (للعربية والإنجليزية) المستخدمة في جميع المواد المرئية، مع تحديد الاستخدامات (عناوين، نصوص، شعارات).'
+        ],
+      },
+      {
         id: 'brand-identity',
-        name: '2. الهوية الأساسية (عمود العلامة التجارية)',
+        name: '3. الهوية الأساسية (عمود العلامة التجارية)',
         price: 750,
         description: '<strong>⏱️ مدة العمل: 10 أيام عمل.</strong>',
         items: [
-            '__01. الشعار الرئيسي__',
-            'التصميم الأساسي للعلامة الذي يُستخدم في أغلب التطبيقات الرسمية، ويجمع بين النص والرمز (إن وُجد) بشكل متوازن ومميز.',
-            '__02. الشعار الثانوي__',
-            'نسخة بديلة من الشعار تُستخدم في سياقات مختلفة (مثل المساحات الضيقة أو الخلفيات المعقدة)، مع الحفاظ على الوضوح والهوية.',
-            '__03. إصدارات الشعار__',
-            'جميع التنسيقات الممكنة للشعار (أبيض، أسود، ملون، شفاف، أفقي، عمودي) لضمان مرونته عبر مختلف الوسائط.',
-            '__04. الحد الأدنى للأحجام__',
-            'تحديد أقل حجم مسموح طباعته أو عرضه دون فقدان وضوح التفاصيل أو جودة الشعار.',
-            '__05. سوء الاستخدام__',
-            'أمثلة مرئية على ما لا يجب فعله بالشعار (مثل التمديد، تغيير الألوان، إضافة ظلال) لحماية هوية العلامة.',
-            '__06. الأيقونة الرقمية__',
-            'رمز مبسّط أو "فاوكون" (Favicon) يُستخدم على المواقع، التطبيقات، ووسائل التواصل الاجتماعي لتمثيل العلامة بسرعة.',
-            '__07. لوحة الألوان الرسمية__',
-            'مجموعة الألوان الأساسية والثانوية للعلامة مع قيمها (CMYK, RGB, HEX, Pantone) لضمان الاتساق عبر الطباعة والرقمي.',
-            '__08. الخطوط المعتمدة__',
-            'الخطوط الرسمية (للعربية والإنجليزية) المستخدمة في جميع المواد المرئية، مع تحديد الاستخدامات (عناوين، نصوص، شعارات).',
-            '__09. نمط مرئي متكرر__',
-            'عنصر زخرفي أو رسومي (Pattern) يُستخدم كخلفية خفيفة أو تفصيل ديكوري يعزز التعرف البصري على العلامة.',
-            '__10. نمط خلفيات__',
-            'تصاميم خلفيات جاهزة (ثابتة أو قابلة للتخصيص) تُستخدم في العروض التقديمية، مواقع الويب، أو وسائل التواصل.',
-            '__11. نمط تغليف__',
-            'نظام بصري موحد لتغليف المنتجات (أو الهدايا الترويجية) يعكس هوية العلامة ويجذب الانتباه على الرفوف.',
+            '__01. الشعار الرئيسي:__ التصميم الأساسي للعلامة الذي يُستخدم في أغلب التطبيقات الرسمية، ويجمع بين النص والرمز (إن وُجد) بشكل متوازن ومميز.',
+            '__02. الشعار الثانوي:__ نسخة بديلة من الشعار تُستخدم في سياقات مختلفة (مثل المساحات الضيقة أو الخلفيات المعقدة)، مع الحفاظ على الوضوح والهوية.',
+            '__03. إصدارات الشعار:__ جميع التنسيقات الممكنة للشعار (أبيض، أسود، ملون، شفاف، أفقي، عمودي) لضمان مرونته عبر مختلف الوسائط.',
+            '__04. الحد الأدنى للأحجام:__ تحديد أقل حجم مسموح طباعته أو عرضه دون فقدان وضوح التفاصيل أو جودة الشعار.',
+            '__05. سوء الاستخدام:__ أمثلة مرئية على ما لا يجب فعله بالشعار (مثل التمديد، تغيير الألوان، إضافة ظلال) لحماية هوية العلامة.',
+            '__06. الأيقونة الرقمية:__ رمز مبسّط أو "فاوكون" (Favicon) يُستخدم على المواقع، التطبيقات، ووسائل التواصل الاجتماعي لتمثيل العلامة بسرعة.',
+            '__07. لوحة الألوان الرسمية:__ مجموعة الألوان الأساسية والثانوية للعلامة مع قيمها (CMYK, RGB, HEX, Pantone) لضمان الاتساق عبر الطباعة والرقمي.',
+            '__08. الخطوط المعتمدة:__ الخطوط الرسمية (للعربية والإنجليزية) المستخدمة في جميع المواد المرئية، مع تحديد الاستخدامات (عناوين، نصوص، شعارات).',
+            '__09. نمط مرئي متكرر:__ عنصر زخرفي أو رسومي (Pattern) يُستخدم كخلفية خفيفة أو تفصيل ديكوري يعزز التعرف البصري على العلامة.',
+            '__10. نمط خلفيات:__ تصاميم خلفيات جاهزة (ثابتة أو قابلة للتخصيص) تُستخدم في العروض التقديمية، مواقع الويب، أو وسائل التواصل.',
+            '__11. نمط تغليف:__ نظام بصري موحد لتغليف المنتجات (أو الهدايا الترويجية) يعكس هوية العلامة ويجذب الانتباه على الرفوف.'
         ],
       },
       {
         id: 'digital-presence',
-        name: '3. التواجد الرقمي ووسائل التواصل الاجتماعي',
+        name: '4. التواجد الرقمي ووسائل التواصل الاجتماعي',
         price: 350,
         description: '<strong>⏱️ مدة العمل: 3 أيام عمل.</strong>',
         items: [
@@ -753,7 +757,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       },
       {
         id: 'stationery',
-        name: '4. القرطاسية والمراسلات',
+        name: '5. القرطاسية والمراسلات',
         price: 650,
         description: '<strong>⏱️ مدة العمل: 5 أيام عمل.</strong>',
         items: [
@@ -781,7 +785,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       },
       {
         id: 'promotional-materials',
-        name: '5. اللوحات الإعلانية وشاشات العرض',
+        name: '6. اللوحات الإعلانية وشاشات العرض',
         price: 500,
         description: '<strong>⏱️ مدة العمل: 5 أيام عمل.</strong>',
         items: [
@@ -801,7 +805,7 @@ export const SERVICE_CATEGORIES_AR: ServiceCategory[] = [
       },
       {
         id: 'promotional-tools-package',
-        name: '6. الأدوات الترويجية والهدايا',
+        name: '7. الأدوات الترويجية والهدايا',
         price: 650,
         description: '<strong>⏱️ مدة العمل: 7 أيام عمل.</strong>',
         items: [
