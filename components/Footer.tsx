@@ -1,5 +1,6 @@
 import React from 'react';
 import VisitorCounter from './VisitorCounter';
+import SecurityBadge from './SecurityBadge';
 import { translations } from '../i18n';
 
 interface FooterProps {
@@ -29,21 +30,22 @@ const Footer: React.FC<FooterProps> = ({ language }) => {
   const t = translations[language];
 
   return (
-    <footer className="bg-white border-t border-slate-200 print:hidden">
-      <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-500">
-        <div className={`flex flex-col md:flex-row items-center gap-4 ${language === 'ar' ? 'md:flex-row-reverse' : ''}`}>
+    <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 print:hidden transition-colors">
+      <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-500 dark:text-slate-400">
+        <div className={`flex flex-wrap items-center justify-center md:justify-start gap-3 ${language === 'ar' ? 'md:flex-row-reverse' : ''}`}>
            <p className="order-2 sm:order-1">&copy; {new Date().getFullYear()} O2Graphic. All rights reserved.</p>
+           <SecurityBadge language={language} variant="subtle" />
            <VisitorCounter t={t} language={language} />
         </div>
         
-        <div className="flex items-center gap-x-6">
-            <a href="https://www.facebook.com/o2graphic" target="_blank" rel="noopener noreferrer" aria-label="O2Graphic on Facebook" className="hover:text-blue-600 transition-colors">
+        <div className="flex items-center gap-x-6 text-slate-400 dark:text-slate-500">
+            <a href="https://www.facebook.com/o2graphic" target="_blank" rel="noopener noreferrer" aria-label="O2Graphic on Facebook" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 <FacebookIcon />
             </a>
-            <a href="https://www.instagram.com/o2graphic" target="_blank" rel="noopener noreferrer" aria-label="O2Graphic on Instagram" className="hover:text-pink-500 transition-colors">
+            <a href="https://www.instagram.com/o2graphic" target="_blank" rel="noopener noreferrer" aria-label="O2Graphic on Instagram" className="hover:text-pink-500 dark:hover:text-pink-400 transition-colors">
                 <InstagramIcon />
             </a>
-            <a href="https://www.linkedin.com/company/o2graphic" target="_blank" rel="noopener noreferrer" aria-label="O2Graphic on LinkedIn" className="hover:text-blue-700 transition-colors">
+            <a href="https://www.linkedin.com/company/o2graphic" target="_blank" rel="noopener noreferrer" aria-label="O2Graphic on LinkedIn" className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
                 <LinkedInIcon />
             </a>
         </div>

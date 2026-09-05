@@ -15,6 +15,26 @@
     }
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              slate: {
+                750: '#26344d',
+                850: '#141d2e',
+              },
+              dark: {
+                bg: '#090e1a',
+                card: '#111927',
+                border: '#1e293b'
+              }
+            }
+          }
+        }
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
@@ -24,6 +44,13 @@
         background: linear-gradient(to bottom, #EAF3F9, #FFFFFF);
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+        min-height: 100vh;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      html.dark body {
+        background: linear-gradient(to bottom, #090e1a, #0f172a);
+        color: #f1f5f9;
       }
       
       @keyframes value-pop {

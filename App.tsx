@@ -39,6 +39,17 @@ function getInitialLanguage() {
     return 'ar';
 }
 
+function getInitialTheme(): 'light' | 'dark' {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+        return savedTheme;
+    }
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+    }
+    return 'light';
+}
+
 function getInitialClientInfo(): ClientInfo {
     return {
         name: URL_PARAMS.get('name') || '',
@@ -50,6 +61,7 @@ function getInitialClientInfo(): ClientInfo {
 
 function App() {
   const [language, setLanguage] = useState<'ar' | 'en'>(getInitialLanguage());
+  const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme);
   const [isClientMode] = useState(IS_CLIENT_MODE);
   const [clientInfo, setClientInfo] = useState<ClientInfo>(getInitialClientInfo);
   const [emailError, setEmailError] = useState('');
@@ -81,11 +93,24 @@ function App() {
     document.documentElement.classList.remove('lang-en', 'lang-ar');
     document.documentElement.classList.add(`lang-${language}`);
   }, [language]);
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
   
   const toggleLanguage = () => {
     const newLang = language === 'ar' ? 'en' : 'ar';
     setLanguage(newLang);
     localStorage.setItem('language', newLang);
+  };
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
   
   const validateEmail = (email: string) => {
@@ -315,6 +340,8 @@ ${t.proposalTo(clientInfo.name)}
       <Header 
         language={language}
         toggleLanguage={toggleLanguage}
+        theme={theme}
+        toggleTheme={toggleTheme}
       />
       <ProposalProgressBar
         selectedCount={selectedIds.length}

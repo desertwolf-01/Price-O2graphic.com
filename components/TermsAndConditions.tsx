@@ -28,14 +28,14 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ t, language }) 
 
   return (
     <section className={`text-xs print:hidden`}>
-      <h3 className="text-sm font-bold text-slate-900 mb-2">{t.termsTitle}</h3>
-      <ul className={`text-slate-600 space-y-1 list-disc ${language === 'ar' ? 'list-inside pr-1' : 'ml-4'}`}>
-          <li><strong>{t.term1Title}:</strong> {t.term1Desc}</li>
-          <li><strong>{t.term2Title}:</strong> {t.term2Desc}</li>
-          <li><strong>{t.term3Title}:</strong> {t.term3Desc}</li>
-          <li><strong>{t.term4Title}:</strong> {t.term4Desc}</li>
-          <li><strong>{t.term5Title}:</strong> {t.term5Desc}</li>
-          <li><strong>{t.term6Title}:</strong> {t.term6Desc}</li>
+      <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">{t.termsTitle}</h3>
+      <ul className={`text-slate-600 dark:text-slate-300 space-y-1 list-disc ${language === 'ar' ? 'list-inside pr-1' : 'ml-4'}`}>
+          <li><strong className="text-slate-800 dark:text-slate-100">{t.term1Title}:</strong> {t.term1Desc}</li>
+          <li><strong className="text-slate-800 dark:text-slate-100">{t.term2Title}:</strong> {t.term2Desc}</li>
+          <li><strong className="text-slate-800 dark:text-slate-100">{t.term3Title}:</strong> {t.term3Desc}</li>
+          <li><strong className="text-slate-800 dark:text-slate-100">{t.term4Title}:</strong> {t.term4Desc}</li>
+          <li><strong className="text-slate-800 dark:text-slate-100">{t.term5Title}:</strong> {t.term5Desc}</li>
+          <li><strong className="text-slate-800 dark:text-slate-100">{t.term6Title}:</strong> {t.term6Desc}</li>
       </ul>
     </section>
   );

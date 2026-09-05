@@ -51,8 +51,8 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
         status: isArabic 
           ? 'حدد الخدمات الأنسب لمشروعك من الباقات أدناه' 
           : 'Select services below to customize your project scope',
-        color: 'text-slate-500',
-        badgeBg: 'bg-slate-100 text-slate-700',
+        color: 'text-slate-500 dark:text-slate-400',
+        badgeBg: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
         icon: Layers,
       };
     }
@@ -62,8 +62,8 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
         status: isArabic 
           ? 'انطلاقة قوية! أضف خدمة من قسم آخر لفتح خصم إضافي +5%' 
           : 'Great kickoff! Add another service to unlock a multi-category discount',
-        color: 'text-blue-600',
-        badgeBg: 'bg-blue-100 text-blue-800',
+        color: 'text-blue-600 dark:text-blue-400',
+        badgeBg: 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300',
         icon: Zap,
       };
     }
@@ -73,8 +73,8 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
         status: isArabic 
           ? `باقة متكاملة (+${activeCategoriesCount * 5}% خصم تعدد الأقسام مفعّل)` 
           : `Active synergy (+${activeCategoriesCount * 5}% multi-category discount unlocked)`,
-        color: 'text-indigo-600',
-        badgeBg: 'bg-indigo-100 text-indigo-800',
+        color: 'text-indigo-600 dark:text-indigo-400',
+        badgeBg: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300',
         icon: TrendingUp,
       };
     }
@@ -84,8 +84,8 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
         status: isArabic 
           ? 'باقة متقدمة وعالية الأثر لتغطية التواجد الرقمي والطباعي' 
           : 'Advanced suite covering print, digital and visual brand presence',
-        color: 'text-purple-600',
-        badgeBg: 'bg-purple-100 text-purple-800',
+        color: 'text-purple-600 dark:text-purple-400',
+        badgeBg: 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300',
         icon: Sparkles,
       };
     }
@@ -94,8 +94,8 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
       status: isArabic 
         ? 'أعلى تغطية متكاملة لعلامتك مع أقصى توفير وضمان للنتائج!' 
         : 'Maximum agency solution with peak synergy and full deliverables!',
-      color: 'text-emerald-600',
-      badgeBg: 'bg-emerald-100 text-emerald-800',
+      color: 'text-emerald-600 dark:text-emerald-400',
+      badgeBg: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300',
       icon: CheckCircle2,
     };
   };
@@ -113,7 +113,7 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
   };
 
   return (
-    <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs print:hidden transition-all">
+    <div className="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800 shadow-2xs print:hidden transition-colors">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
         {/* Top Info Row */}
         <div className="flex items-center justify-between gap-3 text-xs mb-1.5">
@@ -126,7 +126,7 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
               <span className="whitespace-nowrap">{milestone.tier}</span>
             </span>
 
-            <span className="text-slate-500 text-[11px] hidden sm:inline truncate">
+            <span className="text-slate-500 dark:text-slate-400 text-[11px] hidden sm:inline truncate">
               {milestone.status}
             </span>
           </div>
@@ -136,17 +136,17 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
             {selectedCount > 0 ? (
               <>
                 {discountPercentage > 0 && (
-                  <span className="hidden xs:inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
-                    <Gift className="w-3 h-3 text-emerald-600" />
+                  <span className="hidden xs:inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 px-2 py-0.5 rounded-md">
+                    <Gift className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                     <span>-{discountPercentage}%</span>
                   </span>
                 )}
 
                 <div className="text-right flex items-center gap-1.5">
-                  <span className="text-[11px] text-slate-400 hidden md:inline">
+                  <span className="text-[11px] text-slate-400 dark:text-slate-400 hidden md:inline">
                     {isArabic ? 'الإجمالي:' : 'Total:'}
                   </span>
-                  <span className="font-extrabold text-slate-900 text-xs sm:text-sm">
+                  <span className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm">
                     {formatCurrency(finalTotalPrice)}
                   </span>
                 </div>
@@ -154,16 +154,16 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
                 <button
                   type="button"
                   onClick={scrollToSummary}
-                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200/80 text-[11px] font-bold transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-slate-700 text-blue-700 dark:text-blue-400 border border-blue-200/80 dark:border-slate-700 text-[11px] font-bold transition-colors cursor-pointer"
                   title={isArabic ? 'الانتقال لملخص العرض' : 'Jump to Proposal Summary'}
                 >
                   <span className="hidden sm:inline">{isArabic ? 'الملخص' : 'Summary'}</span>
-                  <span className="text-blue-600 font-extrabold">({selectedCount})</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-extrabold">({selectedCount})</span>
                   <ArrowDown className="w-3 h-3" />
                 </button>
               </>
             ) : (
-              <span className="text-[11px] text-slate-400 font-medium">
+              <span className="text-[11px] text-slate-400 dark:text-slate-400 font-medium">
                 {isArabic ? '0 من 4 خدمات مقترحة' : '0 of 4 recommended'}
               </span>
             )}
@@ -171,7 +171,7 @@ const ProposalProgressBar: React.FC<ProposalProgressBarProps> = ({
         </div>
 
         {/* Progress Bar Track */}
-        <div className="relative w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+        <div className="relative w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
           {/* Animated Fill Bar */}
           <div
             className={`h-full transition-all duration-500 ease-out rounded-full ${

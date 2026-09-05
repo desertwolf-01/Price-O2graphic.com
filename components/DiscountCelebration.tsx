@@ -23,7 +23,7 @@ const DiscountCelebration: React.FC<DiscountCelebrationProps> = ({ t, discountPe
        {/* Modal */}
        <div 
          onClick={onClose}
-         className="bg-white rounded-2xl shadow-2xl p-8 transform animate-bounce-in relative z-10 pointer-events-auto text-center border-4 border-yellow-400 max-w-sm w-full mx-4 cursor-pointer"
+         className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 transform animate-bounce-in relative z-10 pointer-events-auto text-center border-4 border-yellow-400 dark:border-yellow-500 max-w-sm w-full mx-4 cursor-pointer"
          title="Click to close"
        >
           {/* Confetti Elements (Simple CSS) */}
@@ -40,13 +40,13 @@ const DiscountCelebration: React.FC<DiscountCelebrationProps> = ({ t, discountPe
           <div className="mb-4 relative z-10">
              <span className="text-6xl animate-pulse inline-block">🎉</span>
           </div>
-          <h2 className="text-3xl font-black text-slate-800 mb-2 relative z-10">
+          <h2 className="text-3xl font-black text-slate-800 dark:text-white mb-2 relative z-10">
             {t.discountUnlockedTitle}
           </h2>
-          <p className="text-xl text-slate-600 font-bold mb-4 relative z-10">
+          <p className="text-xl text-slate-600 dark:text-slate-300 font-bold mb-4 relative z-10">
             {t.discountUnlockedMessage(discountPercentage)}
           </p>
-          <div className="bg-green-100 text-green-800 px-4 py-2 rounded-full inline-block font-bold text-lg animate-pulse relative z-10 border border-green-200 shadow-sm">
+          <div className="bg-green-100 dark:bg-green-950/60 text-green-800 dark:text-green-300 px-4 py-2 rounded-full inline-block font-bold text-lg animate-pulse relative z-10 border border-green-200 dark:border-green-800 shadow-sm">
             {t.youSaved(formatCurrency(savedAmount))}
           </div>
        </div>

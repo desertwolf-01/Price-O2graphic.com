@@ -282,32 +282,32 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
   const currentWorkflow = workflows.find(w => w.id === selectedWorkflow) || workflows[0];
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-slate-200/90 overflow-hidden print:hidden">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200/90 dark:border-slate-800 overflow-hidden print:hidden transition-colors">
       {/* Top Navigation Tabs */}
-      <div className="p-3 bg-slate-50/80 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+      <div className="p-3 bg-slate-50/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-xs">
             <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-sm md:text-base font-bold text-slate-800 tracking-tight">
+            <h2 className="text-sm md:text-base font-bold text-slate-800 dark:text-white tracking-tight">
               {isArabic ? 'منصة العرض الاستراتيجية التفاعلية' : 'Interactive Strategic Showcase'}
             </h2>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
               {isArabic ? 'اكتشف الركائز، المسارات الموصى بها، وحدد احتياجك الدقيق' : 'Explore pillars, tailored workflows, and smart package matching'}
             </p>
           </div>
         </div>
 
         {/* Tab Buttons */}
-        <div className="inline-flex rounded-xl bg-slate-200/70 p-1 text-xs font-semibold">
+        <div className="inline-flex rounded-xl bg-slate-200/70 dark:bg-slate-800 p-1 text-xs font-semibold">
           <button
             type="button"
             onClick={() => setActiveTab('pillars')}
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
               activeTab === 'pillars' 
-                ? 'bg-white text-blue-700 shadow-xs font-bold' 
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-xs font-bold' 
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -319,8 +319,8 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
             onClick={() => setActiveTab('workflows')}
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
               activeTab === 'workflows' 
-                ? 'bg-white text-blue-700 shadow-xs font-bold' 
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-xs font-bold' 
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Compass className="w-3.5 h-3.5" />
@@ -332,8 +332,8 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
             onClick={() => setActiveTab('hub')}
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
               activeTab === 'hub' 
-                ? 'bg-white text-blue-700 shadow-xs font-bold' 
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-xs font-bold' 
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Vote className="w-3.5 h-3.5" />
@@ -358,26 +358,26 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                     isArabic ? 'text-right' : 'text-left'
                   } ${
                     isSelected
-                      ? 'bg-blue-50/70 border-blue-500 shadow-md ring-2 ring-blue-500/20 scale-[1.01]'
-                      : 'bg-white border-slate-200 hover:border-blue-300 hover:bg-slate-50/60'
+                      ? 'bg-blue-50/70 dark:bg-blue-950/40 border-blue-500 shadow-md ring-2 ring-blue-500/20 scale-[1.01]'
+                      : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-slate-600 hover:bg-slate-50/60 dark:hover:bg-slate-700/60'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
-                      isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'
+                      isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
                     }`}>
                       <IconComp className="w-4 h-4" />
                     </div>
                     <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
-                      isSelected ? 'bg-blue-200/80 text-blue-900' : 'bg-slate-100 text-slate-600'
+                      isSelected ? 'bg-blue-200/80 dark:bg-blue-900/60 text-blue-900 dark:text-blue-200' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
                     }`}>
                       {p.badge}
                     </span>
                   </div>
-                  <h3 className="font-bold text-slate-900 text-sm md:text-base leading-snug">
+                  <h3 className="font-bold text-slate-900 dark:text-white text-sm md:text-base leading-snug">
                     {p.title}
                   </h3>
-                  <p className="text-xs text-slate-500 mt-1 line-clamp-2">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
                     {p.tagline}
                   </p>
                 </div>
@@ -386,19 +386,19 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
           </div>
 
           {/* Active Pillar Detail Panel */}
-          <div className={`p-5 rounded-2xl bg-gradient-to-br from-slate-50 via-white to-blue-50/30 border border-slate-200/90 shadow-sm ${
+          <div className={`p-5 rounded-2xl bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-800/95 dark:via-slate-900 dark:to-blue-950/40 border border-slate-200/90 dark:border-slate-700/80 shadow-xs ${
             isArabic ? 'text-right' : 'text-left'
           }`}>
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-700">
               <div>
-                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 mb-2">
+                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-300 mb-2">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>{currentPillar.badge}</span>
                 </div>
-                <h3 className="text-xl md:text-2xl font-extrabold text-slate-900">
+                <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white">
                   {currentPillar.title}
                 </h3>
-                <p className="text-sm text-slate-600 mt-1 max-w-2xl">
+                <p className="text-sm text-slate-600 dark:text-slate-300 mt-1 max-w-2xl">
                   {currentPillar.tagline}
                 </p>
               </div>
@@ -418,14 +418,14 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
             <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-5">
               {/* Deliverables List (2 cols on lg) */}
               <div className="lg:col-span-2 space-y-2.5">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <h4 className="text-xs font-bold text-slate-400 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   <span>{isArabic ? 'المخرجات المعتمدة والمعايير التنفيذية' : 'Certified Deliverables & Standards'}</span>
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {currentPillar.deliverables.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2 p-2.5 rounded-lg bg-white border border-slate-200 shadow-xs text-xs text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <div key={idx} className="flex items-start gap-2 p-2.5 rounded-lg bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 shadow-2xs text-xs text-slate-700 dark:text-slate-200">
+                      <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
                       <span className="leading-relaxed">{item}</span>
                     </div>
                   ))}
@@ -434,24 +434,24 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
 
               {/* KPIs & Insight */}
               <div className="space-y-3">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <TrendingUp className="w-4 h-4 text-blue-600" />
+                <h4 className="text-xs font-bold text-slate-400 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   <span>{isArabic ? 'الأثر والمؤشرات المتوقعة' : 'Impact & KPIs'}</span>
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
                   {currentPillar.kpis.map((kpi, idx) => (
-                    <div key={idx} className="p-3 bg-white rounded-xl border border-slate-200 text-center shadow-xs">
-                      <span className="text-lg md:text-xl font-extrabold text-blue-600 block">
+                    <div key={idx} className="p-3 bg-white dark:bg-slate-800/90 rounded-xl border border-slate-200 dark:border-slate-700 text-center shadow-2xs">
+                      <span className="text-lg md:text-xl font-extrabold text-blue-600 dark:text-blue-400 block">
                         {kpi.val}
                       </span>
-                      <span className="text-[11px] text-slate-500 font-medium">
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                         {kpi.label}
                       </span>
                     </div>
                   ))}
                 </div>
 
-                <div className="p-3 bg-blue-50/80 rounded-xl border border-blue-200/80 text-[11px] text-blue-900 leading-relaxed">
+                <div className="p-3 bg-blue-50/80 dark:bg-blue-950/40 rounded-xl border border-blue-200/80 dark:border-blue-900/60 text-[11px] text-blue-900 dark:text-blue-200 leading-relaxed">
                   <strong>💡 {isArabic ? 'رؤية استراتيجية:' : 'Strategic Insight:'}</strong> {currentPillar.insight}
                 </div>
               </div>
@@ -467,10 +467,10 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
             <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 inline-block mb-1">
               {isArabic ? 'اختر غايتك التجارية' : 'Select Your Business Objective'}
             </span>
-            <h3 className="text-lg md:text-xl font-extrabold text-slate-900">
+            <h3 className="text-lg md:text-xl font-extrabold text-slate-900 dark:text-white">
               {isArabic ? 'المسارات التفاعلية الموجهة حسب مرحلة مشروعك' : 'Smart Guided Workflows for Every Stage'}
             </h3>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               {isArabic ? 'انقر على أي مسار لعرض الشرح الاستراتيجي وتسلسل الباقات الأنسب لك' : 'Click a track below to view tailored execution steps and matching packages'}
             </p>
           </div>
@@ -489,17 +489,17 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                   } ${
                     isSelected
                       ? 'bg-blue-600 text-white border-blue-600 shadow-md ring-2 ring-blue-400/30'
-                      : 'bg-white text-slate-800 border-slate-200 hover:border-blue-300 hover:bg-slate-50'
+                      : 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700/60'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                      isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700'
+                      isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
                     }`}>
                       <IconComp className="w-4 h-4" />
                     </div>
                     <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
-                      isSelected ? 'bg-white/25 text-white' : 'bg-slate-100 text-slate-600'
+                      isSelected ? 'bg-white/25 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
                     }`}>
                       {wf.badge}
                     </span>
@@ -513,18 +513,18 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
           </div>
 
           {/* Active Workflow Detail Card */}
-          <div className={`p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm ${
+          <div className={`p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-xs ${
             isArabic ? 'text-right' : 'text-left'
           }`}>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-700">
               <div>
-                <span className="text-xs font-bold text-blue-600 block mb-1">
+                <span className="text-xs font-bold text-blue-600 dark:text-blue-400 block mb-1">
                   {currentWorkflow.badge}
                 </span>
-                <h3 className="text-xl font-bold text-slate-900">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                   {currentWorkflow.title}
                 </h3>
-                <p className="text-xs md:text-sm text-slate-600 mt-1">
+                <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 mt-1">
                   {currentWorkflow.desc}
                 </p>
               </div>
@@ -541,13 +541,13 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
 
             {/* Execution Steps */}
             <div className="mt-4 pt-1">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5">
+              <h4 className="text-xs font-bold text-slate-400 dark:text-slate-400 uppercase tracking-wider mb-2.5">
                 {isArabic ? 'خارطة التنفيذ المرحلية المقترحة:' : 'Recommended Execution Sequence:'}
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
                 {currentWorkflow.steps.map((step, idx) => (
-                  <div key={idx} className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 shadow-xs flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-800 font-bold flex items-center justify-center text-xs flex-shrink-0">
+                  <div key={idx} className="p-3 bg-white dark:bg-slate-900/90 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 shadow-2xs flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-300 font-bold flex items-center justify-center text-xs flex-shrink-0">
                       {idx + 1}
                     </span>
                     <span className="font-medium">{step.replace(/^[0-9]\.\s*/, '')}</span>
@@ -564,14 +564,14 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
         <div className="p-5 md:p-6 space-y-6">
           {/* Sub Switcher */}
           <div className="flex justify-center mb-2">
-            <div className="inline-flex rounded-xl bg-slate-100 p-1 text-xs font-semibold">
+            <div className="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1 text-xs font-semibold">
               <button
                 type="button"
                 onClick={() => setHubTab('poll')}
                 className={`px-4 py-2 rounded-lg transition-all flex items-center gap-1.5 ${
                   hubTab === 'poll'
-                    ? 'bg-white text-blue-700 shadow-xs font-bold'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-xs font-bold'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 <Vote className="w-4 h-4" />
@@ -583,8 +583,8 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                 onClick={() => setHubTab('quiz')}
                 className={`px-4 py-2 rounded-lg transition-all flex items-center gap-1.5 ${
                   hubTab === 'quiz'
-                    ? 'bg-white text-blue-700 shadow-xs font-bold'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-xs font-bold'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 <HelpCircle className="w-4 h-4" />
@@ -595,18 +595,18 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
 
           {/* SUBTAB: POLL */}
           {hubTab === 'poll' && (
-            <div className={`max-w-2xl mx-auto p-5 md:p-6 rounded-2xl bg-gradient-to-b from-slate-50 to-white border border-slate-200 shadow-sm ${
+            <div className={`max-w-2xl mx-auto p-5 md:p-6 rounded-2xl bg-gradient-to-b from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700 shadow-xs ${
               isArabic ? 'text-right' : 'text-left'
             }`}>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 flex items-center justify-center">
                   <Vote className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base md:text-lg font-bold text-slate-900">
+                  <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">
                     {isArabic ? 'ما هو العنصر البصري الأكثر تأثيراً في بناء الثقة الفورية لدى عملائك؟' : 'Which visual element most drives instant client trust in your business?'}
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     {isArabic ? 'شارك برأيك وشاهد النتائج الحية لمجتمع رواد الأعمال' : 'Vote below to see real-time statistics from industry peers'}
                   </p>
                 </div>
@@ -631,29 +631,29 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                       onClick={() => handlePollVote(opt.key)}
                       className={`relative overflow-hidden p-3.5 rounded-xl border transition-all cursor-pointer ${
                         isUserPick
-                          ? 'border-purple-500 bg-purple-50/50 shadow-sm'
+                          ? 'border-purple-500 bg-purple-50/50 dark:bg-purple-950/40 shadow-xs'
                           : userVoted
-                          ? 'border-slate-200 bg-white opacity-85'
-                          : 'border-slate-200 bg-white hover:border-purple-300 hover:bg-slate-50'
+                          ? 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 opacity-85'
+                          : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:border-purple-300 dark:hover:border-purple-600 hover:bg-slate-50 dark:hover:bg-slate-700/60'
                       }`}
                     >
                       {/* Percentage background bar */}
                       {userVoted && (
                         <div
                           className={`absolute top-0 bottom-0 ${isArabic ? 'right-0' : 'left-0'} ${
-                            isUserPick ? 'bg-purple-200/50' : 'bg-slate-100'
+                            isUserPick ? 'bg-purple-200/50 dark:bg-purple-900/40' : 'bg-slate-100 dark:bg-slate-700/40'
                           } transition-all duration-700 ease-out z-0`}
                           style={{ width: `${pct}%` }}
                         />
                       )}
 
-                      <div className="relative z-10 flex items-center justify-between gap-3 text-xs md:text-sm font-semibold text-slate-800">
+                      <div className="relative z-10 flex items-center justify-between gap-3 text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-100">
                         <span className="flex items-center gap-2">
-                          {isUserPick && <Check className="w-4 h-4 text-purple-600 font-bold" />}
+                          {isUserPick && <Check className="w-4 h-4 text-purple-600 dark:text-purple-400 font-bold" />}
                           <span>{opt.label}</span>
                         </span>
                         {userVoted && (
-                          <span className="text-xs font-bold text-purple-700">
+                          <span className="text-xs font-bold text-purple-700 dark:text-purple-300">
                             {pct}% ({votes})
                           </span>
                         )}
@@ -664,14 +664,14 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
               </div>
 
               {userVoted && (
-                <div className="mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between">
+                <div className="mt-4 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300 flex items-center justify-between">
                   <span>
                     🎉 {isArabic ? 'شكراً لمشاركتك! تم تسجيل صوتك بنجاح.' : 'Thank you for your vote! Your perspective has been recorded.'}
                   </span>
                   <button
                     type="button"
                     onClick={() => onNavigateToCategory('graphic-design-services', 'brand-identity')}
-                    className="font-bold underline text-emerald-900 hover:text-emerald-700 text-xs"
+                    className="font-bold underline text-emerald-900 dark:text-emerald-300 hover:text-emerald-700 dark:hover:text-emerald-200 text-xs"
                   >
                     {isArabic ? 'استعراض الباقة المرتبطة ←' : 'View related package →'}
                   </button>
@@ -682,14 +682,14 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
 
           {/* SUBTAB: QUIZ */}
           {hubTab === 'quiz' && (
-            <div className={`max-w-2xl mx-auto p-5 md:p-6 rounded-2xl bg-white border border-slate-200 shadow-sm ${
+            <div className={`max-w-2xl mx-auto p-5 md:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xs ${
               isArabic ? 'text-right' : 'text-left'
             }`}>
               {!quizFinished ? (
                 <div>
                   {/* Step Indicator */}
-                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-                    <span className="text-xs font-bold text-blue-600">
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-xs font-bold text-blue-600 dark:text-blue-400">
                       {isArabic ? `السؤال ${quizStep + 1} من 3` : `Question ${quizStep + 1} of 3`}
                     </span>
                     <div className="flex gap-1.5">
@@ -697,7 +697,7 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                         <div
                           key={s}
                           className={`w-6 h-1.5 rounded-full ${
-                            s <= quizStep ? 'bg-blue-600' : 'bg-slate-200'
+                            s <= quizStep ? 'bg-blue-600' : 'bg-slate-200 dark:bg-slate-700'
                           }`}
                         />
                       ))}
@@ -707,7 +707,7 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                   {/* Question 1: Goal */}
                   {quizStep === 0 && (
                     <div className="space-y-3">
-                      <h3 className="text-base md:text-lg font-bold text-slate-900">
+                      <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">
                         {isArabic ? '1. ما هو الهدف الأهم الذي تسعى لتحقيقه أولاً؟' : '1. What is the primary milestone you want to achieve first?'}
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
@@ -721,7 +721,7 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                             key={choice.val}
                             type="button"
                             onClick={() => handleQuizAnswer('goal', choice.val)}
-                            className="p-3.5 rounded-xl border border-slate-200 hover:border-blue-400 hover:bg-blue-50/50 text-xs md:text-sm font-semibold text-slate-800 text-left transition-all"
+                            className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 bg-white dark:bg-slate-800 hover:bg-blue-50/50 dark:hover:bg-slate-700 text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-100 text-left transition-all"
                             style={{ textAlign: isArabic ? 'right' : 'left' }}
                           >
                             {choice.label}
@@ -734,7 +734,7 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                   {/* Question 2: Timeline */}
                   {quizStep === 1 && (
                     <div className="space-y-3">
-                      <h3 className="text-base md:text-lg font-bold text-slate-900">
+                      <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">
                         {isArabic ? '2. ما هو الإطار الزمني المرغوب للتسليم؟' : '2. What is your expected project delivery timeline?'}
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
@@ -747,7 +747,7 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                             key={choice.val}
                             type="button"
                             onClick={() => handleQuizAnswer('timeline', choice.val)}
-                            className="p-3.5 rounded-xl border border-slate-200 hover:border-blue-400 hover:bg-blue-50/50 text-xs md:text-sm font-semibold text-slate-800 text-left transition-all"
+                            className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 bg-white dark:bg-slate-800 hover:bg-blue-50/50 dark:hover:bg-slate-700 text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-100 text-left transition-all"
                             style={{ textAlign: isArabic ? 'right' : 'left' }}
                           >
                             {choice.label}
@@ -760,7 +760,7 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                   {/* Question 3: Deliverable Focus */}
                   {quizStep === 2 && (
                     <div className="space-y-3">
-                      <h3 className="text-base md:text-lg font-bold text-slate-900">
+                      <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">
                         {isArabic ? '3. ما هي المخرجات ذات الأولوية القصوى لديك؟' : '3. Which deliverable format has top priority for you?'}
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
@@ -773,7 +773,7 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                             key={choice.val}
                             type="button"
                             onClick={() => handleQuizAnswer('output', choice.val)}
-                            className="p-3.5 rounded-xl border border-slate-200 hover:border-blue-400 hover:bg-blue-50/50 text-xs md:text-sm font-semibold text-slate-800 text-left transition-all"
+                            className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 bg-white dark:bg-slate-800 hover:bg-blue-50/50 dark:hover:bg-slate-700 text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-100 text-left transition-all"
                             style={{ textAlign: isArabic ? 'right' : 'left' }}
                           >
                             {choice.label}
@@ -788,31 +788,31 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                 <div className="space-y-4">
                   <div className="text-center pb-2">
                     <span className="text-4xl block mb-2">🎯</span>
-                    <h3 className="text-lg md:text-xl font-extrabold text-slate-900">
+                    <h3 className="text-lg md:text-xl font-extrabold text-slate-900 dark:text-white">
                       {isArabic ? 'تحليل الاحتياج وتوصية الخبراء جاهزة!' : 'Your Custom Package Recommendation is Ready!'}
                     </h3>
-                    <p className="text-xs text-slate-500 mt-1">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                       {isArabic ? 'بناءً على تفضيلاتك، تم تحديد الباقة الأكثر توافقاً وتوليد كوبون هدية خاص بك' : 'Based on your inputs, here is the best package match plus a special reward'}
                     </p>
                   </div>
 
                   {/* Recommendation Card */}
-                  <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 space-y-3">
+                  <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/80 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-blue-700 uppercase">
+                      <span className="text-xs font-bold text-blue-700 dark:text-blue-300 uppercase">
                         {isArabic ? 'الباقة الموصى بها لك' : 'Tailored Recommendation'}
                       </span>
-                      <span className="text-xs font-bold bg-blue-200 text-blue-900 px-2 py-0.5 rounded-md">
+                      <span className="text-xs font-bold bg-blue-200 dark:bg-blue-900 text-blue-900 dark:text-blue-200 px-2 py-0.5 rounded-md">
                         98% Match
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between gap-4">
                       <div>
-                        <h4 className="text-base font-bold text-slate-900">
+                        <h4 className="text-base font-bold text-slate-900 dark:text-white">
                           {isArabic ? 'باقة الهوية الأساسية (عمود العلامة التجارية)' : 'Core Identity (Brand Pillar Package)'}
                         </h4>
-                        <p className="text-xs text-slate-600 mt-0.5">
+                        <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
                           {isArabic ? 'تشمل الشعار، لوحة الألوان، الخطوط، الأيقونة الرقمية، ودليل الهوية المعتمد.' : 'Includes logo system, color palette, fonts, digital favicon & guidelines.'}
                         </p>
                       </div>
@@ -828,14 +828,14 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                   </div>
 
                   {/* Special Coupon Box */}
-                  <div className="p-4 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="p-4 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 border border-amber-200 dark:border-amber-800/60 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5">
-                      <Gift className="w-6 h-6 text-amber-600 flex-shrink-0" />
+                      <Gift className="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0" />
                       <div>
-                        <span className="text-xs font-bold text-amber-900 block">
+                        <span className="text-xs font-bold text-amber-900 dark:text-amber-300 block">
                           {isArabic ? 'كوبون خصم إضافي خاص (15%):' : 'Exclusive 15% Bonus Coupon:'}
                         </span>
-                        <code className="text-sm font-extrabold text-amber-800 tracking-wider">
+                        <code className="text-sm font-extrabold text-amber-800 dark:text-amber-400 tracking-wider">
                           O2SPECIAL
                         </code>
                       </div>
@@ -845,16 +845,16 @@ const InteractivePresentation: React.FC<InteractivePresentationProps> = ({
                       <button
                         type="button"
                         onClick={copyCoupon}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 text-xs font-bold shadow-xs transition-colors"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-slate-700 text-xs font-bold shadow-xs transition-colors"
                       >
-                        {couponCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                        {couponCopied ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{couponCopied ? (isArabic ? 'تم النسخ!' : 'Copied!') : (isArabic ? 'نسخ الكوبون' : 'Copy Code')}</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={resetQuiz}
-                        className="text-xs text-slate-400 hover:text-slate-600 underline"
+                        className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 underline"
                       >
                         {isArabic ? 'إعادة الاختبار' : 'Retake'}
                       </button>

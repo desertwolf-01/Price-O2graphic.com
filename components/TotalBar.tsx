@@ -61,7 +61,7 @@ const TotalBar: React.FC<TotalBarProps> = ({
   const isSending = actionType === 'email';
 
   return (
-    <div className="sticky bottom-0 z-50 bg-white/90 backdrop-blur-md border-t border-slate-200 shadow-lg print:hidden">
+    <div className="sticky bottom-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 shadow-lg print:hidden transition-colors">
       <div className={`max-w-4xl mx-auto p-4 flex flex-col sm:flex-row items-center justify-between gap-4 ${language === 'ar' ? 'sm:flex-row-reverse' : ''}`}>
         <div 
           className={`flex-grow ${language === 'ar' ? 'text-right' : 'text-left'}`}
@@ -71,23 +71,23 @@ const TotalBar: React.FC<TotalBarProps> = ({
           {finalTotalPrice > 0 && (
             <>
               <div className="flex items-baseline gap-2">
-                <span className="text-lg font-medium text-slate-600">{t.totalPrice}:</span>
-                <span className={`text-3xl font-extrabold text-slate-800 transition-transform inline-block ${pulseTotal ? 'animate-value-pop' : ''}`}>
+                <span className="text-lg font-medium text-slate-600 dark:text-slate-300">{t.totalPrice}:</span>
+                <span className={`text-3xl font-extrabold text-slate-800 dark:text-white transition-transform inline-block ${pulseTotal ? 'animate-value-pop' : ''}`}>
                     {formatCurrency(finalTotalPrice)}
                 </span>
                 {discount > 0 && !isClientMode && (
-                  <span className="text-base font-medium text-slate-500 line-through">{formatCurrency(subTotalPrice)}</span>
+                  <span className="text-base font-medium text-slate-500 dark:text-slate-400 line-through">{formatCurrency(subTotalPrice)}</span>
                 )}
               </div>
               {discountText && (
-                <p className="text-sm text-blue-600 font-medium mt-1">{discountText}</p>
+                <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mt-1">{discountText}</p>
               )}
             </>
           )}
         </div>
         <div className="flex flex-col gap-2 items-stretch flex-shrink-0 w-full sm:w-auto">
           {formError && (
-            <p role="alert" className={`text-sm text-red-600 text-center ${language === 'ar' ? 'sm:text-right' : 'sm:text-left'}`}>
+            <p role="alert" className={`text-sm text-red-600 dark:text-red-400 text-center ${language === 'ar' ? 'sm:text-right' : 'sm:text-left'}`}>
               {formError}
             </p>
           )}
@@ -96,7 +96,7 @@ const TotalBar: React.FC<TotalBarProps> = ({
                 <button
                   onClick={onSendEmail}
                   disabled={isSending}
-                  className="w-full sm:w-auto justify-center flex items-center gap-2 px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 transition-transform active:scale-95"
+                  className="w-full sm:w-auto justify-center flex items-center gap-2 px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900 focus:ring-blue-500 disabled:bg-blue-300 dark:disabled:bg-blue-900/50 transition-transform active:scale-95"
                 >
                   {isClientMode ? (
                       isSending ? t.sending : t.sendProposal
@@ -110,7 +110,7 @@ const TotalBar: React.FC<TotalBarProps> = ({
                 {!isClientMode && (
                   <button
                     onClick={onClearSelection}
-                    className="w-full sm:w-auto justify-center flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-slate-700 bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-colors"
+                    className="w-full sm:w-auto justify-center flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900 focus:ring-slate-500 transition-colors"
                   >
                     {t.clearSelection}
                   </button>

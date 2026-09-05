@@ -51,13 +51,13 @@ const StaticSection: React.FC<StaticSectionProps> = ({
   return (
     <section className="space-y-8">
       {/* Introduction Section */}
-      <div className={`p-4 md:p-6 bg-white rounded-2xl shadow-lg border border-slate-200/80 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
-        <h1 className="text-3xl font-extrabold text-slate-900">{t.proposalTitle}</h1>
-        <div className="mt-4 prose prose-slate max-w-none text-slate-700" dangerouslySetInnerHTML={{ __html: t.proposalDescription }} />
+      <div className={`p-4 md:p-6 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200/80 dark:border-slate-800 transition-colors ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">{t.proposalTitle}</h1>
+        <div className="mt-4 prose prose-slate dark:prose-invert max-w-none text-slate-700 dark:text-slate-300" dangerouslySetInnerHTML={{ __html: t.proposalDescription }} />
         
         {/* Quick Navigation */}
         {categories && categories.length > 0 && (
-            <div className="mt-8 pt-6 border-t border-slate-100">
+            <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
                 <div className={`flex flex-wrap gap-2 ${language === 'ar' ? 'justify-start' : 'justify-start'}`}>
                     {categories.map((cat) => (
                         <button
@@ -68,7 +68,7 @@ const StaticSection: React.FC<StaticSectionProps> = ({
                                     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                 }
                             }}
-                            className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-lg text-xs md:text-sm font-semibold text-slate-600 hover:text-blue-600 transition-all duration-200 shadow-sm"
+                            className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-50 dark:bg-slate-800/90 hover:bg-blue-50 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 hover:border-blue-200 dark:hover:border-slate-600 rounded-lg text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 shadow-xs"
                         >
                             <span className="text-base leading-none">{CATEGORY_EMOJIS[cat.id] || '✨'}</span>
                             <span>{cat.name}</span>
@@ -80,15 +80,15 @@ const StaticSection: React.FC<StaticSectionProps> = ({
       </div>
 
       {/* Client Info Section */}
-      <div className="bg-white rounded-2xl shadow-lg border border-slate-200/80">
-        <div className={`p-6 border-b border-slate-200/80 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
-          <h2 className="text-2xl font-bold text-slate-800">{t.clientInfoTitle}</h2>
+      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200/80 dark:border-slate-800 transition-colors">
+        <div className={`p-6 border-b border-slate-200/80 dark:border-slate-800 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t.clientInfoTitle}</h2>
         </div>
         <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Proposal Date */}
           <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-            <label className="block text-sm font-medium text-slate-700">{t.proposalDateLabel}</label>
-            <p className="mt-1 text-md text-slate-900 font-semibold">{formattedDate}</p>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t.proposalDateLabel}</label>
+            <p className="mt-1 text-md text-slate-900 dark:text-white font-semibold">{formattedDate}</p>
           </div>
 
           {/* Spacer for alignment */}
@@ -96,7 +96,7 @@ const StaticSection: React.FC<StaticSectionProps> = ({
 
           {/* Client Name */}
           <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-            <label htmlFor="name" className="block text-sm font-medium text-slate-700">{t.clientNameLabel}</label>
+            <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t.clientNameLabel}</label>
             <input
               type="text"
               name="name"
@@ -105,25 +105,25 @@ const StaticSection: React.FC<StaticSectionProps> = ({
               onChange={onClientInfoChange}
               placeholder={t.clientNamePlaceholder}
               disabled={isClientMode}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+              className="mt-1 block w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md text-sm shadow-xs placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 dark:disabled:bg-slate-800/50 disabled:text-slate-500 dark:disabled:text-slate-400 disabled:border-slate-200 dark:disabled:border-slate-800 disabled:shadow-none"
             />
           </div>
 
           {/* Client Phone */}
           <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-            <label htmlFor="phone" className="block text-sm font-medium text-slate-700">{t.clientPhoneLabel}</label>
-            <div className={`mt-1 flex rounded-md shadow-sm ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
+            <label htmlFor="phone" className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t.clientPhoneLabel}</label>
+            <div className={`mt-1 flex rounded-md shadow-xs ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
                 <select
                     name="countryCode"
                     id="countryCode"
                     value={clientInfo.countryCode}
                     onChange={onClientInfoChange}
                     disabled={isClientMode}
-                    className={`block appearance-none border border-slate-300 py-2 bg-slate-50 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 ${language === 'ar' ? 'rounded-l-md border-r-0 pl-3 pr-8' : 'rounded-l-md border-r-0 pr-3 pl-8'}`}
+                    className={`block appearance-none border border-slate-300 dark:border-slate-700 py-2 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 dark:disabled:bg-slate-800/50 disabled:text-slate-500 dark:disabled:text-slate-400 disabled:border-slate-200 dark:disabled:border-slate-800 ${language === 'ar' ? 'rounded-l-md border-r-0 pl-3 pr-8' : 'rounded-l-md border-r-0 pr-3 pl-8'}`}
                     style={{ backgroundImage: 'none' }}
                 >
                     {countries.map(country => (
-                        <option key={country.code} value={country.dial_code}>{`${country.code} (${country.dial_code})`}</option>
+                        <option key={country.code} value={country.dial_code} className="dark:bg-slate-800 dark:text-white">{`${country.code} (${country.dial_code})`}</option>
                     ))}
                 </select>
                 <input
@@ -134,14 +134,14 @@ const StaticSection: React.FC<StaticSectionProps> = ({
                     onChange={onClientInfoChange}
                     placeholder={t.clientPhonePlaceholder}
                     disabled={isClientMode}
-                    className={`block w-full flex-1 px-3 py-2 bg-white border border-slate-300 text-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none ${language === 'ar' ? 'rounded-r-md border-l-0' : 'rounded-r-md border-l-0'}`}
+                    className={`block w-full flex-1 px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-50 dark:disabled:bg-slate-800/50 disabled:text-slate-500 dark:disabled:text-slate-400 disabled:border-slate-200 dark:disabled:border-slate-800 disabled:shadow-none ${language === 'ar' ? 'rounded-r-md border-l-0' : 'rounded-r-md border-l-0'}`}
                 />
             </div>
           </div>
           
           {/* Client Email */}
           <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
-            <label htmlFor="email" className="block text-sm font-medium text-slate-700">{t.clientEmailLabel}</label>
+            <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t.clientEmailLabel}</label>
             <input
               type="email"
               name="email"
@@ -150,9 +150,9 @@ const StaticSection: React.FC<StaticSectionProps> = ({
               onChange={onClientInfoChange}
               placeholder={t.clientEmailPlaceholder}
               disabled={isClientMode}
-              className={`mt-1 block w-full px-3 py-2 bg-white border ${emailError ? 'border-red-500' : 'border-slate-300'} rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 ${emailError ? 'focus:ring-red-500' : 'focus:ring-blue-500'} disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none`}
+              className={`mt-1 block w-full px-3 py-2 bg-white dark:bg-slate-800 border ${emailError ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} rounded-md text-sm shadow-xs placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-1 ${emailError ? 'focus:ring-red-500' : 'focus:ring-blue-500'} disabled:bg-slate-50 dark:disabled:bg-slate-800/50 disabled:text-slate-500 dark:disabled:text-slate-400 disabled:border-slate-200 dark:disabled:border-slate-800 disabled:shadow-none`}
             />
-            {emailError && <p className="mt-2 text-sm text-red-600">{emailError}</p>}
+            {emailError && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{emailError}</p>}
           </div>
 
         </div>

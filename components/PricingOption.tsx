@@ -62,25 +62,25 @@ const QuantitySelector: React.FC<{
 
     return (
         <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
-            {label && <span className="text-sm font-medium text-slate-700">{label}</span>}
-            <div className="flex items-center border border-slate-200 rounded-lg shadow-sm bg-white overflow-hidden h-9 transition-shadow hover:shadow-md" style={{ minWidth: '120px' }}>
+            {label && <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</span>}
+            <div className="flex items-center border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm bg-white dark:bg-slate-800 overflow-hidden h-9 transition-shadow hover:shadow-md" style={{ minWidth: '120px' }}>
                 {/* Plus Button */}
                 <button
                     onClick={(e) => { e.stopPropagation(); onQuantityChange(quantity + 1); }}
-                    className="w-10 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-blue-600 active:scale-90 transition-all font-bold text-xl"
+                    className="w-10 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-blue-600 dark:hover:text-blue-400 active:scale-90 transition-all font-bold text-xl"
                     aria-label={t.increaseQuantity}
                 >
                     +
                 </button>
                 
                 {/* Number Input */}
-                <div className="flex-1 bg-white h-full flex items-center justify-center border-x border-slate-100">
+                <div className="flex-1 bg-white dark:bg-slate-800 h-full flex items-center justify-center border-x border-slate-100 dark:border-slate-700">
                     <input
                         type="number"
                         value={quantity === 0 ? '' : quantity}
                         onChange={handleInputChange}
                         onBlur={handleBlur}
-                        className={`w-full bg-transparent border-none text-slate-900 font-bold text-center text-base focus:outline-none focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none p-0 transition-transform ${isPulsing ? 'animate-value-pop' : ''}`}
+                        className={`w-full bg-transparent border-none text-slate-900 dark:text-white font-bold text-center text-base focus:outline-none focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none p-0 transition-transform ${isPulsing ? 'animate-value-pop' : ''}`}
                         aria-label={t.currentQuantity}
                     />
                 </div>
@@ -89,7 +89,7 @@ const QuantitySelector: React.FC<{
                 <button
                     onClick={(e) => { e.stopPropagation(); onQuantityChange(Math.max(1, quantity - 1)); }}
                     disabled={quantity <= 1}
-                    className="w-10 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-red-500 disabled:opacity-20 active:scale-90 transition-all font-bold text-xl"
+                    className="w-10 h-full flex items-center justify-center text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-red-500 disabled:opacity-20 active:scale-90 transition-all font-bold text-xl"
                     aria-label={t.decreaseQuantity}
                 >
                     -
@@ -143,8 +143,8 @@ const PricingOption: React.FC<PricingOptionProps> = ({
             className={`
                 scroll-mt-28 relative p-5 border rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform
                 ${isSelected
-                    ? 'bg-blue-50 border-blue-500 shadow-xl scale-[1.015] ring-2 ring-blue-500/20 z-10'
-                    : `bg-white border-slate-200 hover:border-blue-300 hover:shadow-lg hover:translate-y-[-2px] hover:bg-slate-50`
+                    ? 'bg-blue-50 dark:bg-blue-950/50 border-blue-500 dark:border-blue-500 shadow-xl scale-[1.015] ring-2 ring-blue-500/20 z-10'
+                    : `bg-white dark:bg-slate-800/90 border-slate-200 dark:border-slate-700/80 hover:border-blue-300 dark:hover:border-blue-500/70 hover:shadow-lg hover:translate-y-[-2px] hover:bg-slate-50 dark:hover:bg-slate-800`
                 }
                 ${isClientMode ? 'cursor-default pointer-events-none opacity-90' : 'cursor-pointer'}
             `}
@@ -168,7 +168,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                 <div className={`
                     flex-shrink-0 w-6 h-6 mt-1 border-2 flex items-center justify-center transition-all duration-300 ease-out
                     ${isRadio ? 'rounded-full' : 'rounded-lg'}
-                    ${isSelected ? 'bg-blue-600 border-blue-600 text-white scale-110 shadow-md shadow-blue-200' : 'bg-white border-slate-300 group-hover:border-blue-400'}
+                    ${isSelected ? 'bg-blue-600 border-blue-600 text-white scale-110 shadow-md shadow-blue-200 dark:shadow-blue-950' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 group-hover:border-blue-400'}
                 `}>
                     <div className={`transform transition-all duration-300 ${isSelected ? 'scale-100 opacity-100 rotate-0' : 'scale-0 opacity-0 -rotate-45'}`}>
                          {isRadio ? <div className="w-2.5 h-2.5 bg-white rounded-full shadow-sm"></div> : <CheckIcon className="h-4 w-4 stroke-[3]" />}
@@ -179,10 +179,10 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                     <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-3">
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-0.5">
-                                <span className={`text-xs font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 ${isSelected ? 'bg-blue-200 text-blue-700' : ''}`}>
+                                <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${isSelected ? 'bg-blue-200 dark:bg-blue-900 text-blue-700 dark:text-blue-200' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}`}>
                                     {displayNumber}
                                 </span>
-                                <h4 className={`text-lg font-bold transition-colors duration-300 ${isSelected ? 'text-blue-900' : 'text-slate-800'}`}>
+                                <h4 className={`text-lg font-bold transition-colors duration-300 ${isSelected ? 'text-blue-900 dark:text-blue-200' : 'text-slate-800 dark:text-white'}`}>
                                     {option.name}
                                 </h4>
                             </div>
@@ -191,7 +191,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                             <div className={`${pricePulse ? 'animate-value-pop' : ''}`}>
                                 {option.hasQuantity && quantity > 1 && !isClientMode ? (
                                     <div className="flex flex-col items-end">
-                                        <p className={`text-xl font-black ${isSelected ? 'text-blue-700' : 'text-slate-900'}`}>
+                                        <p className={`text-xl font-black ${isSelected ? 'text-blue-700 dark:text-blue-400' : 'text-slate-900 dark:text-white'}`}>
                                             {formatCurrency(totalOptionPrice)}
                                         </p>
                                         <p className="text-xs text-slate-400 font-medium mt-0.5 flex items-center justify-end gap-1">
@@ -201,14 +201,14 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                                                     {formatCurrency(option.price)}
                                                 </span>
                                             )}
-                                            <span className={hasTierDiscount ? 'text-green-600 font-bold' : ''}>
+                                            <span className={hasTierDiscount ? 'text-green-600 dark:text-green-400 font-bold' : ''}>
                                                 {formatCurrency(currentUnitPrice)}
                                             </span>
                                             <span>)</span>
                                         </p>
                                     </div>
                                 ) : (
-                                    <p className={`text-xl font-black ${isSelected ? 'text-blue-700' : 'text-slate-900'}`}>
+                                    <p className={`text-xl font-black ${isSelected ? 'text-blue-700 dark:text-blue-400' : 'text-slate-900 dark:text-white'}`}>
                                         {formatCurrency(currentUnitPrice)}
                                         {option.hasQuantity && <span className="text-sm text-slate-400 font-normal"> {option.priceSuffix || t.perPageSuffix}</span>}
                                     </p>
@@ -219,34 +219,34 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                     
                     {option.description && (
                         <div 
-                            className="mt-2 text-sm text-slate-500 leading-relaxed"
+                            className="mt-2 text-sm text-slate-500 dark:text-slate-400 leading-relaxed"
                             dangerouslySetInnerHTML={{ __html: option.description }}
                         />
                     )}
 
                     {option.items && (
-                        <ul className={`mt-3 text-sm text-slate-600 space-y-1.5 ${language === 'ar' ? 'pr-4 border-r-2 border-slate-200' : 'pl-4 border-l-2 border-slate-200'} transition-opacity duration-300 ${isSelected ? 'opacity-100' : 'opacity-85'}`}>
+                        <ul className={`mt-3 text-sm text-slate-600 dark:text-slate-300 space-y-1.5 ${language === 'ar' ? 'pr-4 border-r-2 border-slate-200 dark:border-slate-700' : 'pl-4 border-l-2 border-slate-200 dark:border-slate-700'} transition-opacity duration-300 ${isSelected ? 'opacity-100' : 'opacity-85'}`}>
                             {option.items.map((item, index) => (
                                 <li 
                                     key={index} 
                                     className="leading-relaxed" 
-                                    dangerouslySetInnerHTML={{ __html: item.replace(/__(.*?)__/g, '<strong class="text-slate-800 font-bold">$1</strong>') }} 
+                                    dangerouslySetInnerHTML={{ __html: item.replace(/__(.*?)__/g, '<strong class="text-slate-800 dark:text-slate-100 font-bold">$1</strong>') }} 
                                 />
                             ))}
                         </ul>
                     )}
 
                     {/* Delivery Standards & Commercial Guarantee Drawer */}
-                    <div className="mt-4 pt-3 border-t border-slate-100">
+                    <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
                         <button
                             type="button"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setShowStandards(!showStandards);
                             }}
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 transition-colors py-1"
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1"
                         >
-                            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                             <span>{language === 'ar' ? 'معايير التسليم والضمان المعتمدة' : 'Delivery Standards & Quality Guarantee'}</span>
                             {showStandards ? <ChevronUp className="w-3.5 h-3.5 text-slate-400" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-400" />}
                         </button>
@@ -254,31 +254,31 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                         {showStandards && (
                             <div 
                                 onClick={(e) => e.stopPropagation()}
-                                className="mt-2.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 text-xs text-slate-600 space-y-2 animate-fadeIn"
+                                className="mt-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 space-y-2 animate-fadeIn"
                             >
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                    <div className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200/70 shadow-xs">
-                                        <FileCode2 className="w-4 h-4 text-indigo-600 flex-shrink-0 mt-0.5" />
+                                    <div className="flex items-start gap-2 bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200/70 dark:border-slate-700 shadow-xs">
+                                        <FileCode2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-0.5" />
                                         <span>
-                                            <strong>{language === 'ar' ? 'ملفات المصدر الأصلية:' : 'Source Files:'}</strong> {language === 'ar' ? 'تسليم ملفات الفكتور المفتوحة AI, SVG, PSD, PDF بدقة طباعة 300DPI.' : '100% open vector files (AI, SVG, PSD, PDF) at 300 DPI.'}
+                                            <strong className="text-slate-800 dark:text-slate-100">{language === 'ar' ? 'ملفات المصدر الأصلية:' : 'Source Files:'}</strong> {language === 'ar' ? 'تسليم ملفات الفكتور المفتوحة AI, SVG, PSD, PDF بدقة طباعة 300DPI.' : '100% open vector files (AI, SVG, PSD, PDF) at 300 DPI.'}
                                         </span>
                                     </div>
-                                    <div className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200/70 shadow-xs">
-                                        <Lock className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                                    <div className="flex items-start gap-2 bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200/70 dark:border-slate-700 shadow-xs">
+                                        <Lock className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
                                         <span>
-                                            <strong>{language === 'ar' ? 'ملكية تجارية تامة:' : 'Commercial Rights:'}</strong> {language === 'ar' ? 'تنازل كامل عن حقوق الملكية الفكرية والتجارية بدون أي قيود.' : 'Full 100% intellectual & commercial ownership transfer.'}
+                                            <strong className="text-slate-800 dark:text-slate-100">{language === 'ar' ? 'ملكية تجارية تامة:' : 'Commercial Rights:'}</strong> {language === 'ar' ? 'تنازل كامل عن حقوق الملكية الفكرية والتجارية بدون أي قيود.' : 'Full 100% intellectual & commercial ownership transfer.'}
                                         </span>
                                     </div>
-                                    <div className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200/70 shadow-xs">
-                                        <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                                    <div className="flex items-start gap-2 bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200/70 dark:border-slate-700 shadow-xs">
+                                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
                                         <span>
-                                            <strong>{language === 'ar' ? 'تسليم مرحلي منظم:' : 'Milestone Delivery:'}</strong> {language === 'ar' ? 'مراحل مراجعة وتعديلات مرنة حتى الاعتماد النهائي.' : 'Step-by-step review cycles until 100% sign-off.'}
+                                            <strong className="text-slate-800 dark:text-slate-100">{language === 'ar' ? 'تسليم مرحلي منظم:' : 'Milestone Delivery:'}</strong> {language === 'ar' ? 'مراحل مراجعة وتعديلات مرنة حتى الاعتماد النهائي.' : 'Step-by-step review cycles until 100% sign-off.'}
                                         </span>
                                     </div>
-                                    <div className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200/70 shadow-xs">
-                                        <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                                    <div className="flex items-start gap-2 bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200/70 dark:border-slate-700 shadow-xs">
+                                        <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
                                         <span>
-                                            <strong>{language === 'ar' ? 'حماية السرية (NDA):' : 'Confidentiality:'}</strong> {language === 'ar' ? 'التزام تام بحماية سرية البيانات وتوقيع اتفاقية سرية عند الطلب.' : 'Strict data confidentiality with NDA available on request.'}
+                                            <strong className="text-slate-800 dark:text-slate-100">{language === 'ar' ? 'حماية السرية (NDA):' : 'Confidentiality:'}</strong> {language === 'ar' ? 'التزام تام بحماية سرية البيانات وتوقيع اتفاقية سرية عند الطلب.' : 'Strict data confidentiality with NDA available on request.'}
                                         </span>
                                     </div>
                                 </div>
