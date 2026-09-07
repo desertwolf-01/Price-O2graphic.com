@@ -13,6 +13,7 @@ import FAQSection from './components/FAQSection';
 import ProposalProgressBar from './components/ProposalProgressBar';
 import SecurityGuard from './components/SecurityGuard';
 import ClientFeedbackSection from './components/ClientFeedbackSection';
+import HowWeWork from './components/HowWeWork';
 import { getServiceCategories, getUnitPrice } from './constants';
 import { translations } from './i18n';
 import type { ServiceOption, ServiceCategory } from './types';
@@ -103,6 +104,12 @@ function App() {
   const [proposalDate] = useState(new Date());
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [isMinimalMode, setIsMinimalMode] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('minimalMode') === 'true';
+    }
+    return false;
+  });
   
   const prevDiscountPercentageRef = useRef(0);
 
@@ -214,6 +221,24 @@ function App() {
     clearSavedSelectionState();
     setHasRestoredSession(false);
   };
+
+  const handleToggleMinimalMode = useCallback(() => {
+    setIsMinimalMode(prev => {
+      const next = !prev;
+      localStorage.setItem('minimalMode', String(next));
+      return next;
+    });
+  }, []);
+
+  const handleApplyPreset = useCallback((presetServiceIds: string[], presetQuantities?: { [id: string]: number }) => {
+    setSelectedIds(presetServiceIds);
+    if (presetQuantities) {
+      setQuantities(prev => ({
+        ...prev,
+        ...presetQuantities,
+      }));
+    }
+  }, []);
 
   const selectedOptions = useMemo(() => {
     const allOptions = serviceCategories.flatMap(c => c.options);
@@ -424,6 +449,8 @@ ${t.proposalTo(clientInfo.name)}
           </div>
         )}
 
+        <HowWeWork language={language} />
+
         <StaticSection 
           t={t}
           language={language}
@@ -450,6 +477,10 @@ ${t.proposalTo(clientInfo.name)}
           language={language}
           t={t}
           isClientMode={false}
+          isMinimalMode={isMinimalMode}
+          onToggleMinimalMode={handleToggleMinimalMode}
+          onApplyPreset={handleApplyPreset}
+          onClearSelection={handleClearSelection}
         />
 
         <CouponSection 

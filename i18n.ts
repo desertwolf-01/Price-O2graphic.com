@@ -18,6 +18,16 @@ export interface Translation {
   // PricingSection.tsx
   selectServicesTitle: string;
   selectServicesDescription: string;
+  searchServicesPlaceholder: string;
+  searchServicesAriaLabel: string;
+  searchResultsCount: (count: number, total: number) => string;
+  clearSearch: string;
+  noSearchResultsTitle: string;
+  noSearchResultsDesc: (query: string) => string;
+  minimalModeToggle: string;
+  minimalModeDesc: string;
+  smartPresetsTitle: string;
+  smartPresetsSubtitle: string;
 
   // PricingOption.tsx
   pagesLabel: string;
@@ -110,6 +120,16 @@ const en: Translation = {
   fillInfoAlertClient: 'Please fill in your name, phone, and email to submit your inquiry.',
   selectServicesTitle: 'Select Services',
   selectServicesDescription: 'Choose from the services below to build your custom package.',
+  searchServicesPlaceholder: 'Search services, packages, or options by name...',
+  searchServicesAriaLabel: 'Search services by name',
+  searchResultsCount: (count, total) => `Showing ${count} of ${total} services`,
+  clearSearch: 'Clear search',
+  noSearchResultsTitle: 'No matching services found',
+  noSearchResultsDesc: (query) => `We couldn't find any services matching "${query}". Try searching with different keywords.`,
+  minimalModeToggle: 'Minimal Mode',
+  minimalModeDesc: 'Compact list-only view without descriptions',
+  smartPresetsTitle: 'Smart Presets',
+  smartPresetsSubtitle: 'Select pre-defined bundles that automatically toggle all relevant services on.',
   pagesLabel: 'Pages:',
   perPageSuffix: 'per month',
   decreaseQuantity: 'Decrease quantity',
@@ -188,6 +208,16 @@ const ar: Translation = {
   fillInfoAlertClient: 'يرجى ملء اسمك وهاتفك وبريدك الإلكتروني لإرسال استفسارك.',
   selectServicesTitle: 'اختر الخدمات',
   selectServicesDescription: 'اختر من الخدمات أدناه لبناء باقتك المخصصة.',
+  searchServicesPlaceholder: 'ابحث عن أي خدمة أو باقة بالاسم...',
+  searchServicesAriaLabel: 'البحث عن الخدمات بالاسم',
+  searchResultsCount: (count, total) => `تم العثور على ${count} من أصل ${total} خدمة`,
+  clearSearch: 'مسح البحث',
+  noSearchResultsTitle: 'لم يتم العثور على خدمات مطابقة',
+  noSearchResultsDesc: (query) => `لم نتمكن من إيجاد أي خدمة تطابق "${query}". جرب البحث بكلمات أخرى.`,
+  minimalModeToggle: 'الوضع المختصر',
+  minimalModeDesc: 'عرض سريع ومدمج بدون تفاصيل مطولة',
+  smartPresetsTitle: 'الباقات الذكية الجاهزة',
+  smartPresetsSubtitle: 'اختر باقة مسبقة التحديد لتفعيل خدماتها مباشرة بضغطة زر واحدة.',
   pagesLabel: 'الصفحات:',
   perPageSuffix: 'شهرياً',
   decreaseQuantity: 'تقليل الكمية',

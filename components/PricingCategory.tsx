@@ -103,6 +103,9 @@ interface PricingCategoryProps {
   language: 'ar' | 'en';
   t: Translation;
   isClientMode: boolean;
+  visibleOptionIds?: string[];
+  searchQuery?: string;
+  isMinimalMode?: boolean;
 }
 
 const PricingCategory: React.FC<PricingCategoryProps> = ({
@@ -115,6 +118,9 @@ const PricingCategory: React.FC<PricingCategoryProps> = ({
   language,
   t,
   isClientMode,
+  visibleOptionIds,
+  searchQuery = '',
+  isMinimalMode = false,
 }) => {
   const visual = CATEGORY_VISUALS[category.id] || DEFAULT_VISUAL;
   const IconComponent = visual.icon;
@@ -125,13 +131,20 @@ const PricingCategory: React.FC<PricingCategoryProps> = ({
   const isAllSelected = totalOptions > 0 && selectedCount === totalOptions;
   const hasSelection = selectedCount > 0;
 
+  const displayedOptions = React.useMemo(() => {
+    if (!visibleOptionIds) return category.options;
+    return category.options.filter(opt => visibleOptionIds.includes(opt.id));
+  }, [category.options, visibleOptionIds]);
+
+  const isFilterActive = Boolean(visibleOptionIds && visibleOptionIds.length < category.options.length);
+
   return (
     <div id={category.id} className="scroll-mt-8 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200/80 dark:border-slate-800 print:shadow-none print:border-0 overflow-hidden transition-colors">
-      <div className={`p-6 bg-slate-50/60 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+      <div className={`${isMinimalMode ? 'p-4 sm:p-5' : 'p-6'} bg-slate-50/60 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1">
           <div className="flex items-center gap-3.5 min-w-0">
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xs border ${visual.iconBg} ${visual.iconColor} transition-transform hover:scale-105`}>
-              <IconComponent className="w-6 h-6" />
+            <div className={`${isMinimalMode ? 'w-10 h-10' : 'w-12 h-12'} rounded-xl flex items-center justify-center flex-shrink-0 shadow-xs border ${visual.iconBg} ${visual.iconColor} transition-transform hover:scale-105`}>
+              <IconComponent className={`${isMinimalMode ? 'w-5 h-5' : 'w-6 h-6'}`} />
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -144,8 +157,18 @@ const PricingCategory: React.FC<PricingCategoryProps> = ({
                     {language === 'ar' ? 'خيار واحد' : 'Single choice'}
                   </span>
                 )}
+                {isFilterActive && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/80">
+                    <span>🔍</span>
+                    <span>
+                      {language === 'ar'
+                        ? `${displayedOptions.length} من ${category.options.length} مطابق للبحث`
+                        : `${displayedOptions.length} of ${category.options.length} match`}
+                    </span>
+                  </span>
+                )}
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+              <h3 className={`${isMinimalMode ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'} font-bold text-slate-900 dark:text-white tracking-tight`}>
                 {category.name}
               </h3>
             </div>
@@ -206,7 +229,8 @@ const PricingCategory: React.FC<PricingCategoryProps> = ({
           </div>
         </div>
 
-        {category.description && (
+        {/* Hide category description in minimal mode */}
+        {!isMinimalMode && category.description && (
           <div 
             className="mt-3.5 text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed" 
             dangerouslySetInnerHTML={{ __html: category.description }} 
@@ -214,22 +238,26 @@ const PricingCategory: React.FC<PricingCategoryProps> = ({
         )}
       </div>
 
-      <div className="p-6 space-y-4">
-        {category.options.map((option, optIdx) => (
-          <PricingOption
-            key={option.id}
-            option={option}
-            displayNumber={`${categoryIndex}.${optIdx + 1}`}
-            isSelected={selectedIds.includes(option.id)}
-            onToggle={() => onServiceToggle(option.id, category)}
-            quantity={quantities[option.id] || 1}
-            onQuantityChange={(newQuantity) => onQuantityChange(option.id, newQuantity)}
-            isRadio={category.isRadio}
-            language={language}
-            t={t}
-            isClientMode={isClientMode}
-          />
-        ))}
+      <div className={`${isMinimalMode ? 'p-4 sm:p-5 space-y-2.5 sm:space-y-3' : 'p-6 space-y-4'}`}>
+        {displayedOptions.map((option) => {
+          const optIdx = category.options.findIndex(opt => opt.id === option.id);
+          return (
+            <PricingOption
+              key={option.id}
+              option={option}
+              displayNumber={`${categoryIndex}.${optIdx !== -1 ? optIdx + 1 : 1}`}
+              isSelected={selectedIds.includes(option.id)}
+              onToggle={() => onServiceToggle(option.id, category)}
+              quantity={quantities[option.id] || 1}
+              onQuantityChange={(newQuantity) => onQuantityChange(option.id, newQuantity)}
+              isRadio={category.isRadio}
+              language={language}
+              t={t}
+              isClientMode={isClientMode}
+              isMinimalMode={isMinimalMode}
+            />
+          );
+        })}
       </div>
     </div>
   );
