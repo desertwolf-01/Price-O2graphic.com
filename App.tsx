@@ -21,6 +21,7 @@ import SuccessScreen from './components/SuccessScreen';
 import DiscountCelebration from './components/DiscountCelebration';
 import { isEmailConfigured, sendProposalEmails } from './email';
 import { formatCurrency } from './utils/format';
+import { calculateEstimatedTimeline } from './utils/duration';
 import { 
   getSavedSelectionState, 
   saveSelectionState, 
@@ -271,6 +272,10 @@ function App() {
 
   const discount = useMemo(() => (subTotalPrice * discountPercentage) / 100, [subTotalPrice, discountPercentage]);
   const finalTotalPrice = useMemo(() => subTotalPrice - discount, [subTotalPrice, discountPercentage]);
+
+  const timeline = useMemo(() => {
+    return calculateEstimatedTimeline(selectedOptions, quantities, language);
+  }, [selectedOptions, quantities, language]);
   
   useEffect(() => {
     if (discountPercentage > prevDiscountPercentageRef.current) {
@@ -312,6 +317,9 @@ function App() {
     }).join('\n');
 
     const couponInfo = appliedCoupon ? `\n*الكوبون المطبق:* ${appliedCoupon.code} (${appliedCoupon.discount}% خصم إضافي)` : '';
+    const timelineInfo = timeline 
+      ? `\n*⏱️ ${language === 'ar' ? 'مدة العمل والتسليم المتوقعة:' : 'Estimated Working Duration:'}* ${timeline.formattedText} ${timeline.formattedWeeksText ? `(${timeline.formattedWeeksText})` : ''}`
+      : '';
 
     const message = `
 *${t.proposalTitle}*
@@ -330,6 +338,7 @@ ${couponInfo}
 ${t.subtotal}: ${formatCurrency(subTotalPrice)}
 ${language === 'en' ? t.discountLabel(discountPercentage) : `خصم (${discountPercentage}%)`}: -${formatCurrency(discount)}
 *${t.totalPrice}: ${formatCurrency(finalTotalPrice)}*
+${timelineInfo}
 
 ${t.proposalTo(clientInfo.name)}
     `.trim().replace(/^\s+/gm, "");
@@ -497,6 +506,7 @@ ${t.proposalTo(clientInfo.name)}
         actionType={actionType}
         formError={formError}
         isClientMode={isClientMode}
+        estimatedDuration={timeline ? timeline.formattedText : undefined}
       />
       {showSuccessScreen && (
         <SuccessScreen 

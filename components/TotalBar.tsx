@@ -14,6 +14,7 @@ interface TotalBarProps {
   actionType: string | null;
   formError: string;
   isClientMode: boolean;
+  estimatedDuration?: string;
 }
 
 const WhatsAppIcon = () => (
@@ -39,6 +40,7 @@ const TotalBar: React.FC<TotalBarProps> = ({
   actionType,
   formError,
   isClientMode,
+  estimatedDuration,
 }) => {
   const [pulseTotal, setPulseTotal] = useState(false);
 
@@ -70,13 +72,19 @@ const TotalBar: React.FC<TotalBarProps> = ({
         >
           {finalTotalPrice > 0 && (
             <>
-              <div className="flex items-baseline gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-lg font-medium text-slate-600 dark:text-slate-300">{t.totalPrice}:</span>
                 <span className={`text-3xl font-extrabold text-slate-800 dark:text-white transition-transform inline-block ${pulseTotal ? 'animate-value-pop' : ''}`}>
                     {formatCurrency(finalTotalPrice)}
                 </span>
                 {discount > 0 && !isClientMode && (
                   <span className="text-base font-medium text-slate-500 dark:text-slate-400 line-through">{formatCurrency(subTotalPrice)}</span>
+                )}
+                {estimatedDuration && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-amber-50 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/80 text-xs font-bold shadow-2xs">
+                    <span>⏱️</span>
+                    <span>{language === 'ar' ? `المدة: ${estimatedDuration}` : `Duration: ${estimatedDuration}`}</span>
+                  </span>
                 )}
               </div>
               {discountText && (

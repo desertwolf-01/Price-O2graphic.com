@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { ServiceOption, ServiceCategory } from '../types';
 import type { Translation } from '../i18n';
 import { getUnitPrice } from '../constants';
 import { formatCurrency } from '../utils/format';
+import { calculateEstimatedTimeline, getServiceDuration } from '../utils/duration';
 import SecurityBadge from './SecurityBadge';
 import { 
   Receipt, 
@@ -13,7 +14,9 @@ import {
   Sparkles, 
   ArrowUpRight,
   Minus,
-  Plus
+  Plus,
+  Clock,
+  CalendarCheck
 } from 'lucide-react';
 
 const CATEGORY_EMOJIS: Record<string, string> = {
@@ -85,6 +88,10 @@ const SummaryBreakdown: React.FC<SummaryBreakdownProps> = ({
   const couponDiscountPercent = appliedCoupon ? appliedCoupon.discount : 0;
   const couponDiscountAmount = (subTotalPrice * couponDiscountPercent) / 100;
 
+  const timeline = useMemo(() => {
+    return calculateEstimatedTimeline(selectedOptions, quantities, language);
+  }, [selectedOptions, quantities, language]);
+
   if (selectedOptions.length === 0) {
     return (
       <div 
@@ -134,6 +141,12 @@ const SummaryBreakdown: React.FC<SummaryBreakdownProps> = ({
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
                 {selectedOptions.length} {isArabic ? 'خدمة مختارة' : 'Selected items'}
               </span>
+              {timeline && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                  <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                  <span>{timeline.formattedText}</span>
+                </span>
+              )}
               <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">
                 🔒 {isArabic ? 'عرض أسعار سري' : 'Confidential'}
               </span>
@@ -192,8 +205,8 @@ const SummaryBreakdown: React.FC<SummaryBreakdownProps> = ({
                       )}
                     </div>
 
-                    {/* Quantity Indicator */}
-                    <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    {/* Quantity Indicator & Estimated Duration */}
+                    <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-wrap">
                       {option.hasQuantity ? (
                         <span className="font-medium text-slate-700 dark:text-slate-300">
                           {isArabic ? 'الكمية:' : 'Quantity:'} <strong className="text-blue-700 dark:text-blue-400 font-bold">{quantity}</strong> {option.quantityLabel || ''} 
@@ -208,6 +221,17 @@ const SummaryBreakdown: React.FC<SummaryBreakdownProps> = ({
                           {isArabic ? 'خدمة قياسية متكاملة' : 'Single Package'}
                         </span>
                       )}
+
+                      {/* Per-Item Duration Badge */}
+                      {(() => {
+                        const duration = getServiceDuration(option.id, quantity);
+                        return (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-800 dark:text-amber-300 bg-amber-50/90 dark:bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-200/80 dark:border-amber-800/80">
+                            <Clock className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+                            <span>{isArabic ? duration.labelAr : duration.labelEn}</span>
+                          </span>
+                        );
+                      })()}
                     </div>
                   </div>
                 </div>
@@ -339,6 +363,79 @@ const SummaryBreakdown: React.FC<SummaryBreakdownProps> = ({
               </span>
             </div>
           </div>
+
+          {/* Estimated Working Duration & Delivery Timeline Card */}
+          {timeline && (
+            <div 
+              id="estimated-delivery-timeline-card"
+              className="mt-4 p-4 md:p-5 rounded-2xl bg-gradient-to-br from-amber-50/80 via-blue-50/40 to-slate-50 dark:from-slate-800/90 dark:via-slate-850 dark:to-slate-900 border border-amber-200/90 dark:border-slate-700/90 shadow-xs"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-200/70 dark:border-slate-700">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-xs flex-shrink-0">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 block">
+                      {isArabic ? 'الجدول الزمني للإنجاز' : 'Delivery Timeline'}
+                    </span>
+                    <h4 className="text-base md:text-lg font-extrabold text-slate-900 dark:text-white">
+                      {isArabic ? 'مدة العمل والتسليم المتوقعة' : 'Estimated Working Duration'}
+                    </h4>
+                  </div>
+                </div>
+
+                <div className={`flex flex-col ${isArabic ? 'sm:items-end' : 'sm:items-start'}`}>
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700/80 text-amber-900 dark:text-amber-300 font-extrabold text-sm md:text-base shadow-xs">
+                    <span>⏱️</span>
+                    <span>{timeline.formattedText}</span>
+                  </div>
+                  {timeline.formattedWeeksText && (
+                    <span className="text-xs font-bold text-slate-600 dark:text-slate-400 mt-1">
+                      {timeline.formattedWeeksText}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Project Milestones Progress / Phases */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3.5">
+                {timeline.phases.map((phase, idx) => (
+                  <div 
+                    key={idx}
+                    className="p-3 rounded-xl bg-white/90 dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-700/80 flex flex-col justify-between"
+                  >
+                    <div className="flex items-center justify-between gap-1 mb-1.5">
+                      <span className="font-bold text-slate-800 dark:text-slate-100 text-xs flex items-center gap-1.5">
+                        <span>{phase.icon}</span>
+                        <span>{isArabic ? phase.titleAr : phase.titleEn}</span>
+                      </span>
+                      <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-100/70 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800/80">
+                        {isArabic ? phase.timeAr : phase.timeEn}
+                      </span>
+                    </div>
+                    <p className="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">
+                      {isArabic ? phase.descAr : phase.descEn}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-3 pt-2.5 border-t border-slate-200/70 dark:border-slate-700/60 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400 flex-wrap gap-2">
+                <span className="flex items-center gap-1">
+                  <span>⚡</span>
+                  <span>
+                    {isArabic
+                      ? 'تدار المشاريع بمسارات عمل متوازية (Parallel Sprints) لاختصار مدة الإنجاز دون المساس بالجودة.'
+                      : 'Services are executed via parallel sprints to optimize delivery speed while maintaining quality.'}
+                  </span>
+                </span>
+                <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  {isArabic ? '• أيام العمل الرسمية: الأحد - الخميس' : '• Business days: Sun - Thu'}
+                </span>
+              </div>
+            </div>
+          )}
 
           {/* Proprietary & Confidential Rate Card Notice */}
           <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
