@@ -8,7 +8,6 @@ import TotalBar from './components/TotalBar';
 import TermsAndConditions from './components/TermsAndConditions';
 import CouponSection from './components/CouponSection';
 import SummaryBreakdown from './components/SummaryBreakdown';
-import InteractivePresentation from './components/InteractivePresentation';
 import FAQSection from './components/FAQSection';
 import ProposalProgressBar from './components/ProposalProgressBar';
 import SecurityGuard from './components/SecurityGuard';
@@ -230,16 +229,6 @@ function App() {
     });
   }, []);
 
-  const handleApplyPreset = useCallback((presetServiceIds: string[], presetQuantities?: { [id: string]: number }) => {
-    setSelectedIds(presetServiceIds);
-    if (presetQuantities) {
-      setQuantities(prev => ({
-        ...prev,
-        ...presetQuantities,
-      }));
-    }
-  }, []);
-
   const selectedOptions = useMemo(() => {
     const allOptions = serviceCategories.flatMap(c => c.options);
     return allOptions.filter(o => selectedIds.includes(o.id));
@@ -385,19 +374,6 @@ ${t.proposalTo(clientInfo.name)}
       });
   };
 
-  const handleNavigateToCategory = (categoryId: string, optionId?: string) => {
-    const targetElement = optionId ? document.getElementById(optionId) : document.getElementById(categoryId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      if (optionId) {
-        targetElement.classList.add('ring-4', 'ring-blue-500', 'shadow-2xl');
-        setTimeout(() => {
-          targetElement.classList.remove('ring-4', 'ring-blue-500', 'shadow-2xl');
-        }, 3000);
-      }
-    }
-  };
-
   return (
     <div className="bg-transparent min-h-screen">
       <SecurityGuard language={language} />
@@ -462,12 +438,6 @@ ${t.proposalTo(clientInfo.name)}
           categories={serviceCategories}
         />
 
-        <InteractivePresentation
-          language={language}
-          onNavigateToCategory={handleNavigateToCategory}
-          onApplyCoupon={setAppliedCoupon}
-        />
-        
         <PricingSection
           categories={serviceCategories}
           selectedIds={selectedIds}
@@ -479,8 +449,6 @@ ${t.proposalTo(clientInfo.name)}
           isClientMode={false}
           isMinimalMode={isMinimalMode}
           onToggleMinimalMode={handleToggleMinimalMode}
-          onApplyPreset={handleApplyPreset}
-          onClearSelection={handleClearSelection}
         />
 
         <CouponSection 
